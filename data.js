@@ -1,6 +1,6 @@
 // Contenuti della presentazione. Per sostituire skill, casi studio o link, si modifica solo questo file.
 
-window.SHARE_URL = 'https://claude.ai/';
+window.SHARE_URL = 'https://claude.ai/artifact/8kAega2RsnSgdo4PPaGEdH';
 
 window.FAMILIES = [
   { id: 'metodo',     label: 'Metodo',              blurb: 'Come lavoriamo: prima capire, poi pianificare, poi costruire e verificare.' },

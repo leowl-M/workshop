@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- icona Composer: cerchio bianco con pallino giallo su nero; griglia icone macOS 824 su 1024 -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="#050505"/>
+  <circle cx="512" cy="512" r="145" fill="none" stroke="#ffffff" stroke-width="46"/>
+  <circle cx="512" cy="512" r="66" fill="#f5cf3f"/>
+</svg>

@@ -2,6 +2,16 @@
 
 window.SHARE_URL = 'https://claude.ai/artifact/8kAega2RsnSgdo4PPaGEdH';
 
+// Plugin da installare in Claude Code. Fonti: i marketplace GitHub da cui li ho installati.
+window.PLUGINS = [
+  { name: 'superpowers', what: 'Il metodo: domande, spec, piano, test, revisione.', cmds: ['/plugin install superpowers@claude-plugins-official'] },
+  { name: 'impeccable', what: 'Critica, audit e rifinitura di un\'interfaccia.', cmds: ['/plugin marketplace add pbakaus/impeccable', '/plugin install impeccable@impeccable'] },
+  { name: 'ponytail', what: 'La soluzione più semplice che funziona.', cmds: ['/plugin marketplace add DietrichGebert/ponytail', '/plugin install ponytail@ponytail'] },
+  { name: 'caveman', what: 'Risposte brevi, stesso contenuto tecnico.', cmds: ['/plugin marketplace add JuliusBrussee/caveman', '/plugin install caveman@caveman'] },
+  { name: 'figma', what: 'Claude legge e scrive direttamente in Figma.', cmds: ['/plugin install figma@claude-plugins-official'] },
+  { name: 'code-review', what: 'Revisione delle modifiche alla ricerca di bug.', cmds: ['/plugin install code-review@claude-plugins-official'] },
+];
+
 window.FAMILIES = [
   { id: 'metodo',     label: 'Metodo',              blurb: 'Come lavoriamo: prima capire, poi pianificare, poi costruire e verificare.' },
   { id: 'stile',      label: 'Stile di lavoro',     blurb: 'Codice minimo, risposte brevi, niente output tagliati.' },
@@ -101,84 +111,136 @@ window.SKILLS = [
   { family: 'documenti', name: 'docs', what: 'Documenti vivi su claude.ai, modificabili insieme.', when: 'Per spec e note da scrivere a quattro mani con il team.' },
 ];
 
-window.CASES = [
-  {
-    id: 'tokenizer', name: 'Tokenizer', kind: 'Plugin Figma',
-    problem: 'Le variabili restavano in Figma: ogni modifica la ricopiavo a mano nel codice.',
-    skills: ['superpowers:brainstorming', 'superpowers:test-driven-development', 'ponytail'],
-    result: 'Un clic esporta le variabili in token CSS e Swift, sempre allineati.',
-    visual: `
-      <div class="cv-win"><div class="cv-bar"><i></i><i></i><i></i><span>Tokenizer</span></div>
-        <div class="cv-body">
-          <div class="cv-row"><b class="cv-sw" style="background:#3b5bff"></b><span>color/accent</span><code>#3B5BFF</code></div>
-          <div class="cv-row"><b class="cv-sw" style="background:#111113"></b><span>color/ink</span><code>#111113</code></div>
-          <div class="cv-row"><b class="cv-sw cv-sw-num">16</b><span>space/m</span><code>16px</code></div>
-          <div class="cv-row"><b class="cv-sw cv-sw-num">12</b><span>radius/card</span><code>12px</code></div>
-          <div class="cv-btn">Esporta CSS · Swift</div>
-        </div></div>`,
-  },
-  {
-    id: 'layerlink', name: 'Layerlink', kind: 'App macOS',
-    problem: 'I PSD dei clienti arrivavano in Figma come immagini piatte.',
-    skills: ['superpowers:brainstorming', 'superpowers:writing-plans', 'superpowers:subagent-driven-development', 'superpowers:systematic-debugging'],
-    result: 'I livelli arrivano in Figma con gruppi, nomi e testi modificabili.',
-    steps: [
-      '«Voglio i livelli dei PSD in Figma, non un\'immagine piatta.»',
-      'Claude chiede: quali livelli? Testi modificabili? Smart object?',
-      'Una spec di una pagina: cosa fa, cosa non fa, come si verifica.',
-      'Un piano in 9 task, ognuno con il suo test.',
-      'App per Mac funzionante: trascini il PSD, si apre in Figma.',
-    ],
-    visual: `
-      <div class="cv-split">
-        <div class="cv-win"><div class="cv-bar"><i></i><i></i><i></i><span>campagna.psd</span></div>
-          <div class="cv-body cv-layers"><div>▾ Hero</div><div class="cv-in">T Titolo</div><div class="cv-in">▢ Foto prodotto</div><div>▾ CTA</div><div class="cv-in">T Scopri</div></div></div>
-        <div class="cv-arrow">→</div>
-        <div class="cv-win"><div class="cv-bar"><i></i><i></i><i></i><span>Figma</span></div>
-          <div class="cv-body cv-layers"><div>▾ Hero</div><div class="cv-in">T Titolo</div><div class="cv-in">▢ Foto prodotto</div><div>▾ CTA</div><div class="cv-in">T Scopri</div></div></div>
-      </div>`,
-  },
-  {
-    id: 'squeeze', name: 'Squeeze', kind: 'App macOS',
-    problem: 'Convertire immagini e video per il web voleva dire tre tool diversi e mille preset.',
-    skills: ['ponytail', 'superpowers:executing-plans', 'impeccable'],
-    result: 'Trascino una cartella: escono AVIF, WebP e MP4 ottimizzati, in un passaggio.',
-    visual: `
-      <div class="cv-win"><div class="cv-bar"><i></i><i></i><i></i><span>Squeeze</span></div>
-        <div class="cv-body">
-          <div class="cv-drop">Trascina qui una cartella</div>
-          <div class="cv-file"><span>hero.png</span><em>AVIF · −82%</em><div class="cv-prog"><b style="width:100%"></b></div></div>
-          <div class="cv-file"><span>reel.mov</span><em>MP4 · −64%</em><div class="cv-prog"><b style="width:72%"></b></div></div>
-          <div class="cv-file"><span>team.jpg</span><em>WebP · −58%</em><div class="cv-prog"><b style="width:35%"></b></div></div>
-        </div></div>`,
-  },
-  {
-    id: 'handoff-check', name: 'Handoff Check', kind: 'Plugin Figma',
-    problem: 'Gli sviluppatori trovavano livelli senza nome e stili scollegati solo dopo la consegna.',
-    skills: ['superpowers:brainstorming', 'code-review', 'impeccable'],
-    result: 'Prima di consegnare, una lista dei problemi con il pulsante per correggerli.',
-    visual: `
-      <div class="cv-win"><div class="cv-bar"><i></i><i></i><i></i><span>Handoff Check</span></div>
-        <div class="cv-body">
-          <div class="cv-chk cv-warn"><b>!</b><span>12 livelli senza nome</span><u>Correggi</u></div>
-          <div class="cv-chk cv-warn"><b>!</b><span>4 colori fuori dagli stili</span><u>Collega</u></div>
-          <div class="cv-chk cv-ok"><b>✓</b><span>Contrasto testi AA</span></div>
-          <div class="cv-chk cv-ok"><b>✓</b><span>Auto layout sui componenti</span></div>
-        </div></div>`,
-  },
-  {
-    id: 'tavolo', name: 'Tavolo', kind: 'Piattaforma web',
-    problem: 'Cene e viaggi con gli amici si perdevano tra chat, fogli condivisi e sondaggi.',
-    skills: ['design-taste-frontend', 'image-to-code', 'superpowers:subagent-driven-development', 'gdprgard-compliance'],
-    result: 'Una piattaforma condivisa: date, quote e decisioni in un posto solo.',
-    visual: `
-      <div class="cv-win"><div class="cv-bar"><i></i><i></i><i></i><span>tavolo.app</span></div>
-        <div class="cv-body">
-          <div class="cv-event"><strong>Weekend a Matera</strong><span>6 persone · €142 a testa</span></div>
-          <div class="cv-poll"><span>Ven 14</span><div class="cv-prog"><b style="width:83%"></b></div><em>5</em></div>
-          <div class="cv-poll"><span>Ven 21</span><div class="cv-prog"><b style="width:33%"></b></div><em>2</em></div>
-          <div class="cv-avatars"><i>LM</i><i>GR</i><i>SA</i><i>FB</i><i>+2</i></div>
-        </div></div>`,
-  },
+// Progetti veri, dalla cartella project/. Le immagini sono segnaposto numerati (img-01…): basta salvare
+// media/projects/img-NN.jpg a 1600×1000 e la pagina la usa al posto del segnaposto.
+window.PROJECTS = [
+  { id: 'prisma', name: 'Prisma', kind: 'App per Mac', group: 'app',
+    problem: 'Per convertire un file devi aprire un\'app o un sito, ogni volta.',
+    solution: 'Mentre trascini un file premi ⇧, ⌘ o ⌃: si apre un ventaglio di bolle. Rilasci sulla bolla e la copia convertita nasce accanto all\'originale.',
+    details: ['Immagini, video, audio, PDF, Office, sottotitoli, archivi', 'Annota, Ritaglia, Taglia video, Organizza PDF', 'Controlla i file per Reels, TikTok, Shorts, LinkedIn', 'Export @1x @2x @3x, .icns, .ico, palette HEX', 'Tutto in locale, sul Mac'],
+    stack: 'Swift · FFmpeg · Sparkle',
+    imgs: ['img-07'],
+    // La demo simulata nella pagina: le bolle sono quelle vere dell'app per un'immagine (OptionCatalog in Converters.swift).
+    sim: {
+      shift: { title: 'Converti', items: ['PNG', 'JPG', 'AVIF', 'TIFF', 'GIF', 'BMP', 'WEBP', 'SVG', 'PDF'], pick: 'WEBP', hint: 'WEBP · stima 0,7 MB', out: 'copertina.webp' },
+      cmd: { title: 'Strumenti', items: ['Annota', 'Ritaglia', 'Ridimensiona', 'Design', 'Comprimi', 'Controlla', 'Ruota', 'Metadati'], pick: 'Comprimi', hint: 'Comprimi · stima −54%', out: 'copertina 2.heic' },
+      ctrl: { title: 'Azioni', items: ['Apri con', 'AirDrop', 'In primo piano', 'Copia in…', 'Sposta in…', 'Copia percorso', 'Terminale', 'Mostra'], pick: 'Copia percorso', hint: 'Copia percorso', toast: 'Percorso copiato negli appunti' },
+    } },
+  { id: 'composer', name: 'Composer', kind: 'App desktop + plugin Figma', group: 'app',
+    problem: 'Post e storie social ricomposti a mano, ogni volta, partendo dai template Figma.',
+    solution: 'Un plugin estrae i layout da Figma in un template con testi e immagini modificabili. L\'app li apre e li compila, con progetti, clienti e cartelle.',
+    details: ['Post 1080×1350 e storie 1080×1920', 'Prefissi nei livelli: # testo · @ immagine · $ forma · ^ overlay', 'Controllo di fedeltà prima dell\'estrazione, correzioni in un clic'],
+    stack: 'Electron · plugin Figma',
+    imgs: ['img-08', 'img-09'] },
+  { id: 'squeeze', name: 'Squeeze', kind: 'Plugin Figma', group: 'figma',
+    problem: 'Gli export di Figma sono pesanti e poco controllabili.',
+    solution: 'Esporta le tavole in PDF, PNG, JPG, WebP o SVG, nell\'ordine e alla scala che scelgo, e le comprime al massimo senza perdita visibile.',
+    details: ['Qualità scelta in automatico, misurata', 'Mai più pesante dell\'originale', 'Report prima e dopo, "Prova su 1"', 'PDF modificabile per Illustrator'],
+    stack: 'pdf-lib · offline',
+    imgs: ['img-01'] },
+  { id: 'export', name: 'Export', kind: 'Plugin Figma', group: 'figma',
+    problem: 'Figma non sa esportare in video i frame che contengono video.',
+    solution: 'Ricompone grafica e video fotogramma per fotogramma ed esporta MP4, MOV o WebM. Senza server.',
+    details: ['H.264, HEVC, AV1, VP9', 'Fino a 4K, audio AAC, Opus, PCM', 'Preset Leggero, Alta qualità, Master'],
+    stack: 'WebCodecs · mediabunny',
+    imgs: ['img-02'] },
+  { id: 'typeswap', name: 'Type & Color Swap', kind: 'Plugin Figma', group: 'figma',
+    problem: 'Font, misure e colori sparsi in un file, da sostituire a mano.',
+    solution: 'Analizza tipografia e colori della pagina, li sostituisce e li collega a stili e variabili.',
+    details: ['Tolleranza colore ΔE', 'Contrasto WCAG AA e AAA, correzioni in un clic', 'Coda di modifiche, preset, cronologia nel file'],
+    stack: 'Figma API · offline',
+    imgs: ['img-03'] },
+  { id: 'splitpdf', name: 'Split PDF', kind: 'Plugin Figma', group: 'figma',
+    problem: 'Portare un PDF o un PowerPoint dentro Figma.',
+    solution: 'Importa ogni pagina come frame: vettori e testo modificabile, testo in tracciati, oppure un\'immagine per pagina.',
+    details: ['Abbina i font installati', 'PDF e PPTX', 'Tre versioni, dalla 01 alla 03'],
+    stack: 'PDF.js · Figma API',
+    imgs: ['img-04'] },
+  { id: 'modulink', name: 'Modulink', kind: 'Plugin Figma', group: 'figma',
+    problem: 'Le card dei link nelle presentazioni, costruite a mano una per una.',
+    solution: 'Da uno o più URL genera in Figma card con favicon, titolo, descrizione e screenshot.',
+    details: ['Stili Default, Small, Large', 'Cache di 7 giorni', 'Tre versioni'],
+    stack: 'Figma API · Microlink',
+    imgs: ['img-05'] },
+  { id: 'photoshop', name: 'Modifica in Photoshop', kind: 'App per Mac + plugin Figma', group: 'app',
+    problem: 'Per ritoccare un\'immagine di Figma: esporta, apri in Photoshop, reimporta.',
+    solution: 'Apre l\'immagine selezionata in Photoshop a piena risoluzione. Con ⌘S si aggiorna da sola in Figma.',
+    details: ['Pulsante "Modifica in Photoshop" sul livello', 'Fino a 10 immagini alla volta', 'App di supporto per Mac'],
+    stack: 'Figma API · helper locale',
+    imgs: ['img-06'] },
+  { id: 'training', name: 'Training', kind: '20 strumenti web', group: 'web',
+    problem: null,
+    solution: 'Strumenti per generare grafiche e animazioni: dithering, distorsioni, testo, keycap, collage. Tutti con la stessa interfaccia, online a ogni push.',
+    details: ['20 strumenti, una pelle sola', 'HTML e Tailwind', 'Pubblicati su Cloudflare'],
+    stack: 'HTML · Tailwind · Cloudflare Workers',
+    imgs: ['img-10'],
+    // Anteprime uniformi in media/tools/: catturate con un'immagine di prova caricata. Book Animator e Keycap Reel
+    // non si catturano senza un server o una GPU, Moto esce vuoto: restano fuori dal muro.
+    tools: [['article-image', 'Article Image'], ['blobtracking', 'Blob Tracking'], ['blur', 'Blur Threshold'], ['collage', 'Collage Dinamico'],
+      ['countour', 'Countour'], ['distortion', 'Distortion'], ['dithering', 'Dithering'], ['estrusione', 'Estrusione'], ['fiorisci', 'Fiorisci'],
+      ['flowerpixel', 'Flower Pixel'], ['gravity', 'Gravity'], ['keycap', 'Keycap Studio'], ['morf', 'Morf'],
+      ['ripple', 'Ripple'], ['sweep', 'Sweep'], ['textnoise', 'Text Noise'], ['typeshot', 'TypeShot']] },
 ];
 
+window.GROUPS = [
+  { id: 'figma', label: 'Plugin Figma', line: 'Dove passo le giornate, e dove si perde più tempo.' },
+  { id: 'app', label: 'App', line: 'Quando un plugin non basta, esco da Figma.' },
+  { id: 'web', label: 'Web', line: 'Tutto quello che ho messo online, a un clic.' },
+];
+
+// Come lavoro, passo per passo. Esempio vero: il pannello di Keycap Reel (Training), ottobre 2026.
+// Gli estratti vengono dai file del progetto; il terzo passo viene da questa presentazione.
+window.METHOD = [
+  { name: 'Il problema', what: 'Parto da un fastidio vero, scritto in parole semplici. Se non so dirlo in due righe, non so ancora cosa costruire.',
+    file: 'docs/keycap-reel-pannello-design.md · Perché',
+    lines: ['Si muove un cursore, non succede niente,', 'e non si sa se è rotto o se non c\'entra.'] },
+  { name: 'Il contesto', what: 'Nella cartella c\'è un CLAUDE.md: cosa si tocca, cosa no, come si lavora. Claude lo legge prima di ogni cosa.',
+    file: 'CLAUDE.md',
+    lines: ['Si brandizza, non si ridisegna.', 'Prima una prova su uno strumento.', 'Nessun push senza ok.', 'I commenti spiegano il perché.'] },
+  { name: 'Le skill giuste', what: 'Accendo solo le skill che servono a quel progetto. Le altre restano spente, così Claude non si distrae.',
+    file: '.claude/settings.local.json', skill: '/skills',
+    lines: ['"skillOverrides": {', '  "framer": "off",', '  "threejs-shaders": "off",', '  "copy-guide": "name-only"', '}'] },
+  { name: 'Le domande', what: 'Claude mi fa domande una alla volta e propone. Le scelte restano mie, e restano scritte.',
+    file: 'spec · decisioni', skill: 'superpowers:brainstorming',
+    lines: ['Deciso con l\'utente: il flat è un modello,', 'gli scacchi non sono uno stile.', '', '(proposta mia, accettata)'] },
+  { name: 'La spec', what: 'Un documento solo: perché, obiettivi, non obiettivi. E gli anti-obiettivi: cosa sarebbe un fallimento anche se funziona.',
+    file: 'docs/keycap-reel-pannello-design.md', skill: 'documento di design',
+    lines: ['## Anti-obiettivi', '- Un comando che si può toccare e non fa', '  niente, senza che si capisca perché.', '- Perdere le impostazioni salvate.'] },
+  { name: 'Il piano', what: 'Task piccoli, ognuno con la sua prova. Il primo task è sempre il banco di prova.',
+    file: 'docs/keycap-reel-pannello-piano.md', skill: 'superpowers:writing-plans',
+    lines: ['Task 0  Il banco di prova', 'Task 1  Il modello unico', 'Task 2  Il pannello riordinato', 'Task 3  Spento con il perché', '…', 'Task 8  Verifica finale'] },
+  { name: 'La costruzione', what: 'Un agente per task e un revisore che lo controlla. Io guardo, provo e decido.',
+    file: 'piano · istruzioni per gli agenti', skill: 'subagent-driven-development',
+    lines: ['Use superpowers:subagent-driven-development', 'to implement this plan task-by-task.', '', 'Ogni task finisce con le prove verdi.'] },
+  { name: 'La verifica', what: 'Prove nel browser vero, con Playwright, sui punti dove può rompersi. Niente "fatto" senza una prova.',
+    file: 'piano · Review Focus', skill: 'verification-before-completion',
+    lines: ['node prove/keycap-reel/prova.mjs', '→ PASS nome / FAIL nome: messaggio', '', 'migrazione_mode_flat · senza_3d', 'incompatibile_resta · dopo_export_spenti'] },
+  { name: 'Il rilascio', what: 'Lo apro io in locale e controllo che funzioni come prima. Solo con il mio ok va online.',
+    file: 'CLAUDE.md · Come si lavora',
+    lines: ['Prima di ogni push si apre lo strumento', 'in locale e si controlla che funzioni', 'come prima.', '', 'A ogni push Cloudflare pubblica da solo.'] },
+];
+
+// Segnaposto: numero, dove compare, misura consigliata.
+window.SLOTS = {
+  'img-01': 'Squeeze', 'img-02': 'Export', 'img-03': 'Type & Color Swap', 'img-04': 'Split PDF', 'img-05': 'Modulink',
+  'img-06': 'Modifica in Photoshop (app)', 'img-07': 'Prisma', 'img-08': 'Composer · app', 'img-09': 'Composer · plugin', 'img-10': 'Training',
+};
+window.SLOT_SIZE = '1600 × 1000';
+
+// La tastiera 3D in apertura: un tasto per strumento; premuto, porta al progetto.
+window.KEYS = [
+  { label: 'Squeeze', u: 1.5, color: 'yellow', to: 'squeeze' }, { label: 'Export', u: 1.25, color: 'cream', to: 'export' },
+  { label: 'T&C Swap', u: 1.5, color: 'blue', to: 'typeswap' }, { label: 'Split PDF', u: 1.5, color: 'cream', to: 'splitpdf' },
+  { label: 'Modulink', u: 1.5, color: 'deep', to: 'modulink' }, { label: 'Photoshop', u: 1.75, color: 'cream', to: 'photoshop' },
+  { label: 'Prisma', u: 1.25, color: 'yellow', to: 'prisma' }, { label: 'Composer', u: 1.5, color: 'blue', to: 'composer' },
+  { label: 'Training', u: 2.25, color: 'cream', to: 'training' },
+];
+
+// Tutte le skill, i plugin e i comandi, da Kit Claude (kit-claude/index.html, 29 ottobre 2026).
+window.KIT = [ { "h": "Create da te", "p": "Esistono solo in questo kit (o nel tuo account claude.ai).", "rows": [ { "name": "inventario", "what": "Elenca skill, plugin e comandi installati, legge i segnali del progetto (dipendenze, file, cookie) e dice quali usare, accendere o spegnere, con il JSON pronto per .claude/settings.local.json", "use": "/inventario", "src": "questo kit", "mine": true }, { "name": "video-brief", "what": "Raccoglie il brief di un video e scrive la timeline da approvare prima del render (abbinala a lemo-opuscar)", "use": "/video-brief", "src": "questo kit · stili opzionali in ~/claude-risorse/", "mine": true }, { "name": "copy-guide", "what": "Router dei testi: guarda progetto e richiesta, sceglie tra product-marketing, copywriting, copy-editing, ux-writing e la attiva", "use": "/copy-guide, \"copy\", \"testi\", \"microcopy\"", "src": "questo kit", "mine": true }, { "name": "/compliance", "what": "Comando: audit GDPR e cookie di un sito, proposta fix, applicazione, report finale", "use": "/compliance", "src": "questo kit · commands/", "mine": true }, { "name": "/purge-archived", "what": "Comando: elimina le sessioni archiviate dell'estensione Claude in Cursor/VS Code. Mostra la lista e chiede conferma", "use": "/purge-archived", "src": "questo kit · commands/ + bin/", "mine": true }, { "name": "ui-micro-interactions", "what": "Micro-animazioni e dettagli UI: press feedback, popover, stagger, spring, reduced motion (React, Motion, Tailwind, CSS)", "use": "da sola su animazioni, \"polish\", \"più fluida\"", "src": "sincronizzata dal tuo account claude.ai (non nel kit, non serve copiarla)", "mine": false } ] }, { "h": "Plugin", "p": "Si installano da Claude Code con /plugin marketplace add <repo> e poi /plugin install <id>. install.sh installa tutti tranne taste-skill.", "rows": [ { "name": "figma", "what": "Ponte Figma ↔ codice in tutte e due le direzioni: design-to-code, librerie, diagrammi FigJam, SwiftUI, motion (16 skill)", "use": "da sola con link Figma", "src": "anthropics/claude-plugins-official · figma@claude-plugins-official", "mine": false, "href": "https://github.com/anthropics/claude-plugins-official", "cmds": [ "/plugin marketplace add anthropics/claude-plugins-official", "/plugin install figma@claude-plugins-official" ] }, { "name": "mattpocock-skills", "what": "Metodo da sviluppatore: grilling del piano, prototipi, TDD, diagnosi bug, code review, domain model", "use": "\"grill me\", \"diagnose\", \"tdd\"…", "src": "mattpocock/skills · mattpocock-skills@mattpocock", "mine": false, "href": "https://github.com/mattpocock/skills", "cmds": [ "/plugin marketplace add mattpocock/skills", "/plugin install mattpocock-skills@mattpocock" ] }, { "name": "lemo-opuscar", "what": "Video fatti interamente in codice in 66 stili (ukiyo-e, acquerello, keynote…). Serve Node 20+ e ffmpeg", "use": "\"fammi un video in stile…\"", "src": "lemomo-ai/lemo-opuscar · lemo-opuscar@lemolab", "mine": false, "href": "https://github.com/lemomo-ai/lemo-opuscar", "cmds": [ "/plugin marketplace add lemomo-ai/lemo-opuscar", "/plugin install lemo-opuscar@lemolab" ] }, { "name": "caveman", "what": "Risposte compresse, circa 75% di token in meno. Sempre acceso", "use": "/caveman lite|full|ultra, \"stop caveman\"", "src": "JuliusBrussee/caveman · caveman@caveman", "mine": false, "href": "https://github.com/JuliusBrussee/caveman", "cmds": [ "/plugin marketplace add JuliusBrussee/caveman", "/plugin install caveman@caveman" ] }, { "name": "ponytail", "what": "Claude scrive la soluzione più semplice che funziona. Sempre acceso. Include audit e review anti over-engineering", "use": "/ponytail, /ponytail-audit, \"stop ponytail\"", "src": "DietrichGebert/ponytail · ponytail@ponytail", "mine": false, "href": "https://github.com/DietrichGebert/ponytail", "cmds": [ "/plugin marketplace add DietrichGebert/ponytail", "/plugin install ponytail@ponytail" ] }, { "name": "superpowers", "what": "Raccolta di workflow per sviluppo (brainstorming, piani, esecuzione, debugging)", "use": "da sola", "src": "superpowers@claude-plugins-official", "mine": false, "cmds": [ "/plugin install superpowers@claude-plugins-official" ] }, { "name": "code-review", "what": "Review della PR con più agenti", "use": "/code-review", "src": "code-review@claude-plugins-official", "mine": false, "cmds": [ "/plugin install code-review@claude-plugins-official" ] }, { "name": "claude-code-setup", "what": "Analizza il progetto e consiglia hook, skill, MCP da configurare", "use": "\"consigliami il setup\"", "src": "claude-code-setup@claude-plugins-official", "mine": false, "cmds": [ "/plugin install claude-code-setup@claude-plugins-official" ] }, { "name": "impeccable", "what": "Linguaggio di design per frontend: audit, polish, tipografia, colore", "use": "comandi del plugin", "src": "pbakaus/impeccable · impeccable@impeccable", "mine": false, "href": "https://github.com/pbakaus/impeccable", "cmds": [ "/plugin marketplace add pbakaus/impeccable", "/plugin install impeccable@impeccable" ] }, { "name": "taste-skill", "what": "Versione plugin delle skill taste (doppione delle skill design qui sotto: scegline una)", "use": "da sola sulle UI", "src": "Leonxlnx/taste-skill · taste-skill@taste-skill", "mine": false, "href": "https://github.com/Leonxlnx/taste-skill", "cmds": [ "/plugin marketplace add Leonxlnx/taste-skill", "/plugin install taste-skill@taste-skill" ] } ] }, { "h": "Skill di terzi · design e UI", "p": "Quasi tutte dalla famiglia taste-skill di Leonxlnx (MIT). Partono da sole quando lavori su interfacce o le chiami per nome.", "rows": [ { "name": "minimalist-skill", "what": "Interfacce editoriali: monocromo caldo, tipografia forte, griglie bento, niente gradienti", "use": "\"stile minimal\"", "src": "Leonxlnx/taste-skill-classics", "mine": false, "href": "https://github.com/Leonxlnx/taste-skill-classics" }, { "name": "redesign-skill", "what": "Audit di un sito esistente e upgrade premium senza rompere nulla", "use": "\"rifai questo sito\"", "src": "taste-skill, marzo 2026 (ritirata dall'autore)", "mine": false, "href": "https://github.com/Leonxlnx/taste-skill/tree/3206dd44fc/skills/redesign-skill" }, { "name": "output-skill", "what": "Obbliga Claude a scrivere codice completo, senza placeholder", "use": "\"codice completo\"", "src": "taste-skill, marzo 2026 (ritirata dall'autore)", "mine": false, "href": "https://github.com/Leonxlnx/taste-skill/tree/3206dd44fc/skills/output-skill" }, { "name": "soft-skill", "what": "Design da agenzia high-end: font, spaziature, ombre e animazioni che fanno sembrare il sito costoso", "use": "\"stile premium/soft\"", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "brutalist-skill", "what": "Interfacce brutaliste: griglie svizzere, estetica da terminale, contrasto tipografico estremo", "use": "\"stile brutalista\"", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "gpt-tasteskill", "what": "UX/UI + motion GSAP: layout variati, struttura AIDA, bento senza buchi", "use": "per nome", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "taste-skill-v1", "what": "La taste-skill originale v1 (nome interno design-taste-frontend-v1), per compatibilità", "use": "per nome", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "stitch-skill", "what": "Genera file DESIGN.md per Google Stitch con standard anti-generici", "use": "\"design system per Stitch\"", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "image-to-code-skill", "what": "Prima genera l'immagine del design, poi la analizza e la implementa fedelmente", "use": "per nome", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "imagegen-frontend-web", "what": "Genera immagini di riferimento per siti, una per ogni sezione", "use": "per nome", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "imagegen-frontend-mobile", "what": "Genera concept di schermate app iOS/Android", "use": "per nome", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "brandkit", "what": "Genera board di brand guidelines, sistemi logo, identity deck", "use": "\"brand kit\"", "src": "Leonxlnx/taste-skill", "mine": false }, { "name": "frontend-slides", "what": "Presentazioni HTML animate da zero o da PPTX, export PDF e deploy opzionale", "use": "\"fammi una presentazione\"", "src": "zarazhangrui/frontend-slides · MIT · skill-auditor: falsi positivi, vedi README", "mine": false, "href": "https://github.com/zarazhangrui/frontend-slides" } ] }, { "h": "Skill di terzi · testi", "p": "Usale passando da /copy-guide, che sceglie quella giusta.", "rows": [ { "name": "product-marketing", "what": "Crea .agents/product-marketing.md: prodotto, target, posizionamento, tono. Le altre lo leggono", "use": "\"posizionamento\", \"tono di voce\"", "src": "coreyhaines31/marketingskills · MIT", "mine": false, "href": "https://github.com/coreyhaines31/marketingskills" }, { "name": "copywriting", "what": "Scrive o riscrive copy marketing: home, landing, pricing, hero, CTA", "use": "\"scrivi il copy per…\"", "src": "coreyhaines31/marketingskills · MIT", "mine": false }, { "name": "copy-editing", "what": "Migliora copy esistente, toglie lo stile da AI, aggiorna contenuti vecchi", "use": "\"sistema questo testo\"", "src": "coreyhaines31/marketingskills · MIT", "mine": false }, { "name": "ux-writing", "what": "Microcopy di interfaccia: bottoni, errori, form, onboarding, empty state, accessibilità", "use": "\"testi dell'interfaccia\"", "src": "Christopher Greer · MIT (repo da verificare)", "mine": false } ] }, { "h": "Skill di terzi · 3D e Three.js", "p": "Si attivano da sole quando lavori con Three.js.", "rows": [ { "name": "img2threejs", "what": "Da un'immagine di riferimento a un modello Three.js procedurale animabile", "use": "\"ricostruisci in 3D\"", "src": "img2threejs/img2threejs · Apache-2.0", "mine": false, "href": "https://github.com/img2threejs/img2threejs" }, { "name": "threejs-fundamentals", "what": "Scena, camere, renderer, gerarchie", "use": "da sola", "src": "10 skill threejs-*: CloudAI-X/threejs-skills (da verificare)", "mine": false }, { "name": "threejs-geometry", "what": "Forme, BufferGeometry, instancing", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-materials", "what": "PBR, shader material, proprietà", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-textures", "what": "Texture, UV, environment map, HDR", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-lighting", "what": "Luci, ombre, IBL", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-shaders", "what": "GLSL, uniform, effetti custom", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-postprocessing", "what": "EffectComposer, bloom, DOF", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-animation", "what": "Keyframe, skeletal, morph, mixing", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-interaction", "what": "Raycasting, controlli, input", "use": "da sola", "src": "", "mine": false }, { "name": "threejs-loaders", "what": "GLTF, texture, caricamento asincrono", "use": "da sola", "src": "", "mine": false } ] }, { "h": "Skill di terzi · strumenti", "p": "", "rows": [ { "name": "graphify", "what": "Trasforma codice e documenti in un grafo di conoscenza interrogabile. Serve pipx install graphifyy", "use": "/graphify", "src": "Graphify-Labs/graphify · Apache-2.0", "mine": false, "href": "https://github.com/Graphify-Labs/graphify" }, { "name": "skill-auditor", "what": "Controlla una skill esterna prima di installarla: injection, furto dati, persistenza", "use": "\"è sicura questa skill?\"", "src": "ki-stuff/skill-auditor · MIT", "mine": false, "href": "https://github.com/ki-stuff/skill-auditor" } ] }, { "h": "Fuori dal kit · passi manuali", "p": "Non si copiano: si collegano all'account o si generano sulla macchina.", "rows": [ { "name": "framer + framer-code-components", "what": "Modifica, analizza e pubblica siti Framer. Generate con percorsi della macchina, per questo non sono nel kit", "use": "\"modifica il sito Framer\"", "src": "Terminale: npx @framer/agent@latest setup", "mine": false }, { "name": "Plugin claude.ai", "what": "privacy-legal, gdprgard-compliance, compliance-es", "use": "—", "src": "claude.ai → directory plugin", "mine": false }, { "name": "Connettori", "what": "Claude Docs, Framer, Gmail, Google Calendar, Motion, Google Drive", "use": "—", "src": "claude.ai → Settings → Connectors", "mine": false }, { "name": "Skill Anthropic", "what": "docx, pdf, pptx, xlsx, docs, deep-research, skill-creator, google-workspace, reverse-brand…", "use": "da sole", "src": "arrivano con l'account Claude", "mine": false } ] } ];
+
+// Tutto quello che è online, dal mio sito (Portfolio/data.json, sezione Training): la sfera della sezione Web.
+window.WEBAPPS = [{"name": "Ripple", "href": "https://training-ripple.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "ripple"}, {"name": "Book Animator", "href": "https://training-bookanimator.woozy-lab.workers.dev/app/index.html", "kind": "Tool web"}, {"name": "Moto", "href": "https://training-moto.woozy-lab.workers.dev/", "kind": "Tool web"}, {"name": "Morf", "href": "https://training-morf.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "morf"}, {"name": "Sweep", "href": "https://training-sweep.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "sweep"}, {"name": "Countour", "href": "https://training-countour.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "countour"}, {"name": "Estrusione", "href": "https://training-estrusione.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "estrusione"}, {"name": "Fiorisci", "href": "https://training-fiorisci.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "fiorisci"}, {"name": "Blur", "href": "https://training-blur.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "blur"}, {"name": "Type Noise", "href": "https://training-textnoise.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "textnoise"}, {"name": "TypeShot", "href": "https://training-typeshot.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "typeshot"}, {"name": "Distortion", "href": "https://training-distortion.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "distortion"}, {"name": "Gravity", "href": "https://training-gravity.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "gravity"}, {"name": "Officina Ditheris", "href": "https://www.figma.com/community/plugin/1556657188945716249/officina-ditheris", "kind": "Plugin Figma"}, {"name": "Modulink", "href": "https://www.figma.com/community/plugin/1609560384487730743/modulink", "kind": "Plugin Figma"}, {"name": "Type & Color Swap", "href": "https://www.figma.com/community/plugin/1685280633774285667", "kind": "Plugin Figma"}, {"name": "Flower Pixel", "href": "https://training-flowerpixel.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "flowerpixel"}, {"name": "Collage Dinamico", "href": "https://training-collage.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "collage"}, {"name": "Blob Tracking", "href": "https://training-blobtracking.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "blobtracking"}, {"name": "Dithering & Posterize", "href": "https://training-dithering.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "dithering"}, {"name": "Article Image", "href": "https://article-image.woozy-lab.workers.dev/", "kind": "Tool web", "preview": "article-image"}];
+
+// Nomi brevi degli step, per i tasti della "base solida" alla fine del metodo.
+window.METHOD_KEYS = ['Problema', 'Contesto', 'Skill', 'Domande', 'Spec', 'Piano', 'Costruzione', 'Verifica', 'Rilascio'];

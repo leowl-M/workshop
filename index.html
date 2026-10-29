@@ -4,206 +4,269 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Design × AI</title>
-<meta name="description" content="Come lavoro ogni giorno con Claude e le mie skill per costruire plugin, app e tool su misura.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- fonts load without blocking: a hung font server must not stall the scripts -->
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230057FF'/%3E%3C/svg%3E">
+<meta name="description" content="Come uso l'AI per costruirmi plugin, tool e app che tolgono di mezzo i processi noiosi. Workshop interno The Wave.">
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="styles.css">
 <script defer src="data.js"></script>
 <script defer src="nav.js"></script>
+<script defer src="media/models.js"></script>
 <script defer src="vendor/gsap.min.js"></script>
 <script defer src="vendor/ScrollTrigger.min.js"></script>
+<script defer src="vendor/lenis.min.js"></script>
+<script defer src="vendor/three.min.js"></script>
 <script defer src="vendor/qrcode.min.js"></script>
 <script defer src="main.js"></script>
 </head>
-<body>
+<body data-theme="deep">
 
-<aside class="index" aria-label="Indice">
-  <a class="brand" href="#s01">Design × AI</a>
-  <nav>
-    <a href="#s01" data-num="01"><span>01</span>Strumenti giusti</a>
-    <a href="#s02" data-num="02"><span>02</span>Il prima</a>
-    <a href="#s03" data-num="03"><span>03</span>Il metodo</a>
-    <a href="#s04" data-num="04"><span>04</span>Le skill</a>
-    <a href="#s05" data-num="05"><span>05</span>Le lenti</a>
-    <a href="#s06" data-num="06"><span>06</span>Immagine → codice</a>
-    <a href="#s07" data-num="07"><span>07</span>Casi studio</a>
-    <a href="#s08" data-num="08"><span>08</span>Anatomia</a>
-    <a href="#s09" data-num="09"><span>09</span>Da dove partire</a>
-    <a href="#s10" data-num="10"><span>10</span>Fine</a>
-  </nav>
-  <div class="index-foot">
-    <div id="pos">01</div>
-    <p class="keys">↑ ↓ o spazio per avanzare</p>
-  </div>
-  <div class="progress" aria-hidden="true"><b></b></div>
-</aside>
+<!-- ===================== FIXED CHROME ===================== -->
+<a class="brand" href="#hero" aria-label="The Wave, torna all'inizio"><svg class="logo" aria-hidden="true" viewBox="0 0 590 116" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.9935 15.5966H0V0.000366211H68.9353V15.5966H47.9418V63.9691H21.0062V15.5966H20.9935Z" fill="currentColor"></path><path d="M73.1792 0.000366211H100.115V23.6545H126.784V0.000366211H153.72V63.9691H126.784V39.2508H100.115V63.9691H73.1792V0.000366211Z" fill="currentColor"></path><path d="M157.965 0.000366211H219.273V13.4681H184.014V25.2509H217.069V38.7186H184.014V50.5014H219.628V63.9691H157.965V0.000366211Z" fill="currentColor"></path><path d="M242.344 0.000366211H268.393L276.894 39.9603H277.16L289.12 0.000366211H319.159L330.942 39.9603H331.208L339.634 0.000366211H363.82L348.667 63.9691H314.725L303.297 25.0735H303.031L291.515 63.9691H257.319L242.344 0.000366211Z" fill="currentColor"></path><path d="M384.991 0.000366211H418.565L451.164 63.9691H421.479L416.779 53.3394H383.724L378.757 63.9691H352.354L384.966 0.000366211H384.991ZM410.52 39.3395L400.6 17.0156L390.236 39.3395H410.533H410.52Z" fill="currentColor"></path><path d="M434.884 0.000366211H464.569L480.52 40.4037L496.914 0.000366211H524.382L496.116 63.9691H463.162L434.896 0.000366211H434.884Z" fill="currentColor"></path><path d="M527.03 0.000366211H588.338V13.4681H553.078V25.2509H586.133V38.7186H553.078V50.5014H588.705V63.9691H527.042V0.000366211H527.03Z" fill="currentColor"></path><path d="M355.636 78.7934L367.469 108.06H363.047L359.88 100.433H346.298L343.131 108.06H338.962L351.29 78.7934H355.623H355.636ZM347.603 97.1516H358.676L353.279 82.797L347.603 97.1516Z" fill="currentColor"></path><path d="M373.234 78.7934V90.6775C374.577 88.2449 376.845 87.1933 379.885 87.1933C385.523 87.1933 388.729 90.9689 388.729 97.443C388.729 101.168 387.842 103.854 386.094 105.716C384.396 107.503 382.166 108.352 379.645 108.352C376.933 108.352 374.539 107.262 373.12 104.943C373.082 106.527 373.044 107.541 373.044 108.06H369.357C369.395 106.236 369.433 105.019 369.433 104.411V78.7934H373.247H373.234ZM384.7 97.6838C384.7 92.8947 382.799 89.7779 378.948 89.7779C375.096 89.7779 373.145 92.6539 373.145 97.8865C373.145 102.79 375.096 105.59 378.821 105.59C382.546 105.59 384.7 102.422 384.7 97.6838Z" fill="currentColor"></path><path d="M407.682 102.992C407.682 104.082 407.809 106.476 408.012 108.06H404.566C404.287 107.122 404.198 106.312 404.198 105.019C402.944 107.325 401.031 108.706 397.876 108.706C393.543 108.706 390.743 106.273 390.743 102.701C390.743 100.952 391.275 99.1785 393.302 97.4301C394.595 96.2899 397.281 95.403 401.044 95.403C401.576 95.403 402.83 95.403 404.122 95.5297V94.1487C404.122 92.9324 404.046 92.0455 403.641 91.3867C402.792 89.9677 401.132 89.689 399.713 89.689C397.357 89.689 395.862 90.9053 395.786 93.1351H391.972C392.048 91.7922 392.378 90.7406 392.91 89.9297C394.405 87.6239 397.496 87.0917 399.967 87.0917C401.829 87.0917 403.894 87.4972 405.313 88.308C406.859 89.1949 407.872 90.5379 407.872 93.0464L407.708 102.979L407.682 102.992ZM404.034 100.268L404.11 98.165C403.704 98.0889 402.412 98.0383 401.918 98.0383C397.091 98.0383 394.582 99.4573 394.582 102.131C394.582 104.196 396.077 105.703 398.801 105.703C402.006 105.703 403.907 103.6 404.034 100.268Z" fill="currentColor"></path><path d="M424.267 94.2375C424.102 91.4375 422.607 89.9805 420.213 89.9805C416.931 89.9805 414.942 92.3751 414.942 97.6837C414.942 102.992 416.64 105.716 420.01 105.716C422.569 105.716 424.267 104.094 424.432 101.294H428.283C427.954 105.754 424.596 108.592 420.099 108.592C414.461 108.592 410.938 105.108 410.938 98.1778C410.938 90.3986 415.474 87.1932 420.137 87.1932C424.799 87.1932 427.966 89.9045 428.118 94.2502H424.267V94.2375Z" fill="currentColor"></path><path d="M448.314 87.7129V104.335C448.314 104.982 448.352 106.236 448.44 108.06H444.462C444.424 106.312 444.386 105.146 444.386 104.576C443.005 107.338 440.813 108.263 437.899 108.263C433.11 108.263 430.525 105.628 430.525 101.295V87.7129H434.415V100.927C434.415 103.968 435.872 105.311 438.748 105.311C442.029 105.311 444.386 103.284 444.386 99.9644V87.7256H448.314V87.7129Z" fill="currentColor"></path><path d="M468.052 93.3376H464.163V93.0969C464.163 91.1078 462.871 90.0182 460.235 90.0182C457.6 90.0182 456.105 91.0318 456.105 92.9322C456.105 94.1485 456.954 94.9974 458.576 95.4028L463.276 96.5811C466.849 97.4679 468.585 99.1403 468.585 102.092C468.585 104.081 467.609 108.617 459.906 108.617C454.8 108.617 451.835 106.349 451.835 102.004H455.852C455.852 104.31 457.435 105.691 460.349 105.691C464.328 105.691 464.53 103.182 464.53 102.485C464.53 100.901 463.922 100.255 460.071 99.4444C455.079 98.3928 452.241 97.2145 452.241 93.363C452.241 89.7141 455.446 87.2056 460.185 87.2056C461.844 87.2056 463.428 87.4843 464.72 88.0164C466.709 88.8273 468.04 90.2463 468.04 92.7549V93.325L468.052 93.3376Z" fill="currentColor"></path><path d="M500.981 86.0906C500.5 83.1259 497.978 81.5042 494.368 81.5042C492.303 81.5042 490.592 81.9096 489.262 82.7205C486.626 84.3042 484.637 88.3204 484.637 93.3883C484.637 95.6181 484.967 97.7213 485.689 99.7104C487.108 103.638 490.149 105.462 495.14 105.462C497.294 105.462 499.233 105.222 501.463 104.525V95.8462H494.773V92.4761H505.517V106.907C502.071 108.085 498.663 108.693 495.14 108.693C489.997 108.693 486.348 107.274 483.953 104.474C481.559 101.674 480.38 98.152 480.38 93.8951C480.38 90.8544 480.989 88.0544 482.205 85.5838C484.637 80.6807 488.603 78.2861 494.811 78.2861C496.965 78.2861 498.739 78.6155 500.196 79.2237C503.11 80.478 505.225 82.6318 505.39 86.0779H500.968L500.981 86.0906Z" fill="currentColor"></path><path d="M522.102 87.548V91.2728C521.658 91.1081 521.164 91.0701 520.404 91.0701C516.312 91.0701 514.728 93.1353 514.728 97.0755V108.06H510.877V91.5642C510.877 91.1968 510.801 89.1317 510.674 87.7127H514.525C514.563 89.6638 514.601 90.9561 514.601 91.6402C515.286 88.8783 517.769 87.5099 521.012 87.5099L522.102 87.548Z" fill="currentColor"></path><path d="M532.921 108.743C526.675 108.743 522.912 104.562 522.912 98.1262C522.912 91.69 526.637 87.1796 533.25 87.1796C539.864 87.1796 543.222 91.7154 543.222 97.8854C543.222 104.372 539.332 108.756 532.921 108.756V108.743ZM539.167 97.7207C539.167 92.8936 536.975 89.9796 533.25 89.9796C529.526 89.9796 526.89 92.7416 526.89 97.7968C526.89 102.852 529.12 105.905 532.972 105.905C536.823 105.905 539.18 102.903 539.18 97.7207H539.167Z" fill="currentColor"></path><path d="M564.544 87.7129V104.335C564.544 104.982 564.582 106.236 564.671 108.06H560.692C560.654 106.312 560.616 105.146 560.616 104.576C559.235 107.338 557.044 108.263 554.13 108.263C549.341 108.263 546.756 105.628 546.756 101.295V87.7129H550.646V100.927C550.646 103.968 552.102 105.311 554.978 105.311C558.26 105.311 560.616 103.284 560.616 99.9644V87.7256H564.544V87.7129Z" fill="currentColor"></path><path d="M579.837 108.833C576.796 108.833 574.693 107.578 573.553 105.792V115.89H569.777V90.842C569.777 90.5126 569.739 89.461 569.65 87.7252H573.502C573.54 89.385 573.578 90.5252 573.578 91.0954C575.035 88.6628 577.67 87.4085 580.546 87.4085C585.614 87.4085 589.06 91.2981 589.06 97.9496C589.06 104.601 585.247 108.858 579.824 108.858L579.837 108.833ZM585.107 97.6835C585.107 92.7804 583.207 90.2212 579.507 90.2212C575.618 90.2212 573.426 92.7804 573.426 98.4944C573.426 103.562 575.415 106.033 579.14 106.033C583.194 106.033 585.095 102.751 585.095 97.6835H585.107Z" fill="currentColor"></path></svg></a>
+<nav class="rail" id="rail" aria-label="Capitoli"><b class="dot" aria-hidden="true"></b></nav>
 
 <main>
 
-  <section id="s01" class="sec hero" data-steps="1" aria-labelledby="s01-h">
-    <div class="hero-copy">
-      <h1 id="s01-h">Ho smesso di aspettare gli <span class="serif">strumenti giusti.</span></h1>
-      <p class="lead">Come lavoro ogni giorno con Claude e <span data-count="skills">67</span> skill per costruirmi plugin, app e tool che prima non potevo avere.</p>
-      <p class="meta">Leonardo Maltese · Workshop interno · Design × AI</p>
-    </div>
-    <canvas id="hero-gl" aria-hidden="true"></canvas>
-  </section>
-
-  <section id="s02" class="sec" data-steps="4" aria-labelledby="s02-h">
-    <header class="sec-head">
-      <h2 id="s02-h">Prima, ogni problema aveva un workaround.</h2>
-      <p>E ogni workaround mi costava tempo, qualità o soldi.</p>
-    </header>
-    <div class="stack">
-      <div class="wk"><strong>Esporto a mano</strong><span>Variabili, icone, asset: copia, incolla, ripeti.</span></div>
-      <div class="wk"><strong>Screenshot e incollo</strong><span>Da Photoshop a Figma, un livello alla volta.</span></div>
-      <div class="wk"><strong>Pago un tool che fa metà</strong><span>Un abbonamento al mese per una funzione su dieci.</span></div>
-      <div class="wk"><strong>Chiedo a uno sviluppatore</strong><span>…e aspetto il suo prossimo buco libero.</span></div>
-    </div>
-    <p class="turn" data-at="4">E se lo strumento me lo <span class="serif">costruissi io?</span></p>
-  </section>
-
-  <section id="s03" class="sec" data-steps="5" aria-labelledby="s03-h">
-    <header class="sec-head">
-      <h2 id="s03-h">Il metodo: capire prima di costruire.</h2>
-      <p>Cinque passi, sempre gli stessi. Le skill di superpowers li trasformano in abitudine.</p>
-    </header>
-    <div class="path-wrap">
-    <svg class="path-line" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1"/><line class="path-fill" x1="0" y1="1" x2="1000" y2="1" pathLength="1"/></svg>
-    <ol class="path">
-      <li class="node" data-at="1"><b>1</b><strong>Capire</strong><span>Domande una alla volta, finché so cosa voglio davvero.</span><code>superpowers:brainstorming</code></li>
-      <li class="node" data-at="2"><b>2</b><strong>Descrivere</strong><span>Una spec che chiunque potrebbe costruire senza chiedermi niente.</span><code>documento di design</code></li>
-      <li class="node" data-at="3"><b>3</b><strong>Pianificare</strong><span>Task piccoli, ognuno con il suo test.</span><code>superpowers:writing-plans</code></li>
-      <li class="node" data-at="4"><b>4</b><strong>Costruire</strong><span>Prima il test, poi il codice, un task alla volta.</span><code>executing-plans · test-driven-development</code></li>
-      <li class="node" data-at="5"><b>5</b><strong>Verificare</strong><span>Niente "fatto" senza una prova.</span><code>verification · code-review</code></li>
-    </ol>
-    </div>
-    <div class="always">
-      <span class="always-label">Sempre attive</span>
-      <span><code>ponytail</code> il codice più semplice che funziona</span>
-      <span><code>caveman</code> risposte brevi</span>
-      <span><code>output-skill</code> niente codice tagliato</span>
+  <!-- ===================== 01 HERO: black, the title; then a 3D keyboard of my tools drops in ===================== -->
+  <section id="hero" class="sec pin" data-theme="deep" data-chapter="Intro">
+    <div class="stage hero-stage">
+      <canvas class="keys-gl" id="keys-gl" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <p class="kicker reveal">Workshop interno · Design × AI</p>
+        <h1 class="display split">Ho smesso di aspettare gli <mark>strumenti giusti.</mark></h1>
+      </div>
+      <p class="hero-by reveal">Leonardo Maltese</p>
+      <p class="scroll-hint reveal" aria-hidden="true"><i></i>Scorri</p>
     </div>
   </section>
 
-  <section id="s04" class="sec" data-steps="1" aria-labelledby="s04-h">
-    <header class="sec-head">
-      <h2 id="s04-h">Le mie <span data-count="skills">67</span> skill.</h2>
-      <p>Una skill è un manuale che Claude legge prima di lavorare. Passa sopra una skill per sapere quando la uso.</p>
-    </header>
-    <div class="inv">
-      <div id="inv-filters" class="chips" role="group" aria-label="Filtra per famiglia"></div>
-      <div class="inv-body">
-        <div id="inv-grid" class="inv-grid"></div>
-        <div id="inv-detail" class="inv-detail" aria-live="polite">
-          <p class="inv-empty">Scegli una skill.</p>
+  <!-- ===================== 02 MANIFESTO ===================== -->
+  <section id="manifesto" class="sec pin" data-theme="cream" data-chapter="Intro" data-beats="1">
+    <div class="stage center">
+      <p class="statement scrub-words">Sono un designer. Quando un processo mi rallenta, non aspetto: con l'AI mi costruisco lo strumento che lo risolve.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 03 PRIMA ===================== -->
+  <section id="prima-intro" class="sec screen" data-theme="cream" data-chapter="Prima">
+    <div class="stage center">
+      <p class="kicker reveal">Il prima</p>
+      <h2 class="title split">Ogni problema aveva un <mark>workaround.</mark></h2>
+      <p class="lead reveal">E ogni workaround mi costava tempo, qualità o soldi.</p>
+    </div>
+  </section>
+
+  <section id="prima" class="sec pin" data-theme="cream" data-chapter="Prima" data-beats="4">
+    <div class="stage">
+      <ol class="deck">
+        <li class="tcard deep"><span class="num">01</span><h3>Esporto a mano</h3><p>Variabili, icone, asset: copia, incolla, ripeti.</p></li>
+        <li class="tcard blue"><span class="num">02</span><h3>Screenshot e incollo</h3><p>Da Photoshop a Figma, un livello alla volta.</p></li>
+        <li class="tcard yellow"><span class="num">03</span><h3>Pago un tool che fa metà</h3><p>Un abbonamento al mese per una funzione su dieci.</p></li>
+        <li class="tcard white"><span class="num">04</span><h3>Chiedo a uno sviluppatore</h3><p>…e aspetto il suo prossimo buco libero.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===================== 04 LA SVOLTA ===================== -->
+  <section id="domanda" class="sec pin" data-theme="cream" data-chapter="Svolta" data-beats="1">
+    <div class="stage center">
+      <div class="growbox"><p class="question">E se lo strumento me lo <em>costruissi io?</em></p></div>
+    </div>
+  </section>
+
+  <section id="ruolo" class="sec pin" data-theme="blue" data-chapter="Svolta" data-beats="2">
+    <div class="stage center">
+      <div class="beats">
+        <p class="statement big beat">Non per sostituire gli sviluppatori.</p>
+        <p class="statement big beat">Per portare lo sguardo del designer <em>dentro gli strumenti.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 05 IL METODO: un progetto vero, passo per passo ===================== -->
+  <section id="metodo" class="sec pin" data-theme="deep" data-chapter="Metodo" data-beats="11">
+    <div class="stage">
+      <div class="track" id="method-track">
+        <div class="panel intro">
+          <p class="kicker">Il metodo</p>
+          <h2 class="title">Come lavoro, <em>passo per passo.</em></h2>
+          <p class="lead">Un esempio vero: il pannello di Keycap Reel, uno dei venti strumenti di Training. Era confuso, l'ho rifatto così.</p>
+        </div>
+        <!-- step panels come from METHOD in data.js -->
+      </div>
+    </div>
+  </section>
+
+  <section id="sempre" class="sec screen" data-theme="cream" data-chapter="Metodo">
+    <div class="stage center">
+      <p class="kicker reveal">Sempre accese</p>
+      <h2 class="title split">Tre skill che non spengo <mark>mai.</mark></h2>
+      <div class="fan">
+        <div class="fcard yellow"><code>ponytail</code><p>Il codice più semplice che funziona.</p></div>
+        <div class="fcard deep"><code>caveman</code><p>Risposte brevi, stesso contenuto.</p></div>
+        <div class="fcard blue"><code>output-skill</code><p>Niente codice tagliato a metà.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 06 LE SKILL ===================== -->
+  <section id="skill" class="sec ring-sec" data-theme="deep" data-chapter="Skill">
+    <div class="ring-wrap" aria-hidden="true"><div class="ring" id="ring"></div></div>
+    <div class="ring-title">
+      <p class="kicker reveal">Le mie skill</p>
+      <p class="mega"><span data-count="skills">67</span></p>
+      <p class="lead reveal">Una skill è un manuale che Claude legge prima di lavorare.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 07 LE LENTI ===================== -->
+  <section id="lenti" class="sec pin" data-theme="cream" data-chapter="Lenti" data-beats="4">
+    <div class="stage split-stage">
+      <div class="side">
+        <p class="kicker">Le lenti</p>
+        <h2 class="title sm">La base resta neutra. Le skill la <mark>trasformano.</mark></h2>
+        <ol class="lens-list" id="lens-list">
+          <li data-lens="base">Base</li><li data-lens="brutalist">brutalist-skill</li><li data-lens="soft">soft-skill</li><li data-lens="editorial">minimalist-skill</li>
+        </ol>
+      </div>
+      <div id="lens-stage" class="lens-stage" data-lens="base">
+        <div class="lc">
+          <div class="lc-top"><span class="lc-kind">App macOS</span><span class="lc-dot"></span></div>
+          <div class="lc-title">Squeeze</div>
+          <p class="lc-desc">Trascini una cartella, escono immagini e video pronti per il web.</p>
+          <div class="lc-stats"><div><b>−74%</b><span>peso medio</span></div><div><b>3</b><span>formati</span></div><div><b>1</b><span>passaggio</span></div></div>
+          <div class="lc-row"><span class="lc-btn">Converti</span><span class="lc-btn lc-ghost">Anteprima</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="s05" class="sec" data-steps="4" aria-labelledby="s05-h">
-    <header class="sec-head">
-      <h2 id="s05-h">La base resta neutra. Le skill la trasformano.</h2>
-      <p>Stesso componente, stesso contenuto. Cambia solo la skill di stile.</p>
-    </header>
-    <div class="lenses" role="group" aria-label="Skill di stile">
-      <button type="button" data-lens="base" aria-pressed="true">Base</button>
-      <button type="button" data-lens="brutalist" aria-pressed="false">brutalist-skill</button>
-      <button type="button" data-lens="soft" aria-pressed="false">soft-skill</button>
-      <button type="button" data-lens="editorial" aria-pressed="false">minimalist-skill</button>
-    </div>
-    <div id="lens-stage" class="lens-stage" data-lens="base">
-      <div class="lc">
-        <div class="lc-top"><span class="lc-kind">App macOS</span><span class="lc-dot"></span></div>
-        <div class="lc-title">Squeeze</div>
-        <p class="lc-desc">Trascini una cartella, escono immagini e video pronti per il web.</p>
-        <div class="lc-stats"><div><b>−74%</b><span>peso medio</span></div><div><b>3</b><span>formati</span></div><div><b>1</b><span>passaggio</span></div></div>
-        <div class="lc-row"><span class="lc-btn">Converti</span><span class="lc-btn lc-ghost">Anteprima</span></div>
+  <!-- ===================== 08 IMMAGINE → CODICE → 3D: one object travels through the three steps ===================== -->
+  <section id="immagine" class="sec pin" data-theme="deep" data-chapter="Immagine">
+    <div class="stage img-stage">
+      <div class="img-steps">
+        <p class="kicker">Dall'immagine al codice, fino al 3D</p>
+        <ol class="isteps">
+          <li class="istep"><b>1</b><div><h3>Immagine</h3><p>Prima di costruire, chiedo un riferimento visivo: vedo la pagina prima che esista.</p>
+            <p class="iex"><span>Esempio</span>«Locandina per un torneo di scacchi, il cavallo protagonista.»</p><code>imagegen-frontend-web</code></div></li>
+          <li class="istep"><b>2</b><div><h3>Codice</h3><p>Il riferimento diventa una pagina vera, fedele, in HTML e CSS.</p>
+            <p class="iex"><span>Esempio</span>La locandina diventa la pagina del torneo: griglia, testi, pulsante.</p><code>image-to-code</code></div></li>
+          <li class="istep"><b>3</b><div><h3>Oggetto 3D</h3><p>Dall'immagine, un modello costruito in codice che gira e reagisce.</p>
+            <p class="iex"><span>Esempio</span>Il cavallo esce dalla pagina e diventa un pezzo 3D.</p><code>img2threejs</code></div></li>
+        </ol>
+      </div>
+      <div class="img-visual">
+        <div class="ivis ivis-poster" aria-hidden="true">
+          <span class="ip-kicker">Circolo scacchi · Torneo d'autunno</span>
+          <span class="ip-title">Il cavallo</span>
+          <span class="ip-foot">12 novembre · Sala grande · Iscrizioni aperte</span>
+        </div>
+        <div class="ivis ivis-web" aria-hidden="true">
+          <div class="iw-bar"><i></i><i></i><i></i><span>torneo.html</span></div>
+          <div class="iw-page"><div class="iw-nav"><b>Circolo</b><span>Torneo</span><span>Regole</span><span>Iscriviti</span></div>
+            <div class="iw-hero"><span class="iw-k">Torneo d'autunno</span><span class="iw-t">Il cavallo</span><span class="iw-btn">Iscriviti</span></div></div>
+          <pre class="iw-code">&lt;section class="hero"&gt;
+  &lt;h1&gt;Il cavallo&lt;/h1&gt;
+  &lt;a class="cta"&gt;Iscriviti&lt;/a&gt;
+&lt;/section&gt;</pre>
+        </div>
+        <canvas class="knight-gl" id="knight-gl" aria-hidden="true"></canvas>
       </div>
     </div>
   </section>
 
-  <section id="s06" class="sec" data-steps="3" aria-labelledby="s06-h">
-    <header class="sec-head">
-      <h2 id="s06-h">Dall'immagine al codice, fino al 3D.</h2>
-      <p>Prima vedo la pagina, poi la costruisco. Se serve, diventa un oggetto.</p>
-    </header>
-    <div class="panes">
-      <figure class="pane" data-at="1">
-        <div class="pane-art art-mock"><i class="m-nav"></i><i class="m-h"></i><i class="m-h m-short"></i><i class="m-img"></i><i class="m-btn"></i></div>
-        <figcaption><b>1</b><code>imagegen-frontend-web</code>Genero il riferimento visivo.</figcaption>
-      </figure>
-      <figure class="pane" data-at="2">
-        <pre class="pane-art art-code" aria-label="Codice generato"><code>&lt;section class="hero"&gt;
-  &lt;h1&gt;Il tuo studio,
-    in ordine.&lt;/h1&gt;
-  &lt;img src="desk.avif"&gt;
-  &lt;a class="cta"&gt;Prova&lt;/a&gt;
-&lt;/section&gt;</code></pre>
-        <figcaption><b>2</b><code>image-to-code</code>Lo traduco in codice fedele.</figcaption>
-      </figure>
-      <figure class="pane" data-at="3">
-        <div class="pane-art art-3d" aria-hidden="true"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-        <figcaption><b>3</b><code>img2threejs</code>Ne faccio un oggetto 3D in codice.</figcaption>
-      </figure>
+  <!-- ===================== 09 PROGETTI ===================== -->
+  <section id="progetti" class="sec screen" data-theme="deep" data-chapter="Progetti">
+    <div class="stage">
+      <p class="kicker reveal">I progetti</p>
+      <h2 class="mega-title split">Gli strumenti che mi sono <mark>costruito.</mark></h2>
+      <div class="kb-wrap"><canvas class="kb-gl" id="groups-gl" aria-label="Gruppi di progetti: premi un tasto"></canvas></div>
+    </div>
+  </section>
+  <div id="projects"></div>
+
+  <!-- ===================== 10 IL GUADAGNO ===================== -->
+  <section id="tempo" class="sec pin" data-theme="yellow" data-chapter="Tempo" data-beats="1">
+    <div class="stage center">
+      <p class="statement scrub-words">Meno tempo nei processi noiosi. Più tempo per studiare, sperimentare e creare.</p>
     </div>
   </section>
 
-  <section id="s07" class="sec" data-steps="5" aria-labelledby="s07-h">
-    <header class="sec-head">
-      <h2 id="s07-h">Cinque problemi, cinque strumenti.</h2>
-      <p>Progetti di esempio: il problema, le skill usate, il risultato.</p>
-    </header>
-    <div class="cases-viewport"><div id="cases-track" class="cases-track"></div></div>
-  </section>
-
-  <section id="s08" class="sec" data-steps="5" aria-labelledby="s08-h">
-    <header class="sec-head">
-      <h2 id="s08-h">Anatomia di un progetto: Layerlink.</h2>
-      <p>Dalla prima frase all'app funzionante, in cinque passaggi.</p>
-    </header>
-    <ol id="anatomy" class="anatomy"></ol>
-  </section>
-
-  <section id="s09" class="sec" data-steps="1" aria-labelledby="s09-h">
-    <header class="sec-head">
-      <h2 id="s09-h">Da dove partire domani.</h2>
-      <p>Tre skill a testa. Installale e prova su un problema vero.</p>
-    </header>
-    <div class="start">
-      <div>
-        <h3>Per chi progetta</h3>
-        <ul>
-          <li><code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.</li>
-          <li><code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.</li>
-          <li><code>superpowers:brainstorming</code>Ti obbliga a sapere cosa vuoi.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Per chi sviluppa</h3>
-        <ul>
-          <li><code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.</li>
-          <li><code>code-review</code>Un secondo paio d'occhi, sempre libero.</li>
-          <li><code>ponytail</code>Meno codice, meno sorprese.</li>
-        </ul>
+  <!-- ===================== 11 DA DOVE PARTIRE ===================== -->
+  <section id="partire" class="sec screen" data-theme="cream" data-chapter="Partire">
+    <div class="stage">
+      <p class="kicker reveal">Da dove partire</p>
+      <h2 class="title split">Tre skill a testa, <mark>domani.</mark></h2>
+      <div class="two">
+        <div class="col-card deep">
+          <h3>Per chi progetta</h3>
+          <ul>
+            <li><code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.</li>
+            <li><code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.</li>
+            <li><code>superpowers:brainstorming</code>Ti obbliga a sapere cosa vuoi.</li>
+          </ul>
+        </div>
+        <div class="col-card yellow">
+          <h3>Per chi sviluppa</h3>
+          <ul>
+            <li><code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.</li>
+            <li><code>code-review</code>Un secondo paio d'occhi, sempre libero.</li>
+            <li><code>ponytail</code>Meno codice, meno sorprese.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="s10" class="sec end" data-steps="1" aria-labelledby="s10-h">
-    <h2 id="s10-h">Lo strumento giusto è quello che <span class="serif">ti costruisci.</span></h2>
-    <div class="share">
-      <div id="qr" class="qr" aria-hidden="true"></div>
-      <div>
-        <p>Grazie. La pagina resta online: rileggila, copiala, usala.</p>
-        <a id="share-link" class="share-link" href="https://claude.ai/">claude.ai</a>
+  <!-- ===================== 12 RISORSE ===================== -->
+  <section id="risorse" class="sec screen" data-theme="cream" data-chapter="Risorse">
+    <div class="stage">
+      <div class="res-head">
+        <div>
+          <p class="kicker reveal">Risorse</p>
+          <h2 class="title split">Prendi <mark>tutto.</mark></h2>
+        </div>
+        <p class="lead reveal">Tutto il kit: le mie skill, i plugin, le skill di terzi. Per ogni cosa: a cosa serve, come si usa, da dove si prende. Clic su un comando per copiarlo.</p>
+      </div>
+      <div class="kit" id="kit"></div>
+    </div>
+  </section>
+
+  <!-- ===================== 13 FINE: a big thank you, with the chess pieces floating ===================== -->
+  <section id="fine" class="sec screen end" data-theme="deep" data-chapter="Fine">
+    <div class="stage">
+      <canvas class="chess-gl" id="chess-gl" aria-hidden="true"></canvas>
+      <div class="end-copy">
+        <p class="kicker">Workshop interno · Design × AI</p>
+        <h2 class="wordmark split">Grazie.</h2>
+        <div class="end-row">
+          <p class="lead">Lo strumento giusto è quello che ti costruisci. Slide e risorse restano online.</p>
+          <div class="end-qr"><div id="qr" class="qr" aria-hidden="true"></div><a id="share-link" class="share-link" href="https://claude.ai/">claude.ai</a></div>
+        </div>
       </div>
     </div>
   </section>
 
 </main>
+
+<!-- Project detail (brandappart "Modal"): Figma plugins open here; ← → move between them, Esc closes -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <article class="modal-card">
+    <button type="button" class="modal-close" data-close aria-label="Chiudi">✕</button>
+    <div class="modal-media" id="modal-media"></div>
+    <div class="modal-body">
+      <p class="pindex" id="modal-index"></p>
+      <h3 class="modal-name" id="modal-title"></h3>
+      <span class="pkind" id="modal-kind"></span>
+      <div class="modal-cols">
+        <div><p class="plabel">Il problema</p><p class="modal-text" id="modal-problem"></p></div>
+        <div><p class="plabel">Cosa fa</p><p class="modal-text" id="modal-solution"></p></div>
+      </div>
+      <ul class="pdetails" id="modal-details"></ul>
+    </div>
+    <div class="modal-nav"><button type="button" data-step="-1" aria-label="Precedente">←</button><span id="modal-count"></span><button type="button" data-step="1" aria-label="Successivo">→</button></div>
+  </article>
+</div>
+
 </body>
 </html>

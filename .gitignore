@@ -2,3 +2,5 @@ node_modules/
 .superpowers/
 .impeccable/
 .DS_Store
+.claude/settings.local.json
+project/

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -25 222 186" width="440" height="368">
+  <!-- stesso riquadro per chiusa, aperta e aperta-clic: messe una sopra l altra combaciano -->
+  <title>Cartella chiusa</title>
+  <!-- la cartella del sito (folder() in components/sphere.php), coi colori dell'arancione #FF8800 -->
+  <path fill="#D16E00" d="M200 30Q200 22 192 22H82Q77 22 74 18L70 13Q67 9 62 9H9Q0 9 0 18V152Q0 160 8 160H192Q200 160 200 152Z"/>
+  <rect fill="#FBF9F7" stroke="#221F1B" stroke-opacity=".12" x="12" y="17" width="176" height="110" rx="4"/>
+  <g>
+    <rect fill="#FF8800" x="0" y="31" width="200" height="129" rx="9"/>
+    <path fill="none" stroke="#FFB47B" stroke-width="1.5" d="M9 33H191"/>
+    <path fill="none" stroke="#D77200" d="M8 148.5H192M8 153.5H192"/>
+  </g>
+</svg>

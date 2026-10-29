@@ -6,25 +6,17 @@ const PAGE = new URL('../index.html', import.meta.url).href;
 const checks = {};
 
 checks.offline = async (browser) => {
+  // No network at all: the talk still runs (libraries are vendored), only fonts and 3D fall back.
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   await ctx.route(/^https?:/, r => r.abort());
   const page = await ctx.newPage();
   await page.goto(PAGE);
-  await page.waitForTimeout(500);
-  const hidden = await page.evaluate(() => {
-    const bad = [];
-    for (const sec of document.querySelectorAll('section.sec')) {
-      const h = sec.querySelector('h1, h2');
-      if (!h) { bad.push(`${sec.id}: no heading`); continue; }
-      const cs = getComputedStyle(h);
-      if (cs.opacity !== '1' || cs.visibility === 'hidden') bad.push(`${sec.id}: heading hidden`);
-    }
-    for (const el of document.querySelectorAll('[data-at]'))
-      if (getComputedStyle(el).opacity !== '1') bad.push(`${el.closest('section')?.id} [data-at=${el.dataset.at}] hidden`);
-    return bad;
-  });
-  assert.equal(await page.locator("section.sec").count(), 10);
-  assert.deepEqual(hidden, []);
+  await page.waitForFunction(() => window.presenter && window.presenter.stops.length > 0, null, { timeout: 4000 });
+  assert.equal(await page.locator('section.sec').count(), 10);
+  assert.equal(await page.evaluate(() => getComputedStyle(document.getElementById('s01-h')).opacity), '1');
+  await press(page, 'ArrowDown');
+  assert.equal(await pos(page), '02 · 1/4');
+  assert.equal(await page.evaluate(() => getComputedStyle(document.getElementById('s02-h')).opacity), '1');
   await ctx.close();
 };
 
@@ -191,8 +183,77 @@ checks.qrOffline = async (browser) => {
   const page = await ctx.newPage();
   await page.goto(PAGE);
   await page.waitForTimeout(500);
-  assert.equal(await page.locator('#qr img, #qr canvas').count(), 0);
+  assert.ok(await page.locator('#qr img, #qr canvas').count() > 0, 'QR missing offline');
   assert.ok(await page.isVisible('#share-link'));
+  await ctx.close();
+};
+
+// ---------- Final-review fixes ----------
+checks.resizeMid = async (browser) => {
+  const { ctx, page } = await open(browser, { viewport: { width: 1440, height: 790 } });
+  await jump(page, 's07', 3);
+  assert.equal(await pos(page), '07 · 3/5');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.waitForTimeout(1200); await settle(page);
+  assert.equal(await pos(page), '07 · 3/5');
+  await press(page, 'ArrowDown');
+  assert.equal(await pos(page), '07 · 4/5');
+  await ctx.close();
+};
+
+checks.phoneReveal = async (browser) => {
+  const { ctx, page } = await open(browser, { viewport: { width: 390, height: 664 } });
+  await page.evaluate(() => document.getElementById('s07-h').scrollIntoView());
+  await page.waitForTimeout(1500);
+  assert.equal(await page.evaluate(() => getComputedStyle(document.getElementById('s07-h')).opacity), '1');
+  await ctx.close();
+};
+
+checks.tallStops = async (browser) => {
+  const { ctx, page } = await open(browser, { viewport: { width: 1280, height: 720 } });
+  await jump(page, 's04');
+  await press(page, 'ArrowDown');
+  assert.match(await pos(page), /^04 · 2\/\d$/);
+  const lastBottom = await page.evaluate(() => document.querySelector('#inv-grid .skill:last-child').getBoundingClientRect().bottom);
+  assert.ok(lastBottom <= 720, `last skill chip below the fold: ${lastBottom}`);
+  await ctx.close();
+};
+
+checks.tallStopsReduced = async (browser) => {
+  const { ctx, page } = await open(browser, { reducedMotion: 'reduce' });
+  await jump(page, 's07');
+  await press(page, 'ArrowDown');
+  assert.match(await pos(page), /^07 · 2\/\d$/);
+  await ctx.close();
+};
+
+checks.cdnHang = async (browser) => {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  await ctx.route(/fonts\.googleapis\.com|cdnjs\.cloudflare\.com/, () => {}); // never answers
+  const page = await ctx.newPage();
+  await page.goto(PAGE, { waitUntil: 'commit' });
+  await page.waitForFunction(() => window.presenter && window.presenter.stops.length > 0, null, { timeout: 4000 });
+  assert.ok(await page.locator('#inv-grid .skill').count() > 0);
+  await ctx.close();
+};
+
+checks.holdKey = async (browser) => {
+  const { ctx, page } = await open(browser);
+  await page.evaluate(() => {
+    for (let i = 0; i < 10; i++) dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', repeat: true, bubbles: true, cancelable: true }));
+  });
+  await page.waitForTimeout(1500);
+  assert.equal(await pos(page), '01');
+  await ctx.close();
+};
+
+checks.nojs = async (browser) => {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
+  const page = await ctx.newPage();
+  await page.goto(PAGE);
+  const hidden = await page.evaluate(() => [...document.querySelectorAll('section.sec h1, section.sec h2, [data-at]')]
+    .filter(el => getComputedStyle(el).opacity !== '1').length);
+  assert.equal(hidden, 0);
   await ctx.close();
 };
 

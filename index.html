@@ -7,13 +7,14 @@
 <meta name="description" content="Come lavoro ogni giorno con Claude e le mie skill per costruire plugin, app e tool su misura.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<!-- fonts load without blocking: a hung font server must not stall the scripts -->
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="styles.css">
 <script defer src="data.js"></script>
 <script defer src="nav.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script defer src="vendor/gsap.min.js"></script>
+<script defer src="vendor/ScrollTrigger.min.js"></script>
+<script defer src="vendor/qrcode.min.js"></script>
 <script defer src="main.js"></script>
 </head>
 <body>
@@ -33,7 +34,7 @@
     <a href="#s10" data-num="10"><span>10</span>Fine</a>
   </nav>
   <div class="index-foot">
-    <div id="pos" aria-live="polite">01</div>
+    <div id="pos">01</div>
     <p class="keys">↑ ↓ o spazio per avanzare</p>
   </div>
   <div class="progress" aria-hidden="true"><b></b></div>

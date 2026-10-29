@@ -117,21 +117,34 @@
       });
       return () => { pins.clear(); secs.forEach(s => { s.dataset.step = s.dataset.steps; }); };
     });
-    ScrollTrigger.addEventListener('refresh', buildStops);
-    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), { threshold: .2 });
-    secs.forEach(s => io.observe(s));
+    // Resizing mid-talk (fullscreen, projector) must keep the presenter on the same stop.
+    let saved = null;
+    ScrollTrigger.addEventListener('refreshInit', () => { saved = scrollY > 0 ? nearestStop() : null; });
+    ScrollTrigger.addEventListener('refresh', () => {
+      buildStops();
+      if (!saved) return;
+      const same = presenter.stops.filter(s => s.id === saved.id);
+      const s = same.find(x => x.step === saved.step) || same[0];
+      saved = null;
+      if (s && Math.abs(s.y - scrollY) > 2) scrollTo({ top: s.y, behavior: 'instant' });
+    });
+    document.fonts?.ready.then(() => ScrollTrigger.refresh()); // fonts load without blocking, heights change
+    // Observe the heading, not the section: phone sections can be taller than 5 screens.
+    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.closest('.sec').classList.add('in')), { threshold: .2 });
+    $$('.sec-head').forEach(h => io.observe(h));
   }
 
   function buildStops() {
     const bar = innerWidth <= 900 ? $('.index').offsetHeight : 0;
+    const vh = innerHeight - bar;
     const max = document.documentElement.scrollHeight - innerHeight;
     presenter.stops = computeStops(secs.map(sec => {
       const st = pins.get(sec);
-      return {
-        id: sec.id, num: sec.id.slice(1), steps: +sec.dataset.steps,
-        top: Math.min(max, Math.max(0, st ? st.start : sec.getBoundingClientRect().top + scrollY - bar)),
-        pinLength: st ? st.end - st.start : 0,
-      };
+      const top = Math.min(max, Math.max(0, st ? st.start : sec.getBoundingClientRect().top + scrollY - bar));
+      if (st) return { id: sec.id, num: sec.id.slice(1), steps: +sec.dataset.steps, top, pinLength: st.end - st.start };
+      // Not pinned and taller than the screen: extra stops so ↓ shows all of it.
+      const extra = Math.min(Math.max(0, sec.offsetHeight - vh), max - top);
+      return { id: sec.id, num: sec.id.slice(1), steps: extra > 8 ? 1 + Math.ceil(extra / (vh * .85)) : 1, top, pinLength: extra > 8 ? extra : 0 };
     }));
     updateIndicator();
   }
@@ -154,14 +167,15 @@
     const back = ['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
     if (!fwd && !back) return;
     e.preventDefault();
+    if (e.repeat) return; // a held key or sticky clicker must not fly through the talk
     go(fwd ? 1 : -1);
   });
 
   const posEl = $('#pos'), links = $$('.index nav a'), index = $('.index');
+  const nearestStop = () => presenter.stops.reduce((a, b) => Math.abs(b.y - scrollY) < Math.abs(a.y - scrollY) ? b : a);
   function updateIndicator() {
-    const st = presenter.stops;
-    if (!st.length) return;
-    const near = st.reduce((a, b) => Math.abs(b.y - scrollY) < Math.abs(a.y - scrollY) ? b : a);
+    if (!presenter.stops.length) return;
+    const near = nearestStop();
     const label = stopLabel(near);
     if (posEl.textContent !== label) posEl.textContent = label;
     links.forEach(a => a.classList.toggle('on', a.dataset.num === near.num));

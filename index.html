@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design × AI</title>
+<meta name="description" content="Come lavoro ogni giorno con Claude e le mie skill per costruire plugin, app e tool su misura.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script defer src="data.js"></script>
+<script defer src="nav.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script defer src="main.js"></script>
+</head>
+<body>
+
+<aside class="index" aria-label="Indice">
+  <a class="brand" href="#s01">Design × AI</a>
+  <nav>
+    <a href="#s01" data-num="01"><span>01</span>Strumenti giusti</a>
+    <a href="#s02" data-num="02"><span>02</span>Il prima</a>
+    <a href="#s03" data-num="03"><span>03</span>Il metodo</a>
+    <a href="#s04" data-num="04"><span>04</span>Le skill</a>
+    <a href="#s05" data-num="05"><span>05</span>Le lenti</a>
+    <a href="#s06" data-num="06"><span>06</span>Immagine → codice</a>
+    <a href="#s07" data-num="07"><span>07</span>Casi studio</a>
+    <a href="#s08" data-num="08"><span>08</span>Anatomia</a>
+    <a href="#s09" data-num="09"><span>09</span>Da dove partire</a>
+    <a href="#s10" data-num="10"><span>10</span>Fine</a>
+  </nav>
+  <div class="index-foot">
+    <div id="pos" aria-live="polite">01</div>
+    <p class="keys">↑ ↓ o spazio per avanzare</p>
+  </div>
+  <div class="progress" aria-hidden="true"><b></b></div>
+</aside>
+
+<main>
+
+  <section id="s01" class="sec hero" data-steps="1" aria-labelledby="s01-h">
+    <div class="hero-copy">
+      <h1 id="s01-h">Ho smesso di aspettare gli <span class="serif">strumenti giusti.</span></h1>
+      <p class="lead">Come lavoro ogni giorno con Claude e <span data-count="skills">67</span> skill per costruirmi plugin, app e tool che prima non potevo avere.</p>
+      <p class="meta">Leonardo Maltese · Workshop interno · Design × AI</p>
+    </div>
+    <canvas id="hero-gl" aria-hidden="true"></canvas>
+  </section>
+
+  <section id="s02" class="sec" data-steps="4" aria-labelledby="s02-h">
+    <header class="sec-head">
+      <h2 id="s02-h">Prima, ogni problema aveva un workaround.</h2>
+      <p>E ogni workaround mi costava tempo, qualità o soldi.</p>
+    </header>
+    <div class="stack">
+      <div class="wk"><strong>Esporto a mano</strong><span>Variabili, icone, asset: copia, incolla, ripeti.</span></div>
+      <div class="wk"><strong>Screenshot e incollo</strong><span>Da Photoshop a Figma, un livello alla volta.</span></div>
+      <div class="wk"><strong>Pago un tool che fa metà</strong><span>Un abbonamento al mese per una funzione su dieci.</span></div>
+      <div class="wk"><strong>Chiedo a uno sviluppatore</strong><span>…e aspetto il suo prossimo buco libero.</span></div>
+    </div>
+    <p class="turn" data-at="4">E se lo strumento me lo <span class="serif">costruissi io?</span></p>
+  </section>
+
+  <section id="s03" class="sec" data-steps="5" aria-labelledby="s03-h">
+    <header class="sec-head">
+      <h2 id="s03-h">Il metodo: capire prima di costruire.</h2>
+      <p>Cinque passi, sempre gli stessi. Le skill di superpowers li trasformano in abitudine.</p>
+    </header>
+    <div class="path-wrap">
+    <svg class="path-line" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1"/><line class="path-fill" x1="0" y1="1" x2="1000" y2="1" pathLength="1"/></svg>
+    <ol class="path">
+      <li class="node" data-at="1"><b>1</b><strong>Capire</strong><span>Domande una alla volta, finché so cosa voglio davvero.</span><code>superpowers:brainstorming</code></li>
+      <li class="node" data-at="2"><b>2</b><strong>Descrivere</strong><span>Una spec che chiunque potrebbe costruire senza chiedermi niente.</span><code>documento di design</code></li>
+      <li class="node" data-at="3"><b>3</b><strong>Pianificare</strong><span>Task piccoli, ognuno con il suo test.</span><code>superpowers:writing-plans</code></li>
+      <li class="node" data-at="4"><b>4</b><strong>Costruire</strong><span>Prima il test, poi il codice, un task alla volta.</span><code>executing-plans · test-driven-development</code></li>
+      <li class="node" data-at="5"><b>5</b><strong>Verificare</strong><span>Niente "fatto" senza una prova.</span><code>verification · code-review</code></li>
+    </ol>
+    </div>
+    <div class="always">
+      <span class="always-label">Sempre attive</span>
+      <span><code>ponytail</code> il codice più semplice che funziona</span>
+      <span><code>caveman</code> risposte brevi</span>
+      <span><code>output-skill</code> niente codice tagliato</span>
+    </div>
+  </section>
+
+  <section id="s04" class="sec" data-steps="1" aria-labelledby="s04-h">
+    <header class="sec-head">
+      <h2 id="s04-h">Le mie <span data-count="skills">67</span> skill.</h2>
+      <p>Una skill è un manuale che Claude legge prima di lavorare. Passa sopra una skill per sapere quando la uso.</p>
+    </header>
+    <div class="inv">
+      <div id="inv-filters" class="chips" role="group" aria-label="Filtra per famiglia"></div>
+      <div class="inv-body">
+        <div id="inv-grid" class="inv-grid"></div>
+        <div id="inv-detail" class="inv-detail" aria-live="polite">
+          <p class="inv-empty">Scegli una skill.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s05" class="sec" data-steps="4" aria-labelledby="s05-h">
+    <header class="sec-head">
+      <h2 id="s05-h">La base resta neutra. Le skill la trasformano.</h2>
+      <p>Stesso componente, stesso contenuto. Cambia solo la skill di stile.</p>
+    </header>
+    <div class="lenses" role="group" aria-label="Skill di stile">
+      <button type="button" data-lens="base" aria-pressed="true">Base</button>
+      <button type="button" data-lens="brutalist" aria-pressed="false">brutalist-skill</button>
+      <button type="button" data-lens="soft" aria-pressed="false">soft-skill</button>
+      <button type="button" data-lens="editorial" aria-pressed="false">minimalist-skill</button>
+    </div>
+    <div id="lens-stage" class="lens-stage" data-lens="base">
+      <div class="lc">
+        <div class="lc-top"><span class="lc-kind">App macOS</span><span class="lc-dot"></span></div>
+        <div class="lc-title">Squeeze</div>
+        <p class="lc-desc">Trascini una cartella, escono immagini e video pronti per il web.</p>
+        <div class="lc-stats"><div><b>−74%</b><span>peso medio</span></div><div><b>3</b><span>formati</span></div><div><b>1</b><span>passaggio</span></div></div>
+        <div class="lc-row"><span class="lc-btn">Converti</span><span class="lc-btn lc-ghost">Anteprima</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s06" class="sec" data-steps="3" aria-labelledby="s06-h">
+    <header class="sec-head">
+      <h2 id="s06-h">Dall'immagine al codice, fino al 3D.</h2>
+      <p>Prima vedo la pagina, poi la costruisco. Se serve, diventa un oggetto.</p>
+    </header>
+    <div class="panes">
+      <figure class="pane" data-at="1">
+        <div class="pane-art art-mock"><i class="m-nav"></i><i class="m-h"></i><i class="m-h m-short"></i><i class="m-img"></i><i class="m-btn"></i></div>
+        <figcaption><b>1</b><code>imagegen-frontend-web</code>Genero il riferimento visivo.</figcaption>
+      </figure>
+      <figure class="pane" data-at="2">
+        <pre class="pane-art art-code" aria-label="Codice generato"><code>&lt;section class="hero"&gt;
+  &lt;h1&gt;Il tuo studio,
+    in ordine.&lt;/h1&gt;
+  &lt;img src="desk.avif"&gt;
+  &lt;a class="cta"&gt;Prova&lt;/a&gt;
+&lt;/section&gt;</code></pre>
+        <figcaption><b>2</b><code>image-to-code</code>Lo traduco in codice fedele.</figcaption>
+      </figure>
+      <figure class="pane" data-at="3">
+        <div class="pane-art art-3d" aria-hidden="true"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <figcaption><b>3</b><code>img2threejs</code>Ne faccio un oggetto 3D in codice.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="s07" class="sec" data-steps="5" aria-labelledby="s07-h">
+    <header class="sec-head">
+      <h2 id="s07-h">Cinque problemi, cinque strumenti.</h2>
+      <p>Progetti di esempio: il problema, le skill usate, il risultato.</p>
+    </header>
+    <div class="cases-viewport"><div id="cases-track" class="cases-track"></div></div>
+  </section>
+
+  <section id="s08" class="sec" data-steps="5" aria-labelledby="s08-h">
+    <header class="sec-head">
+      <h2 id="s08-h">Anatomia di un progetto: Layerlink.</h2>
+      <p>Dalla prima frase all'app funzionante, in cinque passaggi.</p>
+    </header>
+    <ol id="anatomy" class="anatomy"></ol>
+  </section>
+
+  <section id="s09" class="sec" data-steps="1" aria-labelledby="s09-h">
+    <header class="sec-head">
+      <h2 id="s09-h">Da dove partire domani.</h2>
+      <p>Tre skill a testa. Installale e prova su un problema vero.</p>
+    </header>
+    <div class="start">
+      <div>
+        <h3>Per chi progetta</h3>
+        <ul>
+          <li><code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.</li>
+          <li><code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.</li>
+          <li><code>superpowers:brainstorming</code>Ti obbliga a sapere cosa vuoi.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Per chi sviluppa</h3>
+        <ul>
+          <li><code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.</li>
+          <li><code>code-review</code>Un secondo paio d'occhi, sempre libero.</li>
+          <li><code>ponytail</code>Meno codice, meno sorprese.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="s10" class="sec end" data-steps="1" aria-labelledby="s10-h">
+    <h2 id="s10-h">Lo strumento giusto è quello che <span class="serif">ti costruisci.</span></h2>
+    <div class="share">
+      <div id="qr" class="qr" aria-hidden="true"></div>
+      <div>
+        <p>Grazie. La pagina resta online: rileggila, copiala, usala.</p>
+        <a id="share-link" class="share-link" href="https://claude.ai/">claude.ai</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

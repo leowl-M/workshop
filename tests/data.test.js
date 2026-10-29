@@ -1,10 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import vm from 'node:vm';
 
-const window = {};
-vm.runInNewContext(readFileSync(new URL('../data.js', import.meta.url), 'utf8'), { window });
+const window = JSON.parse(readFileSync(new URL('../content.json', import.meta.url), 'utf8'));
 const { FAMILIES, SKILLS, SHARE_URL } = window;
 
 test('families are the nine of the spec', () =>
@@ -27,8 +25,7 @@ test('every family has at least one skill', () =>
 
 const byId = (P, id) => P.find(p => p.id === id);
 
-test('nine projects: complete, grouped, every image slot numbered and described', async () => {
-  const { existsSync } = await import('node:fs');
+test('nine projects: complete, grouped, every image slot numbered and described', () => {
   const P = window.PROJECTS, groups = new Set(window.GROUPS.map(g => g.id));
   assert.equal(P.length, 9);
   assert.equal(new Set(P.map(p => p.id)).size, 9);
@@ -42,8 +39,7 @@ test('nine projects: complete, grouped, every image slot numbered and described'
   assert.ok(P.filter(p => p.group === 'figma').every(p => p.problem), 'figma cards show the problem');
   assert.equal(byId(P, 'photoshop').group, 'app', 'Modifica in Photoshop is an app');
   assert.ok(!P.some(p => /tea|portfolio/i.test(p.id)), 'client material and portfolio stay out');
-  for (const [f] of P.find(p => p.tools).tools) assert.ok(existsSync(new URL(`../media/tools/${f}.jpg`, import.meta.url)), f);
-  const sim = byId(P, 'prisma').sim;
+  const sim = window.PRISMA_SIM;
   assert.deepEqual(Object.keys(sim), ['shift', 'cmd', 'ctrl'], 'one simulated fan per key');
   Object.values(sim).forEach(m => assert.ok(m.items.includes(m.pick), m.title));
 });

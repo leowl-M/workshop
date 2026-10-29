@@ -1,11 +1,12 @@
-// Boot: build the page from data.js, then (motion allowed) smooth scroll, pinned set pieces and the 3D scenes.
+// Boot: load content.json (edited from Pages CMS, .pages.yml), build the page, then (motion allowed) smooth scroll, pinned set pieces and the 3D scenes.
 // The 3D vocabulary is always the same two things, keycaps and chess pieces, used in different ways.
-(function () {
+fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content => {
+  Object.assign(window, content);
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const pad = (n) => String(n).padStart(2, '0');
-  const { FAMILIES, SKILLS, PROJECTS, GROUPS, METHOD, METHOD_KEYS, SLOTS, SLOT_SIZE, KEYS, KIT, WEBAPPS, SHARE_URL } = window;
+  const { FAMILIES, SKILLS, PROJECTS, GROUPS, METHOD, METHOD_KEYS, SLOTS, SLOT_SIZE, KEYS, KIT, WEBAPPS, SHARE_URL, TEXTS, PRISMA_SIM } = window;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motion = !!(window.gsap && window.ScrollTrigger) && !reduced;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -25,6 +26,8 @@
 
   // ---------- Content ----------
   function renderContent() {
+    // Static copy lives in content.json; data-t="section.key" names where it goes (HTML allowed, e.g. <mark>).
+    $$('[data-t]').forEach(el => { const v = el.dataset.t.split('.').reduce((o, k) => o?.[k], TEXTS); if (v != null) el.innerHTML = v; });
     $$('[data-count="skills"]').forEach(el => { el.textContent = SKILLS.length; });
 
     // Figma plugins: one section, a keyboard with a key per plugin; pressing one opens it.
@@ -63,7 +66,7 @@
           `<div class="pbeat"><p class="plabel">Cosa fa</p><p class="psolution">${esc(p.solution)}</p></div>`,
           `<div class="pbeat"><p class="plabel">Dettagli</p><ul class="pdetails">${p.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul><p class="pstack">${esc(p.stack)}</p></div>`,
         ].filter(Boolean);
-        const media = p.sim
+        const media = p.id === 'prisma'
           ? `<div class="pplay" id="pplay" data-mode="shift">
               <div class="pp-fan" aria-hidden="true"></div>
               <ul class="pp-out" aria-live="polite"></ul>
@@ -73,7 +76,7 @@
             </div>
             <div class="pplay-keys"><canvas class="kb-gl" id="prisma-gl" aria-label="Le tre modalità di Prisma: premi un tasto"></canvas></div>`
           : `<div class="pcard">${p.imgs.map(id => slot(id, 'pimg')).join('')}</div>`;
-        out += `<section id="p-${p.id}" class="sec pin project${p.sim ? ' has-play' : ''}" data-theme="${themes[n % 2]}" data-chapter="Progetti">
+        out += `<section id="p-${p.id}" class="sec pin project${p.id === 'prisma' ? ' has-play' : ''}" data-theme="${themes[n % 2]}" data-chapter="Progetti">
           <div class="stage"><div class="ptext">${beats.join('')}</div><div class="pmedia">${media}</div></div></section>`;
       });
     });
@@ -101,7 +104,7 @@
           <p class="kit-what">${esc(r.what)}</p>
           <p class="kit-use"><span>Come</span>${esc(r.use)}</p>
           ${r.src ? `<p class="kit-src"><span>Da</span>${r.href ? `<a href="${esc(r.href)}" target="_blank" rel="noopener">${esc(r.src)}</a>` : esc(r.src)}</p>` : ''}
-          ${r.cmds ? `<div class="kit-cmds">${r.cmds.map(c => `<button type="button" class="cmd" data-copy="${esc(c)}">${esc(c)}</button>`).join('')}</div>` : ''}</li>`).join('')}</ul></div>`).join('')}`;
+          ${r.cmds?.length ? `<div class="kit-cmds">${r.cmds.map(c => `<button type="button" class="cmd" data-copy="${esc(c)}">${esc(c)}</button>`).join('')}</div>` : ''}</li>`).join('')}</ul></div>`).join('')}`;
 
     const link = $('#share-link');
     link.href = SHARE_URL;
@@ -863,7 +866,7 @@
   function prisma() {
     const box = $('#pplay');
     if (!box) return;
-    const sim = byId('prisma').sim, fan = $('.pp-fan', box), file = $('.pp-file', box), out = $('.pp-out', box), label = $('.pp-label', box);
+    const sim = PRISMA_SIM, fan = $('.pp-fan', box), file = $('.pp-file', box), out = $('.pp-out', box), label = $('.pp-label', box);
     let mode = 'shift', drag = null, bubbles = [], hovered = null;
     // Bubbles at even angles on the upper half circle around where the drag began. The radius is the smallest
     // that keeps every pair of neighbours apart (wide labels need room on top, only their height at the sides)
@@ -978,4 +981,4 @@
   };
   if (!motion) { addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', () => { buildStops(); onScroll(); }); }
   document.fonts ? document.fonts.ready.then(ready) : addEventListener('load', ready);
-})();
+});

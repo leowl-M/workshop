@@ -2,7 +2,9 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 
-const PAGE = new URL('../index.html', import.meta.url).href;
+import { serve } from './serve.mjs';
+
+const ORIGIN = await serve(), PAGE = ORIGIN + 'index.html';
 const checks = {};
 
 async function open(browser, opts = {}, hash = '') {
@@ -41,7 +43,7 @@ checks.offline = async (browser) => {
   // No network at all: fonts, libraries, textures and screenshots are local.
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const blocked = [];
-  await ctx.route(/^https?:/, r => { blocked.push(r.request().url()); r.abort(); });
+  await ctx.route(u => !u.href.startsWith(ORIGIN), r => { blocked.push(r.request().url()); r.abort(); });
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));

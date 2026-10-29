@@ -1,0 +1,259 @@
+# Pages CMS (https://app.pagescms.org): edits content.json and commits to master; GitHub Pages republishes.
+# Every key of content.json is declared here, so a save never drops data. A new key in content.json needs a field here too.
+content:
+  - name: presentazione
+    label: Presentazione
+    type: file
+    path: content.json
+    format: json
+    fields:
+      - name: SHARE_URL
+        label: Link del QR finale
+        type: string
+      - name: TEXTS
+        label: Testi delle slide
+        description: "HTML ammesso: <mark>evidenziato</mark>, <em>corsivo</em>, <code>codice</code>."
+        type: object
+        fields:
+          - name: intro
+            label: Intro
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: autore, label: Autore, type: text }
+              - { name: manifesto, label: Manifesto, type: text }
+          - name: prima
+            label: Prima
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: sottotitolo, label: Sottotitolo, type: text }
+              - { name: card1_titolo, label: Card1 titolo, type: text }
+              - { name: card1_testo, label: Card1 testo, type: text }
+              - { name: card2_titolo, label: Card2 titolo, type: text }
+              - { name: card2_testo, label: Card2 testo, type: text }
+              - { name: card3_titolo, label: Card3 titolo, type: text }
+              - { name: card3_testo, label: Card3 testo, type: text }
+              - { name: card4_titolo, label: Card4 titolo, type: text }
+              - { name: card4_testo, label: Card4 testo, type: text }
+          - name: svolta
+            label: Svolta
+            type: object
+            fields:
+              - { name: domanda, label: Domanda, type: text }
+              - { name: frase1, label: Frase1, type: text }
+              - { name: frase2, label: Frase2, type: text }
+          - name: metodo
+            label: Metodo
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: sottotitolo, label: Sottotitolo, type: text }
+              - { name: sempre_kicker, label: Sempre kicker, type: text }
+              - { name: sempre_titolo, label: Sempre titolo, type: text }
+              - { name: sempre_ponytail, label: Sempre ponytail, type: text }
+              - { name: sempre_caveman, label: Sempre caveman, type: text }
+              - { name: sempre_output, label: Sempre output, type: text }
+          - name: skill
+            label: Skill
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: sottotitolo, label: Sottotitolo, type: text }
+          - name: lenti
+            label: Lenti
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+          - name: immagine
+            label: Immagine
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: passo1_titolo, label: Passo1 titolo, type: text }
+              - { name: passo1_testo, label: Passo1 testo, type: text }
+              - { name: passo1_esempio, label: Passo1 esempio, type: text }
+              - { name: passo2_titolo, label: Passo2 titolo, type: text }
+              - { name: passo2_testo, label: Passo2 testo, type: text }
+              - { name: passo2_esempio, label: Passo2 esempio, type: text }
+              - { name: passo3_titolo, label: Passo3 titolo, type: text }
+              - { name: passo3_testo, label: Passo3 testo, type: text }
+              - { name: passo3_esempio, label: Passo3 esempio, type: text }
+          - name: progetti
+            label: Progetti
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+          - name: tempo
+            label: Tempo
+            type: object
+            fields:
+              - { name: frase, label: Frase, type: text }
+          - name: partire
+            label: Partire
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: design_titolo, label: Design titolo, type: text }
+              - { name: design_1, label: Design 1, type: text }
+              - { name: design_2, label: Design 2, type: text }
+              - { name: design_3, label: Design 3, type: text }
+              - { name: dev_titolo, label: Dev titolo, type: text }
+              - { name: dev_1, label: Dev 1, type: text }
+              - { name: dev_2, label: Dev 2, type: text }
+              - { name: dev_3, label: Dev 3, type: text }
+          - name: risorse
+            label: Risorse
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: sottotitolo, label: Sottotitolo, type: text }
+          - name: fine
+            label: Fine
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: sottotitolo, label: Sottotitolo, type: text }
+      - name: FAMILIES
+        label: Famiglie di skill
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: id, label: ID (non cambiare), type: string }
+          - { name: label, label: Nome, type: string }
+          - { name: blurb, label: Descrizione, type: text }
+      - name: SKILLS
+        label: Skill (anello)
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: family, label: Famiglia (id), type: string }
+          - { name: name, label: Nome, type: string }
+          - { name: what, label: Cosa fa (max 90 caratteri), type: text }
+          - { name: when, label: Quando (max 110 caratteri), type: text }
+      - name: GROUPS
+        label: Gruppi di progetti
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: id, label: ID (non cambiare), type: string }
+          - { name: label, label: Nome, type: string }
+          - { name: line, label: Frase, type: text }
+      - name: PROJECTS
+        label: Progetti
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: id, label: ID (non cambiare), type: string }
+          - { name: name, label: Nome, type: string }
+          - { name: kind, label: Tipo, type: string }
+          - { name: group, label: Gruppo (figma, app, web), type: string }
+          - { name: problem, label: Il problema (vuoto = nascosto), type: text }
+          - { name: solution, label: Cosa fa, type: text }
+          - { name: details, label: Dettagli, type: string, list: true }
+          - { name: stack, label: Tecnologie, type: string }
+          - { name: imgs, label: Immagini (img-NN), type: string, list: true }
+      - name: PRISMA_SIM
+        label: Demo di Prisma
+        type: object
+        fields:
+          - name: shift
+            type: object
+            fields:
+              - { name: title, label: Titolo, type: string }
+              - { name: items, label: Bolle, type: string, list: true }
+              - { name: pick, label: Bolla scelta (deve essere tra le bolle), type: string }
+              - { name: hint, label: Suggerimento, type: string }
+              - { name: out, label: File creato, type: string }
+          - name: cmd
+            type: object
+            fields:
+              - { name: title, label: Titolo, type: string }
+              - { name: items, label: Bolle, type: string, list: true }
+              - { name: pick, label: Bolla scelta (deve essere tra le bolle), type: string }
+              - { name: hint, label: Suggerimento, type: string }
+              - { name: out, label: File creato, type: string }
+          - name: ctrl
+            type: object
+            fields:
+              - { name: title, label: Titolo, type: string }
+              - { name: items, label: Bolle, type: string, list: true }
+              - { name: pick, label: Bolla scelta (deve essere tra le bolle), type: string }
+              - { name: hint, label: Suggerimento, type: string }
+              - { name: toast, label: Messaggio, type: string }
+      - name: METHOD
+        label: Metodo (9 passi)
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: skill, label: Skill (facoltativa), type: string }
+          - { name: name, label: Nome, type: string }
+          - { name: what, label: Testo, type: text }
+          - { name: file, label: File citato, type: string }
+          - { name: lines, label: Righe dell'estratto, type: string, list: true }
+      - name: METHOD_KEYS
+        label: Metodo, tasti della tastiera
+        type: string
+        list: true
+      - name: KIT
+        label: Risorse (kit)
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: h, label: Titolo gruppo, type: string }
+          - { name: p, label: Descrizione gruppo, type: text }
+          - name: rows
+            label: Voci
+            type: object
+            list: { collapsible: true }
+            fields:
+              - { name: href, label: Link (facoltativo), type: string }
+              - { name: cmds, label: Comandi da copiare, type: string, list: true }
+              - { name: name, label: Nome, type: string }
+              - { name: what, label: Cosa fa, type: text }
+              - { name: use, label: Come si usa, type: string }
+              - { name: src, label: Da dove, type: string }
+              - { name: mine, label: Creata da me, type: boolean }
+      - name: WEBAPPS
+        label: Strumenti web (sfera)
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: preview, label: Anteprima (nome file in media/tools), type: string }
+          - { name: name, label: Nome, type: string }
+          - { name: href, label: Link, type: string }
+          - { name: kind, label: Tipo, type: string }
+      - name: KEYS
+        label: Tastiera 3D iniziale
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: label, label: Scritta, type: string }
+          - { name: u, label: Larghezza (1 = tasto normale), type: number }
+          - { name: color, label: Colore (yellow, cream, blue, deep), type: string }
+          - { name: to, label: Progetto (id), type: string }
+      - name: SLOTS
+        label: Didascalie immagini
+        type: object
+        fields:
+          - { name: img-01, label: IMG-01, type: string }
+          - { name: img-02, label: IMG-02, type: string }
+          - { name: img-03, label: IMG-03, type: string }
+          - { name: img-04, label: IMG-04, type: string }
+          - { name: img-05, label: IMG-05, type: string }
+          - { name: img-06, label: IMG-06, type: string }
+          - { name: img-07, label: IMG-07, type: string }
+          - { name: img-08, label: IMG-08, type: string }
+          - { name: img-09, label: IMG-09, type: string }
+          - { name: img-10, label: IMG-10, type: string }
+      - name: SLOT_SIZE
+        label: Misura consigliata immagini
+        type: string

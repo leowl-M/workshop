@@ -1,6 +1,7 @@
 // Layout QA: at every stop (and halfway between stops) report visible text that is cut by the screen,
 // cut by its container, or overlapping other visible text. Usage: node qa.mjs [w h] [--mid]
 import { chromium } from 'playwright';
+import { serve } from './serve.mjs';
 const args = process.argv.slice(2);
 const mid = args.includes('--mid');
 const [w = 1440, h = 900] = args.filter(a => !a.startsWith('--')).map(Number);
@@ -8,7 +9,7 @@ const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: w, height: h } });
 const errors = [];
 p.on('pageerror', e => errors.push(e.message));
-await p.goto(new URL('../index.html', import.meta.url).href);
+await p.goto(await serve() + 'index.html');
 await p.waitForFunction(() => window.site && window.site.ready, null, { timeout: 20000 });
 await p.waitForTimeout(1200);
 const stops = await p.evaluate(() => window.site.stops);

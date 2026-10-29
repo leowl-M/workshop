@@ -8,7 +8,6 @@
 <meta name="description" content="Come uso l'AI per costruirmi plugin, tool e app che tolgono di mezzo i processi noiosi. Workshop interno The Wave.">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="styles.css">
-<script defer src="data.js"></script>
 <script defer src="nav.js"></script>
 <script defer src="media/models.js"></script>
 <script defer src="vendor/gsap.min.js"></script>
@@ -31,10 +30,10 @@
     <div class="stage hero-stage">
       <canvas class="keys-gl" id="keys-gl" aria-hidden="true"></canvas>
       <div class="hero-copy">
-        <p class="kicker reveal">Workshop interno · Design × AI</p>
-        <h1 class="display split">Ho smesso di aspettare gli <mark>strumenti giusti.</mark></h1>
+        <p data-t="intro.kicker" class="kicker reveal">Workshop interno · Design × AI</p>
+        <h1 data-t="intro.titolo" class="display split">Ho smesso di aspettare gli <mark>strumenti giusti.</mark></h1>
       </div>
-      <p class="hero-by reveal">Leonardo Maltese</p>
+      <p data-t="intro.autore" class="hero-by reveal">Leonardo Maltese</p>
       <p class="scroll-hint reveal" aria-hidden="true"><i></i>Scorri</p>
     </div>
   </section>
@@ -42,26 +41,26 @@
   <!-- ===================== 02 MANIFESTO ===================== -->
   <section id="manifesto" class="sec pin" data-theme="cream" data-chapter="Intro" data-beats="1">
     <div class="stage center">
-      <p class="statement scrub-words">Sono un designer. Quando un processo mi rallenta, non aspetto: con l'AI mi costruisco lo strumento che lo risolve.</p>
+      <p data-t="intro.manifesto" class="statement scrub-words">Sono un designer. Quando un processo mi rallenta, non aspetto: con l'AI mi costruisco lo strumento che lo risolve.</p>
     </div>
   </section>
 
   <!-- ===================== 03 PRIMA ===================== -->
   <section id="prima-intro" class="sec screen" data-theme="cream" data-chapter="Prima">
     <div class="stage center">
-      <p class="kicker reveal">Il prima</p>
-      <h2 class="title split">Ogni problema aveva un <mark>workaround.</mark></h2>
-      <p class="lead reveal">E ogni workaround mi costava tempo, qualità o soldi.</p>
+      <p data-t="prima.kicker" class="kicker reveal">Il prima</p>
+      <h2 data-t="prima.titolo" class="title split">Ogni problema aveva un <mark>workaround.</mark></h2>
+      <p data-t="prima.sottotitolo" class="lead reveal">E ogni workaround mi costava tempo, qualità o soldi.</p>
     </div>
   </section>
 
   <section id="prima" class="sec pin" data-theme="cream" data-chapter="Prima" data-beats="4">
     <div class="stage">
       <ol class="deck">
-        <li class="tcard deep"><span class="num">01</span><h3>Esporto a mano</h3><p>Variabili, icone, asset: copia, incolla, ripeti.</p></li>
-        <li class="tcard blue"><span class="num">02</span><h3>Screenshot e incollo</h3><p>Da Photoshop a Figma, un livello alla volta.</p></li>
-        <li class="tcard yellow"><span class="num">03</span><h3>Pago un tool che fa metà</h3><p>Un abbonamento al mese per una funzione su dieci.</p></li>
-        <li class="tcard white"><span class="num">04</span><h3>Chiedo a uno sviluppatore</h3><p>…e aspetto il suo prossimo buco libero.</p></li>
+        <li class="tcard deep"><span class="num">01</span><h3 data-t="prima.card1_titolo">Esporto a mano</h3><p data-t="prima.card1_testo">Variabili, icone, asset: copia, incolla, ripeti.</p></li>
+        <li class="tcard blue"><span class="num">02</span><h3 data-t="prima.card2_titolo">Screenshot e incollo</h3><p data-t="prima.card2_testo">Da Photoshop a Figma, un livello alla volta.</p></li>
+        <li class="tcard yellow"><span class="num">03</span><h3 data-t="prima.card3_titolo">Pago un tool che fa metà</h3><p data-t="prima.card3_testo">Un abbonamento al mese per una funzione su dieci.</p></li>
+        <li class="tcard white"><span class="num">04</span><h3 data-t="prima.card4_titolo">Chiedo a uno sviluppatore</h3><p data-t="prima.card4_testo">…e aspetto il suo prossimo buco libero.</p></li>
       </ol>
     </div>
   </section>
@@ -69,15 +68,15 @@
   <!-- ===================== 04 LA SVOLTA ===================== -->
   <section id="domanda" class="sec pin" data-theme="cream" data-chapter="Svolta" data-beats="1">
     <div class="stage center">
-      <div class="growbox"><p class="question">E se lo strumento me lo <em>costruissi io?</em></p></div>
+      <div class="growbox"><p data-t="svolta.domanda" class="question">E se lo strumento me lo <em>costruissi io?</em></p></div>
     </div>
   </section>
 
   <section id="ruolo" class="sec pin" data-theme="blue" data-chapter="Svolta" data-beats="2">
     <div class="stage center">
       <div class="beats">
-        <p class="statement big beat">Non per sostituire gli sviluppatori.</p>
-        <p class="statement big beat">Per portare lo sguardo del designer <em>dentro gli strumenti.</em></p>
+        <p data-t="svolta.frase1" class="statement big beat">Non per sostituire gli sviluppatori.</p>
+        <p data-t="svolta.frase2" class="statement big beat">Per portare lo sguardo del designer <em>dentro gli strumenti.</em></p>
       </div>
     </div>
   </section>
@@ -87,23 +86,23 @@
     <div class="stage">
       <div class="track" id="method-track">
         <div class="panel intro">
-          <p class="kicker">Il metodo</p>
-          <h2 class="title">Come lavoro, <em>passo per passo.</em></h2>
-          <p class="lead">Un esempio vero: il pannello di Keycap Reel, uno dei venti strumenti di Training. Era confuso, l'ho rifatto così.</p>
+          <p data-t="metodo.kicker" class="kicker">Il metodo</p>
+          <h2 data-t="metodo.titolo" class="title">Come lavoro, <em>passo per passo.</em></h2>
+          <p data-t="metodo.sottotitolo" class="lead">Un esempio vero: il pannello di Keycap Reel, uno dei venti strumenti di Training. Era confuso, l'ho rifatto così.</p>
         </div>
-        <!-- step panels come from METHOD in data.js -->
+        <!-- step panels come from METHOD in content.json -->
       </div>
     </div>
   </section>
 
   <section id="sempre" class="sec screen" data-theme="cream" data-chapter="Metodo">
     <div class="stage center">
-      <p class="kicker reveal">Sempre accese</p>
-      <h2 class="title split">Tre skill che non spengo <mark>mai.</mark></h2>
+      <p data-t="metodo.sempre_kicker" class="kicker reveal">Sempre accese</p>
+      <h2 data-t="metodo.sempre_titolo" class="title split">Tre skill che non spengo <mark>mai.</mark></h2>
       <div class="fan">
-        <div class="fcard yellow"><code>ponytail</code><p>Il codice più semplice che funziona.</p></div>
-        <div class="fcard deep"><code>caveman</code><p>Risposte brevi, stesso contenuto.</p></div>
-        <div class="fcard blue"><code>output-skill</code><p>Niente codice tagliato a metà.</p></div>
+        <div class="fcard yellow"><code>ponytail</code><p data-t="metodo.sempre_ponytail">Il codice più semplice che funziona.</p></div>
+        <div class="fcard deep"><code>caveman</code><p data-t="metodo.sempre_caveman">Risposte brevi, stesso contenuto.</p></div>
+        <div class="fcard blue"><code>output-skill</code><p data-t="metodo.sempre_output">Niente codice tagliato a metà.</p></div>
       </div>
     </div>
   </section>
@@ -112,9 +111,9 @@
   <section id="skill" class="sec ring-sec" data-theme="deep" data-chapter="Skill">
     <div class="ring-wrap" aria-hidden="true"><div class="ring" id="ring"></div></div>
     <div class="ring-title">
-      <p class="kicker reveal">Le mie skill</p>
+      <p data-t="skill.kicker" class="kicker reveal">Le mie skill</p>
       <p class="mega"><span data-count="skills">67</span></p>
-      <p class="lead reveal">Una skill è un manuale che Claude legge prima di lavorare.</p>
+      <p data-t="skill.sottotitolo" class="lead reveal">Una skill è un manuale che Claude legge prima di lavorare.</p>
     </div>
   </section>
 
@@ -122,8 +121,8 @@
   <section id="lenti" class="sec pin" data-theme="cream" data-chapter="Lenti" data-beats="4">
     <div class="stage split-stage">
       <div class="side">
-        <p class="kicker">Le lenti</p>
-        <h2 class="title sm">La base resta neutra. Le skill la <mark>trasformano.</mark></h2>
+        <p data-t="lenti.kicker" class="kicker">Le lenti</p>
+        <h2 data-t="lenti.titolo" class="title sm">La base resta neutra. Le skill la <mark>trasformano.</mark></h2>
         <ol class="lens-list" id="lens-list">
           <li data-lens="base">Base</li><li data-lens="brutalist">brutalist-skill</li><li data-lens="soft">soft-skill</li><li data-lens="editorial">minimalist-skill</li>
         </ol>
@@ -144,14 +143,14 @@
   <section id="immagine" class="sec pin" data-theme="deep" data-chapter="Immagine">
     <div class="stage img-stage">
       <div class="img-steps">
-        <p class="kicker">Dall'immagine al codice, fino al 3D</p>
+        <p data-t="immagine.kicker" class="kicker">Dall'immagine al codice, fino al 3D</p>
         <ol class="isteps">
-          <li class="istep"><b>1</b><div><h3>Immagine</h3><p>Prima di costruire, chiedo un riferimento visivo: vedo la pagina prima che esista.</p>
-            <p class="iex"><span>Esempio</span>«Locandina per un torneo di scacchi, il cavallo protagonista.»</p><code>imagegen-frontend-web</code></div></li>
-          <li class="istep"><b>2</b><div><h3>Codice</h3><p>Il riferimento diventa una pagina vera, fedele, in HTML e CSS.</p>
-            <p class="iex"><span>Esempio</span>La locandina diventa la pagina del torneo: griglia, testi, pulsante.</p><code>image-to-code</code></div></li>
-          <li class="istep"><b>3</b><div><h3>Oggetto 3D</h3><p>Dall'immagine, un modello costruito in codice che gira e reagisce.</p>
-            <p class="iex"><span>Esempio</span>Il cavallo esce dalla pagina e diventa un pezzo 3D.</p><code>img2threejs</code></div></li>
+          <li class="istep"><b>1</b><div><h3 data-t="immagine.passo1_titolo">Immagine</h3><p data-t="immagine.passo1_testo">Prima di costruire, chiedo un riferimento visivo: vedo la pagina prima che esista.</p>
+            <p data-t="immagine.passo1_esempio" class="iex"><span>Esempio</span>«Locandina per un torneo di scacchi, il cavallo protagonista.»</p><code>imagegen-frontend-web</code></div></li>
+          <li class="istep"><b>2</b><div><h3 data-t="immagine.passo2_titolo">Codice</h3><p data-t="immagine.passo2_testo">Il riferimento diventa una pagina vera, fedele, in HTML e CSS.</p>
+            <p data-t="immagine.passo2_esempio" class="iex"><span>Esempio</span>La locandina diventa la pagina del torneo: griglia, testi, pulsante.</p><code>image-to-code</code></div></li>
+          <li class="istep"><b>3</b><div><h3 data-t="immagine.passo3_titolo">Oggetto 3D</h3><p data-t="immagine.passo3_testo">Dall'immagine, un modello costruito in codice che gira e reagisce.</p>
+            <p data-t="immagine.passo3_esempio" class="iex"><span>Esempio</span>Il cavallo esce dalla pagina e diventa un pezzo 3D.</p><code>img2threejs</code></div></li>
         </ol>
       </div>
       <div class="img-visual">
@@ -177,8 +176,8 @@
   <!-- ===================== 09 PROGETTI ===================== -->
   <section id="progetti" class="sec screen" data-theme="deep" data-chapter="Progetti">
     <div class="stage">
-      <p class="kicker reveal">I progetti</p>
-      <h2 class="mega-title split">Gli strumenti che mi sono <mark>costruito.</mark></h2>
+      <p data-t="progetti.kicker" class="kicker reveal">I progetti</p>
+      <h2 data-t="progetti.titolo" class="mega-title split">Gli strumenti che mi sono <mark>costruito.</mark></h2>
       <div class="kb-wrap"><canvas class="kb-gl" id="groups-gl" aria-label="Gruppi di progetti: premi un tasto"></canvas></div>
     </div>
   </section>
@@ -187,30 +186,30 @@
   <!-- ===================== 10 IL GUADAGNO ===================== -->
   <section id="tempo" class="sec pin" data-theme="yellow" data-chapter="Tempo" data-beats="1">
     <div class="stage center">
-      <p class="statement scrub-words">Meno tempo nei processi noiosi. Più tempo per studiare, sperimentare e creare.</p>
+      <p data-t="tempo.frase" class="statement scrub-words">Meno tempo nei processi noiosi. Più tempo per studiare, sperimentare e creare.</p>
     </div>
   </section>
 
   <!-- ===================== 11 DA DOVE PARTIRE ===================== -->
   <section id="partire" class="sec screen" data-theme="cream" data-chapter="Partire">
     <div class="stage">
-      <p class="kicker reveal">Da dove partire</p>
-      <h2 class="title split">Tre skill a testa, <mark>domani.</mark></h2>
+      <p data-t="partire.kicker" class="kicker reveal">Da dove partire</p>
+      <h2 data-t="partire.titolo" class="title split">Tre skill a testa, <mark>domani.</mark></h2>
       <div class="two">
         <div class="col-card deep">
-          <h3>Per chi progetta</h3>
+          <h3 data-t="partire.design_titolo">Per chi progetta</h3>
           <ul>
-            <li><code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.</li>
-            <li><code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.</li>
-            <li><code>superpowers:brainstorming</code>Ti obbliga a sapere cosa vuoi.</li>
+            <li data-t="partire.design_1"><code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.</li>
+            <li data-t="partire.design_2"><code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.</li>
+            <li data-t="partire.design_3"><code>superpowers:brainstorming</code>Ti obbliga a sapere cosa vuoi.</li>
           </ul>
         </div>
         <div class="col-card yellow">
-          <h3>Per chi sviluppa</h3>
+          <h3 data-t="partire.dev_titolo">Per chi sviluppa</h3>
           <ul>
-            <li><code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.</li>
-            <li><code>code-review</code>Un secondo paio d'occhi, sempre libero.</li>
-            <li><code>ponytail</code>Meno codice, meno sorprese.</li>
+            <li data-t="partire.dev_1"><code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.</li>
+            <li data-t="partire.dev_2"><code>code-review</code>Un secondo paio d'occhi, sempre libero.</li>
+            <li data-t="partire.dev_3"><code>ponytail</code>Meno codice, meno sorprese.</li>
           </ul>
         </div>
       </div>
@@ -222,10 +221,10 @@
     <div class="stage">
       <div class="res-head">
         <div>
-          <p class="kicker reveal">Risorse</p>
-          <h2 class="title split">Prendi <mark>tutto.</mark></h2>
+          <p data-t="risorse.kicker" class="kicker reveal">Risorse</p>
+          <h2 data-t="risorse.titolo" class="title split">Prendi <mark>tutto.</mark></h2>
         </div>
-        <p class="lead reveal">Tutto il kit: le mie skill, i plugin, le skill di terzi. Per ogni cosa: a cosa serve, come si usa, da dove si prende. Clic su un comando per copiarlo.</p>
+        <p data-t="risorse.sottotitolo" class="lead reveal">Tutto il kit: le mie skill, i plugin, le skill di terzi. Per ogni cosa: a cosa serve, come si usa, da dove si prende. Clic su un comando per copiarlo.</p>
       </div>
       <div class="kit" id="kit"></div>
     </div>
@@ -236,10 +235,10 @@
     <div class="stage">
       <canvas class="chess-gl" id="chess-gl" aria-hidden="true"></canvas>
       <div class="end-copy">
-        <p class="kicker">Workshop interno · Design × AI</p>
-        <h2 class="wordmark split">Grazie.</h2>
+        <p data-t="fine.kicker" class="kicker">Workshop interno · Design × AI</p>
+        <h2 data-t="fine.titolo" class="wordmark split">Grazie.</h2>
         <div class="end-row">
-          <p class="lead">Lo strumento giusto è quello che ti costruisci. Slide e risorse restano online.</p>
+          <p data-t="fine.sottotitolo" class="lead">Lo strumento giusto è quello che ti costruisci. Slide e risorse restano online.</p>
           <div class="end-qr"><div id="qr" class="qr" aria-hidden="true"></div><a id="share-link" class="share-link" href="https://claude.ai/">claude.ai</a></div>
         </div>
       </div>

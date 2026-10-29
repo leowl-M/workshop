@@ -36,6 +36,7 @@
     const link = $('#share-link');
     link.href = SHARE_URL;
     link.textContent = SHARE_URL.replace(/^https:\/\//, '').replace(/\/$/, '');
+    if (window.QRCode) new QRCode($('#qr'), { text: SHARE_URL, width: 336, height: 336, colorDark: '#111113', colorLight: '#fbfbfa' });
   }
 
   // ---------- 04 Inventario ----------

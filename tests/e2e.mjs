@@ -178,6 +178,24 @@ checks.cases = async (browser) => {
   await ctx.close();
 };
 
+checks.qr = async (browser) => {
+  const { ctx, page } = await open(browser);
+  assert.ok(await page.locator('#qr img, #qr canvas').count() > 0, 'no QR rendered');
+  assert.equal(await page.getAttribute('#share-link', 'href'), await page.evaluate(() => window.SHARE_URL));
+  await ctx.close();
+};
+
+checks.qrOffline = async (browser) => {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  await ctx.route(/^https?:/, r => r.abort());
+  const page = await ctx.newPage();
+  await page.goto(PAGE);
+  await page.waitForTimeout(500);
+  assert.equal(await page.locator('#qr img, #qr canvas').count(), 0);
+  assert.ok(await page.isVisible('#share-link'));
+  await ctx.close();
+};
+
 const only = process.argv.slice(2);
 const browser = await chromium.launch();
 let failed = 0;

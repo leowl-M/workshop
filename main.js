@@ -75,6 +75,15 @@
     $('#s05').addEventListener('step', e => set(LENSES[e.detail - 1] || 'base'));
   }
 
+  // ---------- 07 / 08: mark the current item of a stepped list ----------
+  function stepItems(secSel, itemSel) {
+    const items = $$(itemSel);
+    $(secSel).addEventListener('step', e => items.forEach((el, i) => {
+      el.classList.toggle('active', i === e.detail - 1);
+      el.classList.toggle('done', i < e.detail - 1);
+    }));
+  }
+
   // ---------- Motion engine ----------
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motion = !!(window.gsap && window.ScrollTrigger) && !reduced;
@@ -240,6 +249,8 @@
   renderContent();
   inventory();
   lenses();
+  stepItems('#s07', '#cases-track .case');
+  stepItems('#s08', '#anatomy li');
   hero3d();
   if (motion) setupMotion();
   else secs.forEach(s => { s.dataset.step = s.dataset.steps; }); // no step events: lenses stay on base

@@ -164,6 +164,20 @@ checks.lens = async (browser) => {
   await ctx.close();
 };
 
+checks.cases = async (browser) => {
+  const { ctx, page } = await open(browser);
+  await jump(page, 's07', 3);
+  assert.equal(await pos(page), '07 · 3/5');
+  await page.waitForTimeout(800);
+  const box = await page.evaluate(() => [...document.querySelectorAll('#cases-track .case')].map(c => {
+    const r = c.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.right)];
+  }));
+  const vw = 1440;
+  assert.ok(box[2][0] >= 0 && box[2][1] <= vw, `card 3 not fully visible: ${box[2]}`);
+  assert.ok(box[0][1] <= 240, `card 1 still visible: ${box[0]}`); // 240 = sidebar width
+  await ctx.close();
+};
+
 const only = process.argv.slice(2);
 const browser = await chromium.launch();
 let failed = 0;

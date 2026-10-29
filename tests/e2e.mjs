@@ -109,6 +109,23 @@ checks.reduced = async (browser) => {
   await ctx.close();
 };
 
+checks.hero = async (browser) => {
+  const { ctx, page } = await open(browser);
+  await page.waitForFunction(() => document.getElementById('hero-gl').dataset.ready === '1', null, { timeout: 8000 });
+  assert.ok(await page.evaluate(() => document.getElementById('hero-gl').clientWidth > 0));
+  await ctx.close();
+};
+
+checks.heroOffline = async (browser) => {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  await ctx.route(/^https?:/, r => r.abort());
+  const page = await ctx.newPage();
+  await page.goto(PAGE);
+  await page.waitForFunction(() => getComputedStyle(document.getElementById('hero-gl')).display === 'none', null, { timeout: 8000 });
+  assert.equal(await page.evaluate(() => getComputedStyle(document.getElementById('s01-h')).opacity), '1');
+  await ctx.close();
+};
+
 const only = process.argv.slice(2);
 const browser = await chromium.launch();
 let failed = 0;

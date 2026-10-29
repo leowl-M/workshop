@@ -128,7 +128,80 @@
     requestAnimationFrame(() => { ticking = false; updateIndicator(); });
   }, { passive: true });
 
+  // ---------- Hero: one point per skill on a sphere ----------
+  async function hero3d() {
+    const canvas = $('#hero-gl');
+    let THREE;
+    try { THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'); }
+    catch { canvas.style.display = 'none'; return; }
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(35, 1, .1, 100);
+    cam.position.z = 6.2;
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const R = 1.7, N = SKILLS.length;
+    const pts = SKILLS.map((_, i) => {
+      const y = 1 - 2 * (i + .5) / N, r = Math.sqrt(1 - y * y), th = i * 2.39996; // Fibonacci sphere
+      return new THREE.Vector3(Math.cos(th) * r, y, Math.sin(th) * r).multiplyScalar(R);
+    });
+    const ink = new THREE.Color('#111113'), acc = new THREE.Color('#3b5bff');
+    const own = new Set(['inventario', 'compliance']); // skill scritte da Leonardo
+    const dots = new THREE.InstancedMesh(new THREE.SphereGeometry(.04, 14, 14), new THREE.MeshBasicMaterial(), N);
+    const m = new THREE.Matrix4();
+    pts.forEach((p, i) => {
+      const s = own.has(SKILLS[i].name) ? 1.9 : 1;
+      dots.setMatrixAt(i, m.makeScale(s, s, s).setPosition(p));
+      dots.setColorAt(i, own.has(SKILLS[i].name) ? acc : ink);
+    });
+    group.add(dots);
+    const seg = [];
+    pts.forEach((a, i) => pts.forEach((b, j) => { if (j > i && a.distanceTo(b) < .9) seg.push(a, b); }));
+    group.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(seg),
+      new THREE.LineBasicMaterial({ color: ink, transparent: true, opacity: .12 })));
+
+    const size = () => { const w = canvas.clientWidth; renderer.setSize(w, w, false); };
+    new ResizeObserver(size).observe(canvas);
+    size();
+
+    // Hover a point → its skill name.
+    const tip = document.createElement('div');
+    tip.className = 'gl-tip';
+    canvas.after(tip);
+    const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(2, 2);
+    let mx = 0, my = 0;
+    canvas.addEventListener('pointermove', e => {
+      const r = canvas.getBoundingClientRect();
+      ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+      tip.style.transform = `translate(${canvas.offsetLeft + e.clientX - r.left + 14}px, ${canvas.offsetTop + e.clientY - r.top + 14}px)`;
+    });
+    canvas.addEventListener('pointerleave', () => { ndc.set(2, 2); tip.classList.remove('on'); });
+    addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
+
+    const frame = (t) => {
+      const p = Math.min(1, scrollY / innerHeight);
+      group.rotation.y += .0022;
+      group.rotation.x += (my * .7 - group.rotation.x) * .04;
+      group.rotation.z += (mx * .35 - group.rotation.z) * .04;
+      group.scale.setScalar((1 + Math.sin(t * .0012) * .015) * (1 + p * .35));
+      group.position.y = p * .8;
+      ray.setFromCamera(ndc, cam);
+      const hit = ray.intersectObject(dots)[0];
+      if (hit) { tip.textContent = SKILLS[hit.instanceId].name; tip.classList.add('on'); }
+      else tip.classList.remove('on');
+      renderer.render(scene, cam);
+    };
+    frame(0);
+    canvas.dataset.ready = '1';
+    if (reduced) return;
+    new IntersectionObserver(([e]) => renderer.setAnimationLoop(e.isIntersecting ? frame : null)).observe(canvas);
+  }
+
   renderContent();
+  hero3d();
   if (motion) setupMotion();
   else secs.forEach(s => setStep(s, s.dataset.steps));
   if (motion) ScrollTrigger.refresh(); // fires 'refresh' → buildStops

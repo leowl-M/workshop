@@ -83,7 +83,15 @@ h3 { font-size: 20px; font-weight: 500; letter-spacing: -.015em; }
 .hero-copy { display: grid; gap: 28px; }
 .lead { font-size: 20px; max-width: 34ch; }
 .meta { font: 400 13px var(--mono); color: var(--mute); }
-#hero-gl { width: 100%; aspect-ratio: 1; max-height: 70vh; display: block; }
+.hero { position: relative; }
+#hero-gl { width: 100%; aspect-ratio: 1; max-height: 70vh; display: block; cursor: crosshair; justify-self: center; }
+.gl-tip {
+  position: absolute; left: 0; top: 0; pointer-events: none;
+  font: 400 12px var(--mono); background: var(--ink); color: var(--bg);
+  padding: 5px 9px; border-radius: 6px; white-space: nowrap;
+  opacity: 0; transition: opacity .15s;
+}
+.gl-tip.on { opacity: 1; }
 
 /* 02 Prima */
 .stack { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; max-width: 960px; }

@@ -2,7 +2,7 @@
   "SHARE_URL": "https://claude.ai/artifact/8kAega2RsnSgdo4PPaGEdH",
   "TEXTS": {
     "intro": {
-      "kicker": "Workshop interno · Design × AI",
+      "kicker": "Workshop",
       "titolo": "Ho smesso di aspettare gli <mark>strumenti giusti.</mark>",
       "autore": "Leonardo Maltese",
       "manifesto": "Sono un designer. Quando un processo mi rallenta, non aspetto: con l'AI mi costruisco lo strumento che lo risolve."
@@ -699,7 +699,6 @@
       "name": "Training",
       "kind": "20 strumenti web",
       "group": "web",
-      "problem": "",
       "solution": "Strumenti per generare grafiche e animazioni: dithering, distorsioni, testo, keycap, collage. Tutti con la stessa interfaccia, online a ogni push.",
       "details": [
         "20 strumenti, una pelle sola",
@@ -765,7 +764,6 @@
   },
   "METHOD": [
     {
-      "skill": "",
       "name": "Il problema",
       "what": "Parto da un fastidio vero, scritto in parole semplici. Se non so dirlo in due righe, non so ancora cosa costruire.",
       "file": "docs/keycap-reel-pannello-design.md · Perché",
@@ -775,7 +773,6 @@
       ]
     },
     {
-      "skill": "",
       "name": "Il contesto",
       "what": "Nella cartella c'è un CLAUDE.md: cosa si tocca, cosa no, come si lavora. Claude lo legge prima di ogni cosa.",
       "file": "CLAUDE.md",
@@ -807,7 +804,6 @@
       "lines": [
         "Deciso con l'utente: il flat è un modello,",
         "gli scacchi non sono uno stile.",
-        "",
         "(proposta mia, accettata)"
       ]
     },
@@ -845,7 +841,6 @@
       "lines": [
         "Use superpowers:subagent-driven-development",
         "to implement this plan task-by-task.",
-        "",
         "Ogni task finisce con le prove verdi."
       ]
     },
@@ -857,13 +852,11 @@
       "lines": [
         "node prove/keycap-reel/prova.mjs",
         "→ PASS nome / FAIL nome: messaggio",
-        "",
         "migrazione_mode_flat · senza_3d",
         "incompatibile_resta · dopo_export_spenti"
       ]
     },
     {
-      "skill": "",
       "name": "Il rilascio",
       "what": "Lo apro io in locale e controllo che funzioni come prima. Solo con il mio ok va online.",
       "file": "CLAUDE.md · Come si lavora",
@@ -871,7 +864,6 @@
         "Prima di ogni push si apre lo strumento",
         "in locale e si controlla che funzioni",
         "come prima.",
-        "",
         "A ogni push Cloudflare pubblica da solo."
       ]
     }
@@ -893,8 +885,6 @@
       "p": "Esistono solo in questo kit (o nel tuo account claude.ai).",
       "rows": [
         {
-          "href": "",
-          "cmds": [],
           "name": "inventario",
           "what": "Elenca skill, plugin e comandi installati, legge i segnali del progetto (dipendenze, file, cookie) e dice quali usare, accendere o spegnere, con il JSON pronto per .claude/settings.local.json",
           "use": "/inventario",
@@ -902,8 +892,6 @@
           "mine": true
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "video-brief",
           "what": "Raccoglie il brief di un video e scrive la timeline da approvare prima del render (abbinala a lemo-opuscar)",
           "use": "/video-brief",
@@ -911,8 +899,6 @@
           "mine": true
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "copy-guide",
           "what": "Router dei testi: guarda progetto e richiesta, sceglie tra product-marketing, copywriting, copy-editing, ux-writing e la attiva",
           "use": "/copy-guide, \"copy\", \"testi\", \"microcopy\"",
@@ -920,8 +906,6 @@
           "mine": true
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "/compliance",
           "what": "Comando: audit GDPR e cookie di un sito, proposta fix, applicazione, report finale",
           "use": "/compliance",
@@ -929,8 +913,6 @@
           "mine": true
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "/purge-archived",
           "what": "Comando: elimina le sessioni archiviate dell'estensione Claude in Cursor/VS Code. Mostra la lista e chiede conferma",
           "use": "/purge-archived",
@@ -938,8 +920,6 @@
           "mine": true
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "ui-micro-interactions",
           "what": "Micro-animazioni e dettagli UI: press feedback, popover, stagger, spring, reduced motion (React, Motion, Tailwind, CSS)",
           "use": "da sola su animazioni, \"polish\", \"più fluida\"",
@@ -1013,7 +993,6 @@
           "mine": false
         },
         {
-          "href": "",
           "cmds": [
             "/plugin install superpowers@claude-plugins-official"
           ],
@@ -1024,7 +1003,6 @@
           "mine": false
         },
         {
-          "href": "",
           "cmds": [
             "/plugin install code-review@claude-plugins-official"
           ],
@@ -1035,7 +1013,6 @@
           "mine": false
         },
         {
-          "href": "",
           "cmds": [
             "/plugin install claude-code-setup@claude-plugins-official"
           ],
@@ -1077,7 +1054,6 @@
       "rows": [
         {
           "href": "https://github.com/Leonxlnx/taste-skill-classics",
-          "cmds": [],
           "name": "minimalist-skill",
           "what": "Interfacce editoriali: monocromo caldo, tipografia forte, griglie bento, niente gradienti",
           "use": "\"stile minimal\"",
@@ -1086,7 +1062,6 @@
         },
         {
           "href": "https://github.com/Leonxlnx/taste-skill/tree/3206dd44fc/skills/redesign-skill",
-          "cmds": [],
           "name": "redesign-skill",
           "what": "Audit di un sito esistente e upgrade premium senza rompere nulla",
           "use": "\"rifai questo sito\"",
@@ -1095,7 +1070,6 @@
         },
         {
           "href": "https://github.com/Leonxlnx/taste-skill/tree/3206dd44fc/skills/output-skill",
-          "cmds": [],
           "name": "output-skill",
           "what": "Obbliga Claude a scrivere codice completo, senza placeholder",
           "use": "\"codice completo\"",
@@ -1103,8 +1077,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "soft-skill",
           "what": "Design da agenzia high-end: font, spaziature, ombre e animazioni che fanno sembrare il sito costoso",
           "use": "\"stile premium/soft\"",
@@ -1112,8 +1084,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "brutalist-skill",
           "what": "Interfacce brutaliste: griglie svizzere, estetica da terminale, contrasto tipografico estremo",
           "use": "\"stile brutalista\"",
@@ -1121,8 +1091,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "gpt-tasteskill",
           "what": "UX/UI + motion GSAP: layout variati, struttura AIDA, bento senza buchi",
           "use": "per nome",
@@ -1130,8 +1098,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "taste-skill-v1",
           "what": "La taste-skill originale v1 (nome interno design-taste-frontend-v1), per compatibilità",
           "use": "per nome",
@@ -1139,8 +1105,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "stitch-skill",
           "what": "Genera file DESIGN.md per Google Stitch con standard anti-generici",
           "use": "\"design system per Stitch\"",
@@ -1148,8 +1112,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "image-to-code-skill",
           "what": "Prima genera l'immagine del design, poi la analizza e la implementa fedelmente",
           "use": "per nome",
@@ -1157,8 +1119,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "imagegen-frontend-web",
           "what": "Genera immagini di riferimento per siti, una per ogni sezione",
           "use": "per nome",
@@ -1166,8 +1126,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "imagegen-frontend-mobile",
           "what": "Genera concept di schermate app iOS/Android",
           "use": "per nome",
@@ -1175,8 +1133,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "brandkit",
           "what": "Genera board di brand guidelines, sistemi logo, identity deck",
           "use": "\"brand kit\"",
@@ -1185,7 +1141,6 @@
         },
         {
           "href": "https://github.com/zarazhangrui/frontend-slides",
-          "cmds": [],
           "name": "frontend-slides",
           "what": "Presentazioni HTML animate da zero o da PPTX, export PDF e deploy opzionale",
           "use": "\"fammi una presentazione\"",
@@ -1200,7 +1155,6 @@
       "rows": [
         {
           "href": "https://github.com/coreyhaines31/marketingskills",
-          "cmds": [],
           "name": "product-marketing",
           "what": "Crea .agents/product-marketing.md: prodotto, target, posizionamento, tono. Le altre lo leggono",
           "use": "\"posizionamento\", \"tono di voce\"",
@@ -1208,8 +1162,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "copywriting",
           "what": "Scrive o riscrive copy marketing: home, landing, pricing, hero, CTA",
           "use": "\"scrivi il copy per…\"",
@@ -1217,8 +1169,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "copy-editing",
           "what": "Migliora copy esistente, toglie lo stile da AI, aggiorna contenuti vecchi",
           "use": "\"sistema questo testo\"",
@@ -1226,8 +1176,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "ux-writing",
           "what": "Microcopy di interfaccia: bottoni, errori, form, onboarding, empty state, accessibilità",
           "use": "\"testi dell'interfaccia\"",
@@ -1242,7 +1190,6 @@
       "rows": [
         {
           "href": "https://github.com/img2threejs/img2threejs",
-          "cmds": [],
           "name": "img2threejs",
           "what": "Da un'immagine di riferimento a un modello Three.js procedurale animabile",
           "use": "\"ricostruisci in 3D\"",
@@ -1250,8 +1197,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-fundamentals",
           "what": "Scena, camere, renderer, gerarchie",
           "use": "da sola",
@@ -1259,95 +1204,66 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-geometry",
           "what": "Forme, BufferGeometry, instancing",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-materials",
           "what": "PBR, shader material, proprietà",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-textures",
           "what": "Texture, UV, environment map, HDR",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-lighting",
           "what": "Luci, ombre, IBL",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-shaders",
           "what": "GLSL, uniform, effetti custom",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-postprocessing",
           "what": "EffectComposer, bloom, DOF",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-animation",
           "what": "Keyframe, skeletal, morph, mixing",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-interaction",
           "what": "Raycasting, controlli, input",
           "use": "da sola",
-          "src": "",
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "threejs-loaders",
           "what": "GLTF, texture, caricamento asincrono",
           "use": "da sola",
-          "src": "",
           "mine": false
         }
       ]
     },
     {
       "h": "Skill di terzi · strumenti",
-      "p": "",
       "rows": [
         {
           "href": "https://github.com/Graphify-Labs/graphify",
-          "cmds": [],
           "name": "graphify",
           "what": "Trasforma codice e documenti in un grafo di conoscenza interrogabile. Serve pipx install graphifyy",
           "use": "/graphify",
@@ -1356,7 +1272,6 @@
         },
         {
           "href": "https://github.com/ki-stuff/skill-auditor",
-          "cmds": [],
           "name": "skill-auditor",
           "what": "Controlla una skill esterna prima di installarla: injection, furto dati, persistenza",
           "use": "\"è sicura questa skill?\"",
@@ -1370,8 +1285,6 @@
       "p": "Non si copiano: si collegano all'account o si generano sulla macchina.",
       "rows": [
         {
-          "href": "",
-          "cmds": [],
           "name": "framer + framer-code-components",
           "what": "Modifica, analizza e pubblica siti Framer. Generate con percorsi della macchina, per questo non sono nel kit",
           "use": "\"modifica il sito Framer\"",
@@ -1379,8 +1292,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "Plugin claude.ai",
           "what": "privacy-legal, gdprgard-compliance, compliance-es",
           "use": "—",
@@ -1388,8 +1299,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "Connettori",
           "what": "Claude Docs, Framer, Gmail, Google Calendar, Motion, Google Drive",
           "use": "—",
@@ -1397,8 +1306,6 @@
           "mine": false
         },
         {
-          "href": "",
-          "cmds": [],
           "name": "Skill Anthropic",
           "what": "docx, pdf, pptx, xlsx, docs, deep-research, skill-creator, google-workspace, reverse-brand…",
           "use": "da sole",
@@ -1416,13 +1323,11 @@
       "kind": "Tool web"
     },
     {
-      "preview": "",
       "name": "Book Animator",
       "href": "https://training-bookanimator.woozy-lab.workers.dev/app/index.html",
       "kind": "Tool web"
     },
     {
-      "preview": "",
       "name": "Moto",
       "href": "https://training-moto.woozy-lab.workers.dev/",
       "kind": "Tool web"
@@ -1488,19 +1393,16 @@
       "kind": "Tool web"
     },
     {
-      "preview": "",
       "name": "Officina Ditheris",
       "href": "https://www.figma.com/community/plugin/1556657188945716249/officina-ditheris",
       "kind": "Plugin Figma"
     },
     {
-      "preview": "",
       "name": "Modulink",
       "href": "https://www.figma.com/community/plugin/1609560384487730743/modulink",
       "kind": "Plugin Figma"
     },
     {
-      "preview": "",
       "name": "Type & Color Swap",
       "href": "https://www.figma.com/community/plugin/1685280633774285667",
       "kind": "Plugin Figma"

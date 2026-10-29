@@ -126,6 +126,44 @@ checks.heroOffline = async (browser) => {
   await ctx.close();
 };
 
+async function jump(page, id, step = 1) {
+  await page.evaluate(([id, step]) => {
+    const s = window.presenter.stops.find(s => s.id === id && s.step === step);
+    window.scrollTo(0, s.y);
+  }, [id, step]);
+  await settle(page); await page.waitForTimeout(200);
+}
+
+checks.inventory = async (browser) => {
+  const { ctx, page } = await open(browser);
+  await jump(page, 's04');
+  await page.click('#inv-filters [data-family="3d"]');
+  await page.waitForTimeout(500);
+  assert.equal(await page.locator('#inv-grid .skill:visible').count(), 11);
+  assert.equal(await page.getAttribute('#inv-filters [data-family="3d"]', 'aria-pressed'), 'true');
+  const first = page.locator('#inv-grid .skill:visible').first();
+  await first.focus();
+  const what = await page.evaluate(() => {
+    const el = [...document.querySelectorAll('#inv-grid .skill')].find(b => !b.hidden);
+    return window.SKILLS[+el.dataset.i].what;
+  });
+  assert.ok((await page.textContent('#inv-detail')).includes(what));
+  await ctx.close();
+};
+
+checks.lens = async (browser) => {
+  const { ctx, page } = await open(browser);
+  await jump(page, 's05', 1);
+  const lens = () => page.getAttribute('#lens-stage', 'data-lens');
+  const seq = [await lens()];
+  for (let i = 0; i < 3; i++) { await press(page, 'ArrowDown'); seq.push(await lens()); }
+  assert.deepEqual(seq, ['base', 'brutalist', 'soft', 'editorial']);
+  await page.click('.lenses [data-lens="soft"]');
+  assert.equal(await lens(), 'soft');
+  assert.equal(await page.getAttribute('.lenses [data-lens="soft"]', 'aria-pressed'), 'true');
+  await ctx.close();
+};
+
 const only = process.argv.slice(2);
 const browser = await chromium.launch();
 let failed = 0;

@@ -38,6 +38,76 @@ checks.overflow = async (browser) => {
   await ctx.close();
 };
 
+// ---------- Presenter (motion on, needs network for GSAP) ----------
+const settle = (page) => page.evaluate(() => new Promise(res => {
+  let last = -1, same = 0;
+  const t = setInterval(() => {
+    if (Math.abs(scrollY - last) < 1) { if (++same >= 4) { clearInterval(t); res(); } }
+    else { same = 0; last = scrollY; }
+  }, 100);
+}));
+const pos = async (page) => (await page.textContent('#pos')).trim();
+async function open(browser, opts = {}) {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...opts });
+  const page = await ctx.newPage();
+  await page.goto(PAGE);
+  await page.waitForFunction(() => window.presenter && window.presenter.stops.length > 0);
+  await page.waitForTimeout(300);
+  return { ctx, page };
+}
+async function press(page, key, n = 1) {
+  for (let i = 0; i < n; i++) { await page.keyboard.press(key); await settle(page); }
+  await page.waitForTimeout(150);
+}
+
+checks.keys = async (browser) => {
+  const { ctx, page } = await open(browser);
+  assert.equal(await page.evaluate(() => document.documentElement.classList.contains('motion')), true);
+  assert.equal(await pos(page), '01');
+  const seen = [];
+  for (let i = 0; i < 6; i++) { await press(page, 'ArrowDown'); seen.push(await pos(page)); }
+  assert.deepEqual(seen, ['02 · 1/4', '02 · 2/4', '02 · 3/4', '02 · 4/4', '03 · 1/5', '03 · 2/5']);
+  await press(page, 'ArrowUp');
+  assert.equal(await pos(page), '03 · 1/5');
+  await ctx.close();
+};
+
+checks.rapid = async (browser) => {
+  const { ctx, page } = await open(browser);
+  for (let i = 0; i < 4; i++) await page.keyboard.press('ArrowDown');
+  await page.waitForTimeout(2000); await settle(page);
+  assert.equal(await pos(page), '02 · 4/4');
+  await ctx.close();
+};
+
+checks.resize = async (browser) => {
+  const { ctx, page } = await open(browser);
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.waitForTimeout(600);
+  await press(page, 'ArrowDown');
+  assert.equal(await pos(page), '02 · 1/4');
+  await ctx.close();
+};
+
+checks.focus = async (browser) => {
+  const { ctx, page } = await open(browser);
+  const btn = page.locator('.lenses button').first();
+  if (await btn.count()) {
+    await btn.focus();
+    const before = await page.evaluate(() => scrollY);
+    await page.keyboard.press('Space'); await settle(page);
+    assert.ok(await page.evaluate(() => scrollY) !== before, 'Space on focused button did not advance');
+  }
+  await ctx.close();
+};
+
+checks.reduced = async (browser) => {
+  const { ctx, page } = await open(browser, { reducedMotion: 'reduce' });
+  assert.equal(await page.evaluate(() => document.documentElement.classList.contains('motion')), false);
+  await press(page, 'ArrowDown');
+  assert.equal(await pos(page), '02');
+  await ctx.close();
+};
 
 const only = process.argv.slice(2);
 const browser = await chromium.launch();

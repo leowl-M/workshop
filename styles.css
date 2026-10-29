@@ -238,6 +238,19 @@ h3 { font-size: 20px; font-weight: 500; letter-spacing: -.015em; }
 .qr:empty { display: none; }
 .qr img, .qr canvas { display: block; width: 168px; height: 168px; border-radius: 8px; }
 
+/* ---------- Motion (only when GSAP loaded and motion allowed) ---------- */
+.motion .sec-head > * { transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.motion .sec-head > :nth-child(2) { transition-delay: .12s; }
+.motion .sec:not(.in) .sec-head > * { opacity: 0; transform: translateY(24px); }
+
+.motion [data-at] { transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.motion [data-step="1"] [data-at="2"],
+.motion [data-step="1"] [data-at="3"], .motion [data-step="2"] [data-at="3"],
+.motion [data-step="1"] [data-at="4"], .motion [data-step="2"] [data-at="4"], .motion [data-step="3"] [data-at="4"],
+.motion [data-step="1"] [data-at="5"], .motion [data-step="2"] [data-at="5"], .motion [data-step="3"] [data-at="5"], .motion [data-step="4"] [data-at="5"] {
+  opacity: 0; transform: translateY(16px);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .inv-body { grid-template-columns: 1fr; }

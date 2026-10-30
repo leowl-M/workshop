@@ -423,13 +423,15 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     wordScrub($('#tempo'));
 
     // Reveals for headings and copy outside pins.
+    // The hero is already on screen at load: reversing it hid the title when scrolling back to the top.
+    const toggle = el => el.closest('#hero') ? 'play none none none' : 'play none none reverse';
     $$('.split').forEach(el => {
       if (el.closest('#ruolo')) return;
       gsap.fromTo($$('.w > span', el), { yPercent: 115, rotateX: -25 }, { yPercent: 0, rotateX: 0, duration: 1.1, ease: 'expo.out', stagger: .045,
-        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' } });
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: toggle(el) } });
     });
     $$('.reveal').forEach(el => gsap.fromTo(el, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .9, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' } }));
+      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: toggle(el) } }));
 
     fan($$('.fcard'), '.fan');
 

@@ -765,7 +765,7 @@
     {
       "name": "Il problema",
       "what": "Parto da un fastidio vero, scritto in parole semplici. Se non so dirlo in due righe, non so ancora cosa costruire.",
-      "file": "docs/keycap-reel-pannello-design.md · Perché",
+      "file": "docs/pannello-design.md · Perché",
       "lines": [
         "Si muove un cursore, non succede niente,",
         "e non si sa se è rotto o se non c'entra."
@@ -801,8 +801,8 @@
       "what": "Claude mi fa domande una alla volta e propone. Le scelte restano mie, e restano scritte.",
       "file": "spec · decisioni",
       "lines": [
-        "Deciso con l'utente: il flat è un modello,",
-        "gli scacchi non sono uno stile.",
+        "Deciso con l'utente: i comandi che non",
+        "servono si spengono, non si nascondono.",
         "(proposta mia, accettata)"
       ]
     },
@@ -810,7 +810,7 @@
       "skill": "documento di design",
       "name": "La spec",
       "what": "Un documento solo: perché, obiettivi, non obiettivi. E gli anti-obiettivi: cosa sarebbe un fallimento anche se funziona.",
-      "file": "docs/keycap-reel-pannello-design.md",
+      "file": "docs/pannello-design.md",
       "lines": [
         "## Anti-obiettivi",
         "- Un comando che si può toccare e non fa",
@@ -822,7 +822,7 @@
       "skill": "superpowers:writing-plans",
       "name": "Il piano",
       "what": "Task piccoli, ognuno con la sua prova. Il primo task è sempre il banco di prova.",
-      "file": "docs/keycap-reel-pannello-piano.md",
+      "file": "docs/pannello-piano.md",
       "lines": [
         "Task 0  Il banco di prova",
         "Task 1  Il modello unico",
@@ -849,10 +849,10 @@
       "what": "Prove nel browser vero, con Playwright, sui punti dove può rompersi. Niente \"fatto\" senza una prova.",
       "file": "piano · Review Focus",
       "lines": [
-        "node prove/keycap-reel/prova.mjs",
+        "node prove/pannello/prova.mjs",
         "→ PASS nome / FAIL nome: messaggio",
-        "migrazione_mode_flat · senza_3d",
-        "incompatibile_resta · dopo_export_spenti"
+        "impostazioni_salvate · comando_spento",
+        "export_funziona · reset_pulito"
       ]
     },
     {

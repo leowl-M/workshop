@@ -99,9 +99,9 @@ html:not(.motion) .keys-gl { display: none; }
 .deck { position: relative; width: min(1180px, 72vw); height: 64vh; margin: 0 auto; }
 .tcard {
   position: absolute; inset: 0; border-radius: var(--r); padding: 6vh 4.4vw;
-  display: grid; grid-template-rows: auto 1fr auto; align-items: end; gap: 2vh; will-change: transform;
+  display: grid; align-content: center; justify-items: center; text-align: center; gap: 2vh; will-change: transform;
 }
-.tcard .num { font: 500 16px var(--mono); letter-spacing: .14em; align-self: start; }
+.tcard .num { font: 500 16px var(--mono); letter-spacing: .14em; position: absolute; top: 6vh; left: 4.4vw; }
 .tcard h3 { font: 900 clamp(48px, 5.6vw, 128px)/.92 var(--display); font-stretch: 110%; letter-spacing: -.04em; }
 .tcard p { font: 400 clamp(20px, 1.8vw, 34px)/1.35 var(--display); opacity: .85; max-width: 32ch; }
 .deep, .tcard.deep { background: var(--deep); color: var(--cream); }

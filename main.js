@@ -731,10 +731,16 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     const knight = new T.Mesh(chessGeo('cavallo'), mats[0]);
     knight.scale.setScalar(34);
     scene.add(knight);
-    sizer(canvas, renderer, cam, () => { cam.position.set(0, 1.6, 9); cam.lookAt(0, 1.6, 0); });
-    const vis = onScreen(canvas);
-    const spot = [{ x: 0, y: .9, s: 28, ry: -Math.PI / 2 }, { x: 1.9, y: .5, s: 26, ry: -1.2 }, { x: 0, y: .1, s: 40, ry: 0 }]; // 1: high in the poster, above its title
     let k = -1, x = 0, y = 0, spin = 0;
+    const spot = [{ x: 0, y: .9, s: 28, ry: -Math.PI / 2 }, { x: 1.9, y: .5, s: 26, ry: -1.2 }, { x: 0, y: .1, s: 40, ry: 0 }]; // 1: high in the poster, above its title
+    sizer(canvas, renderer, cam, () => {
+      cam.position.set(0, 1.6, 9); cam.lookAt(0, 1.6, 0);
+      // 2: keep the wireframe inside the page card on narrow canvases
+      const halfW = 9 * Math.tan(T.MathUtils.degToRad(cam.fov / 2)) * cam.aspect;
+      spot[1].x = Math.min(1.9, halfW * .5); spot[1].s = 26 * Math.min(1, halfW / 3.8);
+      if (k === 1) knight.scale.setScalar(spot[1].s);
+    });
+    const vis = onScreen(canvas);
     gsap.ticker.add(() => {
       if (!vis.on) return;
       const step = window.site.imgStep ?? 0;

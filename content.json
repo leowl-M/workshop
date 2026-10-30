@@ -765,10 +765,10 @@
     {
       "name": "Il problema",
       "what": "Parto da un fastidio vero, scritto in parole semplici. Se non so dirlo in due righe, non so ancora cosa costruire.",
-      "file": "docs/pannello-design.md · Perché",
+      "file": "docs/formati-design.md · Perché",
       "lines": [
-        "Si muove un cursore, non succede niente,",
-        "e non si sa se è rotto o se non c'entra."
+        "Finito un visual, lo rifaccio a mano in dieci formati:",
+        "post, storia, banner. Mezza giornata a spostare livelli."
       ]
     },
     {
@@ -776,8 +776,8 @@
       "what": "Nella cartella c'è un CLAUDE.md: cosa si tocca, cosa no, come si lavora. Claude lo legge prima di ogni cosa.",
       "file": "CLAUDE.md",
       "lines": [
-        "Si brandizza, non si ridisegna.",
-        "Prima una prova su uno strumento.",
+        "Il plugin crea copie, non tocca l'originale.",
+        "Prima una prova su un solo formato.",
         "Nessun push senza ok.",
         "I commenti spiegano il perché."
       ]
@@ -801,8 +801,8 @@
       "what": "Claude mi fa domande una alla volta e propone. Le scelte restano mie, e restano scritte.",
       "file": "spec · decisioni",
       "lines": [
-        "Deciso con l'utente: i comandi che non",
-        "servono si spengono, non si nascondono.",
+        "Deciso con l'utente: logo e titolo restano",
+        "sempre interi, lo sfondo si può tagliare.",
         "(proposta mia, accettata)"
       ]
     },
@@ -810,24 +810,24 @@
       "skill": "documento di design",
       "name": "La spec",
       "what": "Un documento solo: perché, obiettivi, non obiettivi. E gli anti-obiettivi: cosa sarebbe un fallimento anche se funziona.",
-      "file": "docs/pannello-design.md",
+      "file": "docs/formati-design.md",
       "lines": [
         "## Anti-obiettivi",
-        "- Un comando che si può toccare e non fa",
-        "  niente, senza che si capisca perché.",
-        "- Perdere le impostazioni salvate."
+        "- Un formato che sembra giusto ma ha",
+        "  il logo tagliato.",
+        "- Modificare il visual di partenza."
       ]
     },
     {
       "skill": "superpowers:writing-plans",
       "name": "Il piano",
       "what": "Task piccoli, ognuno con la sua prova. Il primo task è sempre il banco di prova.",
-      "file": "docs/pannello-piano.md",
+      "file": "docs/formati-piano.md",
       "lines": [
         "Task 0  Il banco di prova",
-        "Task 1  Il modello unico",
-        "Task 2  Il pannello riordinato",
-        "Task 3  Spento con il perché",
+        "Task 1  La lista dei formati",
+        "Task 2  Copiare e ridimensionare",
+        "Task 3  Logo e titolo sempre interi",
         "…",
         "Task 8  Verifica finale"
       ]
@@ -849,10 +849,10 @@
       "what": "Prove nel browser vero, con Playwright, sui punti dove può rompersi. Niente \"fatto\" senza una prova.",
       "file": "piano · Review Focus",
       "lines": [
-        "node prove/pannello/prova.mjs",
+        "node prove/formati/prova.mjs",
         "→ PASS nome / FAIL nome: messaggio",
-        "impostazioni_salvate · comando_spento",
-        "export_funziona · reset_pulito"
+        "dieci_formati · logo_intero",
+        "testo_leggibile · originale_intatto"
       ]
     },
     {
@@ -860,10 +860,10 @@
       "what": "Lo apro io in locale e controllo che funzioni come prima. Solo con il mio ok va online.",
       "file": "CLAUDE.md · Come si lavora",
       "lines": [
-        "Prima di ogni push si apre lo strumento",
-        "in locale e si controlla che funzioni",
-        "come prima.",
-        "A ogni push Cloudflare pubblica da solo."
+        "Prima di ogni push si prova il plugin",
+        "in Figma su un visual vero e si guarda",
+        "ogni formato, uno per uno.",
+        "Poi il team lo installa dal link."
       ]
     }
   ],

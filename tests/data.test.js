@@ -66,5 +66,5 @@ test('web apps: 21, all https', () => {
 
 test('method: nine steps, each with a real excerpt', () => {
   assert.equal(window.METHOD.length, 9);
-  window.METHOD.forEach(m => assert.ok(m.name && m.what && m.file && m.lines.length, m.name));
+  window.METHOD.forEach(m => assert.ok(m.name && m.what && m.chat.length, m.name));
 });

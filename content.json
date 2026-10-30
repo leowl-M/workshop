@@ -47,7 +47,7 @@
       "regole_doc": "<b># Plugin formati</b>\n\nTocca solo src/ e tests/.\nNiente librerie nuove senza chiedere.\nOgni modifica ha la sua prova.\nSpiega le scelte in parole semplici.\nPrima di pubblicare, aspetta il mio ok.",
       "skill_titolo": "Le skill: <em>ricette pronte.</em>",
       "skill_testo": "Una skill è un metodo scritto una volta e riusato ogni volta: come fare le domande giuste, come scrivere un piano, come rileggere il codice. Un manuale per il collega. Accendo solo quelle che servono al progetto.",
-      "skill_doc": "<b>Accese in questo progetto</b>\n\n<i>●</i> brainstorming     fa domande una alla volta\n<i>●</i> writing-plans     scrive il piano a task\n<i>●</i> code-review       rilegge il codice\n\n<u>○  le altre restano spente</u>",
+      "skill_doc": "<b>Accese in questo progetto</b>\n\n<i>●</i> brainstorming     una domanda a volta\n<i>●</i> writing-plans     scrive il piano a task\n<i>●</i> code-review       rilegge il codice\n\n<u>○  le altre restano spente</u>",
       "permesso_titolo": "Io decido, <em>Claude esegue.</em>",
       "permesso_testo": "Ogni azione importante passa da me: creare un file, lanciare un comando, pubblicare online. Posso dire sì, no, oppure spiegare cosa voglio al suo posto.",
       "permesso_doc": "<i>●</i> Voglio lanciare i test del plugin\n\n  <b>npm test</b>\n\n<u>? Posso procedere?</u>\n  <b>1  Sì</b>\n  2  Sì, e non chiedermelo più\n  3  No, fai così invece…"
@@ -67,6 +67,25 @@
     "skill": {
       "kicker": "Le mie skill",
       "sottotitolo": "Una skill è un manuale che Claude legge prima di lavorare."
+    },
+    "pratica": {
+      "kicker": "Le skill, in pratica",
+      "tab1": "Installarle",
+      "tab2": "Richiamarle",
+      "tab3": "Partono da sole?",
+      "tab4": "Spegnerle",
+      "titolo1": "Installarle: <em>due comandi.</em>",
+      "testo1": "Quasi sempre una skill arriva dentro un plugin. Aggiungi il catalogo una volta, poi installi. Oppure copi la cartella in ~/.claude/skills/.",
+      "term1": "<b>&gt; /plugin marketplace add\n    anthropics/claude-plugins-official</b>\n<i>●</i> Catalogo aggiunto\n\n<b>&gt; /plugin install\n    nome@claude-plugins-official</b>\n<i>●</i> Per te o per questo progetto?\n<i>●</i> Installato: le sue skill sono pronte\n\n<u>Quelle dei plugin si chiamano plugin:skill</u>",
+      "titolo2": "Richiamarle: <em>/ e il nome.</em>",
+      "testo2": "Scrivi / seguito dal nome, come un comando. Oppure lo chiedi a parole, come a un collega.",
+      "term2": "<b>&gt; /inventario</b>\n<i>●</i> Leggo la skill inventario\n<i>●</i> Per questo progetto ti servono:\n  brainstorming, writing-plans, code-review\n\n<b>&gt; Facciamo un brainstorming sul plugin</b>\n<i>●</i> Uso la skill brainstorming\n<u>? Prima domanda: per chi è il plugin?</u>",
+      "titolo3": "Partono da sole? <em>Di solito.</em>",
+      "testo3": "Claude legge la descrizione di ogni skill e apre quella che somiglia alla richiesta. Non è garantito: se conta, chiamala tu.",
+      "term3": "<b>&gt; Mi serve un plugin che adatta un visual\n  a dieci formati</b>\n\n<i>●</i> La richiesta somiglia a «brainstorming»:\n  «usala prima di costruire qualcosa»\n<i>●</i> Uso la skill brainstorming\n\n<u>Decide dalla descrizione, non dal nome</u>",
+      "titolo4": "Spegnerle: <em>/skills.</em>",
+      "testo4": "Se una skill non serve a quel progetto, la spegni: Claude resta concentrato. Vale solo per quella cartella.",
+      "term4": "<b>&gt; /skills</b>\n  <i>●</i> brainstorming       on\n  <i>●</i> inventario          on\n  ○ framer              off\n  ○ threejs-shaders     off\n<u>  spazio per cambiare · esc per salvare</u>\n\n<b>&gt; /plugin disable nome@catalogo</b>\n<u>  spegne un plugin intero</u>"
     },
     "lenti": {
       "kicker": "Le lenti",
@@ -822,116 +841,144 @@
     {
       "name": "Il problema",
       "what": "Parto da un fastidio vero, scritto in parole semplici. Se non riesco a spiegarlo in due righe, non so ancora cosa costruire.",
-      "file": "docs/formati-design.md · Perché",
-      "lines": [
-        "Finito un visual, lo rifaccio a mano",
-        "in dieci formati: post, storia, banner.",
-        "Mezza giornata a spostare livelli."
-      ],
-      "here": "formati-design.md"
+      "here": "formati-design.md",
+      "chat": [
+        "<b>&gt; Finito un visual, lo rifaccio a mano in dieci</b>",
+        "<b>  formati: post, storia, banner. Mezza giornata.</b>",
+        "",
+        "<i>●</i> Capito. Parto da qui, scritto in parole semplici.",
+        "<i>●</i> Scrivo docs/formati-design.md · Perché",
+        "<u>  «Finito un visual, lo rifaccio a mano</u>",
+        "<u>   in dieci formati. Mezza giornata a</u>",
+        "<u>   spostare livelli.»</u>"
+      ]
     },
     {
       "name": "Il contesto",
       "what": "Scrivo le regole del progetto nel CLAUDE.md: cosa si tocca, cosa no, come si lavora. Claude le legge prima di cominciare.",
-      "file": "CLAUDE.md",
-      "lines": [
-        "Il plugin crea copie, non tocca l'originale.",
-        "Prima una prova su un solo formato.",
-        "Nessun push senza ok.",
-        "I commenti spiegano il perché."
-      ],
-      "here": "CLAUDE.md"
+      "here": "CLAUDE.md",
+      "chat": [
+        "<b>&gt; Prima mettiamo le regole del progetto.</b>",
+        "",
+        "<i>●</i> Creo CLAUDE.md",
+        "<u>  Il plugin crea copie, non tocca l'originale.</u>",
+        "<u>  Prima una prova su un solo formato.</u>",
+        "<u>  Nessun push senza ok.</u>",
+        "",
+        "<i>●</i> Lo leggo prima di ogni lavoro."
+      ]
     },
     {
       "skill": "/skills",
       "name": "Le skill giuste",
       "what": "Accendo solo le skill che servono a questo progetto. Le altre restano spente, così Claude resta concentrato.",
-      "file": ".claude/settings.local.json",
-      "lines": [
-        "\"skillOverrides\": {",
-        "  \"framer\": \"off\",",
-        "  \"threejs-shaders\": \"off\",",
-        "  \"copy-guide\": \"name-only\"",
-        "}"
-      ],
-      "here": "settings.local.json"
+      "here": "settings.local.json",
+      "chat": [
+        "<b>&gt; /inventario</b>",
+        "",
+        "<i>●</i> Per questo progetto servono:",
+        "  brainstorming, writing-plans, code-review",
+        "<i>●</i> framer e threejs-shaders qui non servono:",
+        "  li spengo",
+        "<u>  .claude/settings.local.json aggiornato</u>"
+      ]
     },
     {
       "skill": "superpowers:brainstorming",
       "name": "Le domande",
       "what": "Prima di costruire, Claude mi fa domande, una alla volta, e propone soluzioni. Le scelte restano mie, e finiscono per iscritto.",
-      "file": "spec · decisioni",
-      "lines": [
-        "Deciso con l'utente: logo e titolo restano",
-        "sempre interi, lo sfondo si può tagliare.",
-        "(proposta mia, accettata)"
-      ],
-      "here": "formati-design.md"
+      "here": "formati-design.md",
+      "chat": [
+        "<i>●</i> Uso la skill brainstorming",
+        "",
+        "<u>? Logo e titolo si possono tagliare</u>",
+        "<u>  nei formati stretti?</u>",
+        "<b>&gt; No, restano sempre interi.</b>",
+        "<u>? E lo sfondo?</u>",
+        "<b>&gt; Lo sfondo sì, si può tagliare.</b>",
+        "",
+        "<i>●</i> Deciso. Lo scrivo nella spec."
+      ]
     },
     {
       "skill": "documento di design",
       "name": "La spec",
       "what": "La spec è il progetto scritto: perché lo facciamo, cosa deve fare, cosa no. E cosa sarebbe un fallimento, anche se funziona.",
-      "file": "docs/formati-design.md",
-      "lines": [
-        "## Anti-obiettivi",
-        "- Un formato che sembra giusto ma ha",
-        "  il logo tagliato.",
-        "- Modificare il visual di partenza."
-      ],
-      "here": "formati-design.md"
+      "here": "formati-design.md",
+      "chat": [
+        "<i>●</i> Scrivo docs/formati-design.md",
+        "<u>  ## Obiettivo</u>",
+        "<u>  Dieci formati in un clic.</u>",
+        "<u>  ## Anti-obiettivi</u>",
+        "<u>  - un formato con il logo tagliato</u>",
+        "<u>  - modificare il visual di partenza</u>",
+        "",
+        "<u>? La spec ti torna?</u>",
+        "<b>&gt; Sì, andiamo.</b>"
+      ]
     },
     {
       "skill": "superpowers:writing-plans",
       "name": "Il piano",
       "what": "Il lavoro diviso in passi piccoli, ognuno con la sua prova. Si parte sempre da un test su un solo formato.",
-      "file": "docs/formati-piano.md",
-      "lines": [
-        "Task 0  Il banco di prova",
-        "Task 1  La lista dei formati",
-        "Task 2  Copiare e ridimensionare",
-        "Task 3  Logo e titolo sempre interi",
-        "…",
-        "Task 8  Verifica finale"
-      ],
-      "here": "formati-piano.md"
+      "here": "formati-piano.md",
+      "chat": [
+        "<i>●</i> Uso la skill writing-plans",
+        "<i>●</i> Scrivo docs/formati-piano.md",
+        "<u>  Task 0  il banco di prova</u>",
+        "<u>  Task 1  la lista dei formati</u>",
+        "<u>  Task 2  copiare e ridimensionare</u>",
+        "<u>  Task 3  logo e titolo sempre interi</u>",
+        "<u>  …</u>",
+        "<u>  Task 8  verifica finale</u>"
+      ]
     },
     {
       "skill": "subagent-driven-development",
       "name": "La costruzione",
       "what": "Ogni passo va a un agente, un'altra AI dedicata solo a quello. Un secondo agente lo ricontrolla. Io guardo, provo e decido.",
-      "file": "piano · istruzioni per gli agenti",
-      "lines": [
-        "Use superpowers:subagent-driven-development",
-        "to implement this plan task-by-task.",
-        "Ogni task finisce con le prove verdi."
-      ],
-      "here": "src/"
+      "here": "src/",
+      "chat": [
+        "<i>●</i> Uso subagent-driven-development",
+        "",
+        "<i>●</i> Task 1 · la lista dei formati      ✓",
+        "<i>●</i> Task 2 · copiare e ridimensionare  ✓",
+        "<i>●</i> Task 3 · logo e titolo interi",
+        "  il revisore trova un caso: banner 728×90",
+        "  corretto, prova di nuovo verde         ✓",
+        "<u>  …</u>"
+      ]
     },
     {
       "skill": "verification-before-completion",
       "name": "La verifica",
       "what": "Prove automatiche in un browser vero, sui punti dove può rompersi. Nessun «fatto» senza una prova che lo dimostri.",
-      "file": "piano · Review Focus",
-      "lines": [
-        "node prove/formati/prova.mjs",
-        "→ PASS nome / FAIL nome: messaggio",
-        "dieci_formati · logo_intero",
-        "testo_leggibile · originale_intatto"
-      ],
-      "here": "tests/"
+      "here": "tests/",
+      "chat": [
+        "<b>&gt; node prove/formati/prova.mjs</b>",
+        "",
+        "  PASS  dieci_formati",
+        "  PASS  logo_intero",
+        "  PASS  testo_leggibile",
+        "  PASS  originale_intatto",
+        "",
+        "<i>●</i> 4 prove su 4, nel browser vero.",
+        "  Adesso è davvero fatto."
+      ]
     },
     {
       "name": "Il rilascio",
       "what": "Lo provo io in Figma su un visual vero. Solo con il mio ok va online, e il team lo installa.",
-      "file": "CLAUDE.md · Come si lavora",
-      "lines": [
-        "Prima di ogni push si prova il plugin",
-        "in Figma su un visual vero e si guarda",
-        "ogni formato, uno per uno.",
-        "Poi il team lo installa dal link."
-      ],
-      "here": "CLAUDE.md"
+      "here": "CLAUDE.md",
+      "chat": [
+        "<b>&gt; L'ho provato in Figma su un visual vero:</b>",
+        "<b>  funziona. Pubblica.</b>",
+        "",
+        "<i>●</i> git push",
+        "<i>●</i> Online: il team lo installa dal link   ✓",
+        "",
+        "<u>  formati-plugin · pronto</u>"
+      ]
     }
   ],
   "METHOD_KEYS": [

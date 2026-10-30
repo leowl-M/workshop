@@ -12,7 +12,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const html = document.documentElement;
   if (motion) html.classList.add('motion');
-  history.scrollRestoration = 'manual'; // the deck decides where a reload lands (hash or top)
+  history.scrollRestoration = 'manual'; // the deck decides where a reload lands: the hash, else the stop you were on, else the top
   const IMG = 'media/projects/';
   const ORDER = GROUPS.flatMap(g => PROJECTS.filter(p => p.group === g.id));
   const byId = (id) => PROJECTS.find(p => p.id === id);
@@ -165,16 +165,32 @@ ${vis}    </div></section>`; };
     // The Claude Code folder: in full with notes once, then beside every step with the file it works on lit up.
     const tree = (here, notes) => FOLDER.map(f => `<li style="--d: ${f.d}"${f.name === here ? ' class="here"' : ''}><b>${esc(f.name)}</b>${notes ? `<span>${esc(f.note)}</span>` : ''}</li>`).join('');
     $('#folder').innerHTML = tree(null, true);
+    // Claude Code window: each line of a conversation is a span, so the lines come in one after the other.
+    $$('#claude .cc-convo').forEach(pre => { pre.innerHTML = pre.innerHTML.split('\n').map((l, i) => `<span class="ln" style="--i: ${i}">${l || ' '}</span>`).join(''); });
     // Overview first: all nine steps at a glance, then one per panel.
     $('#method-track').insertAdjacentHTML('beforeend', `<div class="panel mover"><h3>Nove passi, <em>dall'idea al rilascio.</em></h3>
       <div class="mover-phases">${['Preparare', 'Progettare', 'Costruire'].map((p, i) => `<span style="--i: ${i * 3}">${p}</span>`).join('')}</div>
       <ol class="mover-list"><i class="mover-line" aria-hidden="true"></i>${METHOD.map((m, i) => `<li style="--i: ${i}"><b>${i + 1}</b><span>${esc(m.name)}</span></li>`).join('')}</ol></div>`);
-    $('#method-track').insertAdjacentHTML('beforeend', METHOD.map((m, i) => `
-      <div class="panel mstep"><div class="mleft"><span class="big-num">${i + 1}</span><h3>${esc(m.name)}</h3><p>${esc(m.what)}</p>${m.skill ? `<code>${esc(m.skill)}</code>` : ''}</div>
-        <div class="doc ide"><div class="doc-bar"><i></i><i></i><i></i><span>${esc(m.file)}</span></div>
-          <div class="ide-body"><ul class="tree" aria-label="Cartella del progetto">${tree(m.here)}</ul><pre>${m.lines.map(esc).join('\n')}</pre></div></div></div>`).join('') + `
+    // The nine steps as one Claude Code session: per stop the conversation of that step, the file it works on lit in the folder,
+    // then the finished plugin and the 3D base.
+    const ccWin = (body) => `<div class="cc-bar"><i></i><i></i><i></i><span>claude — ~/formati-plugin</span></div>
+      <div class="cc-body">${body}<div class="cc-input"><span>&gt;</span><i></i></div><p class="cc-hint">? for shortcuts</p></div>`;
+    $('#passi').innerHTML = `<div class="stage cc-stage">
+      <div class="cc-head"><p class="kicker">Il metodo, dal vivo</p>
+        <ol class="cc-tabs cc-dots">${METHOD.map((m, i) => `<li><b>${i + 1}</b><span>${esc(m.name)}</span></li>`).join('')}<li><b>✓</b><span>Il prodotto</span></li></ol></div>
+      <div class="cc-main">
+        <div class="cc ps" id="ps" data-step="0" aria-label="Una sessione di Claude Code, passo per passo">${ccWin(`
+          <div class="ps-cols"><ul class="tree ps-tree" aria-label="Cartella del progetto">${FOLDER.map(f => `<li style="--d: ${f.d}" data-name="${esc(f.name)}"><b>${esc(f.name)}</b></li>`).join('')}</ul>
+            <div class="cc-log">${METHOD.map(m => `<pre class="cc-convo">${m.chat.map((l, i) => `<span class="ln" style="--i: ${i}">${l || ' '}</span>`).join('')}</pre>`).join('')}
+              <div class="cc-convo ps-done"><div class="ps-plugin"><p>Dieci formati.<br><em>Un pulsante.</em></p><span>Fai la<br>magia</span></div>
+                <p class="ps-ok"><i>●</i> formati-plugin · installato nel team   ✓</p></div></div></div>`)}</div>
+        <div class="cc-caps">${METHOD.map((m, i) => `<div class="cc-cap"><span class="big-num">${i + 1}</span><h3>${esc(m.name)}</h3><p>${esc(m.what)}</p>${m.skill ? `<code>${esc(m.skill)}</code>` : ''}</div>`).join('')}
+          <div class="cc-cap"><span class="big-num">✓</span><h3>Il prodotto.</h3><p>Un plugin Figma vero, pronto per il team. Adesso vediamolo in azione.</p></div></div>
+      </div>
       <div class="panel mbase"><canvas class="base-gl" id="base-gl" aria-hidden="true"></canvas>
-        <div class="mbase-copy"><h3>Nove passi.<br><em>Una base solida.</em></h3><p>Ogni progetto parte da qui. Ecco cosa ne è uscito.</p></div></div>`);
+        <div class="mbase-copy"><h3>Nove passi.<br><em>Una base solida.</em></h3><p>Ogni progetto parte da qui. Ecco cosa ne è uscito.</p></div></div>
+    </div>`;
+
 
     // Demo: the ten formats the plugin makes, in three rows of the Figma canvas (row height in % of the canvas).
     const FORMATS = [
@@ -468,17 +484,44 @@ ${vis}    </div></section>`; };
       tl.to({}, { duration: .2 });
     }, (tl) => labelsAt(tl, 3));
 
-    // Method: a horizontal track; each panel is a stop. The last panel builds the base in 3D when it comes on.
-    const track = $('#metodo .track'), panels = $$('#metodo .panel');
-    const maxX = () => track.scrollWidth - innerWidth;
-    pin($('#metodo'), panels.length, (tl) => {
-      tl.to(track, { x: () => -maxX(), duration: 1 });
-    }, () => panels.map(p => Math.min(1, Math.max(0, (p.offsetLeft + p.offsetWidth / 2 - innerWidth / 2) / maxX()))));
-    ScrollTrigger.create({
-      trigger: '#metodo', start: 'top top', end: () => fractions.get($('#metodo')).st.end, onUpdate: self => {
-        const x = self.progress * maxX() + innerWidth / 2;
-        panels.forEach(p => p.classList.toggle('on', x > p.offsetLeft && x < p.offsetLeft + p.offsetWidth));
-      },
+    // Method: two horizontal tracks, each panel a stop; between them the Claude Code window. The last panel builds the base in 3D.
+    const hTrack = (sec) => {
+      const track = $('.track', sec), panels = $$('.panel', sec);
+      const maxX = () => track.scrollWidth - innerWidth;
+      pin(sec, panels.length, (tl) => {
+        tl.to(track, { x: () => -maxX(), duration: 1 });
+      }, () => panels.map(p => Math.min(1, Math.max(0, (p.offsetLeft + p.offsetWidth / 2 - innerWidth / 2) / maxX()))));
+      ScrollTrigger.create({
+        trigger: sec, start: 'top top', end: () => fractions.get(sec).st.end, onUpdate: self => {
+          const x = self.progress * maxX() + innerWidth / 2;
+          panels.forEach(p => p.classList.toggle('on', x > p.offsetLeft && x < p.offsetLeft + p.offsetWidth));
+        },
+      });
+    };
+    hTrack($('#metodo'));
+    // A Claude Code window that moves one stop at a time: tab, conversation and caption k are on; onStep does the rest.
+    const ccPin = (sec, n, onStep) => {
+      const cc = $('.cc', sec), lists = [$$('.cc-tabs li', sec), $$('.cc-cap', sec), $$('.cc-convo', sec)];
+      pin(sec, n - 1, () => {}, Array.from({ length: n }, (_, i) => .04 + i * .92 / (n - 1)));
+      const st = fractions.get(sec).st;
+      const set = (k) => {
+        if (cc.dataset.step === String(k)) return;
+        cc.dataset.step = k; window.site[sec.id + 'Step'] = k;
+        lists.forEach(list => list.forEach((el, i) => el.classList.toggle('on', i === k)));
+        onStep?.(k);
+      };
+      ScrollTrigger.create({ trigger: sec, start: () => st.start, end: () => st.end, onUpdate: self => set(Math.min(n - 1, Math.floor(self.progress * n))) });
+      cc.dataset.step = ''; set(0);
+    };
+    // Skills in practice: four questions.
+    ccPin($('#claude'), 4);
+    hTrack($('#metodo-passi'));
+    // The nine steps live, then the product, then the base (its panel turns on, so the 3D keys land).
+    const psTree = $$('#ps .ps-tree li'), base = $('#passi .mbase');
+    ccPin($('#passi'), METHOD.length + 2, (k) => {
+      psTree.forEach(li => li.classList.toggle('here', li.dataset.name === METHOD[k]?.here));
+      $('#passi').classList.toggle('at-base', k === METHOD.length + 1);
+      base.classList.toggle('on', k === METHOD.length + 1);
     });
 
     // Demo: one Figma state per stop (selected, plugin open, creating, done).
@@ -1277,6 +1320,12 @@ ${vis}    </div></section>`; };
   }
 
   // ---------- Boot ----------
+  // A reload comes back to the stop you were on (this tab only); without storage it starts from the top.
+  const RESUME = 'workshop-stop';
+  const nearestStop = () => { const s = window.site.stops || []; let k = 0; s.forEach((y, i) => { if (Math.abs(y - scrollY) < Math.abs(s[k] - scrollY)) k = i; }); return k; };
+  addEventListener('pagehide', () => { try { sessionStorage.setItem(RESUME, nearestStop()); } catch (e) {} });
+  const resumeStop = () => { try { const k = sessionStorage.getItem(RESUME); return k === null ? null : +k; } catch (e) { return null; } };
+  $('.tiny-logo').append($('.brand .logo').cloneNode(true));
   renderContent();
   $$('.split, #domanda .beat').forEach(el => wrapWords(el, true));
   $$('.scrub-words').forEach(el => wrapWords(el, false));
@@ -1288,7 +1337,9 @@ ${vis}    </div></section>`; };
     if (motion) ScrollTrigger.refresh(); else { buildStops(); onScroll(); }
     const target = location.hash && document.getElementById(location.hash.slice(1));
     lenis?.resize(); // Lenis caches the page height; pins just made it much taller
+    const k = resumeStop(), s = window.site.stops || [];
     if (target) scrollToY(firstStop(target), { immediate: true });
+    else if (k > 0 && k < s.length) scrollToY(s[k], { immediate: true });
     scenes();
     sphere();
     prisma();

@@ -73,8 +73,9 @@ checks.structure = async (browser) => {
   assert.equal(await page.locator('.mq, .keys-hint, .kb-hint, #pattern-gl, .sphere-preview, .pdemo').count(), 0, 'removed on request');
   assert.equal(await page.locator('#sphere .cube3').count(), 21, 'a cube over every name');
   assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.kit-panel')).overflowY), 'visible', 'kit cards never scroll');
-  assert.equal(await page.locator('#metodo .mstep').count(), 9, 'nine steps');
-  assert.equal(await page.locator('#metodo .mbase #base-gl').count(), 1, 'then the solid base, no real project');
+  assert.equal(await page.locator('#claude .cc-convo').count(), 4, 'Claude Code window: four questions on skills');
+  assert.equal(await page.locator('#passi .cc-cap').count(), 10, 'nine steps live, then the product');
+  assert.equal(await page.locator('#passi .mbase #base-gl').count(), 1, 'then the solid base, no real project');
   assert.equal(await page.locator('#demo .ff').count(), 10, 'the demo makes ten formats');
   assert.ok((await stops(page)).length >= 50, 'stops');
   assert.ok(await page.evaluate(() => document.querySelectorAll('.pin-spacer').length >= 12), 'pins');
@@ -205,6 +206,28 @@ checks.hash = async (browser) => {
   await page.waitForTimeout(400);
   assert.equal(await page.evaluate(() => window.site.chapter), 'Progetti');
   assert.ok(await page.isVisible('#p-prisma .pname'));
+  await ctx.close();
+};
+
+checks.reload = async (browser) => {
+  // A reload lands on the stop you were on, not somewhere in between.
+  const { ctx, page } = await open(browser);
+  const s = await stops(page);
+  await page.evaluate(y => window.site.scrollToY(y, { immediate: true }), s[20]);
+  await page.waitForTimeout(300);
+  await page.reload();
+  await page.waitForFunction(() => window.site && window.site.ready, null, { timeout: 15000 });
+  near(await settle(page), (await stops(page))[20], 'same stop after reload');
+  await ctx.close();
+};
+
+checks.tiny = async (browser) => {
+  // Tablet and phone: a blue screen asks for the desktop version.
+  const { ctx, page } = await open(browser, { viewport: { width: 800, height: 1100 } });
+  assert.ok(await page.isVisible('.tiny .tiny-title'));
+  assert.ok(await page.isVisible('.tiny .logo'));
+  await page.setViewportSize({ width: 1440, height: 900 });
+  assert.ok(await page.isHidden('.tiny'), 'gone on desktop');
   await ctx.close();
 };
 

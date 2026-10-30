@@ -94,6 +94,27 @@ content:
             fields:
               - { name: kicker, label: Kicker, type: text }
               - { name: sottotitolo, label: Sottotitolo, type: text }
+          - name: pratica
+            label: Metodo, le skill in pratica
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: tab1, label: Scheda 1, type: text }
+              - { name: tab2, label: Scheda 2, type: text }
+              - { name: tab3, label: Scheda 3, type: text }
+              - { name: tab4, label: Scheda 4, type: text }
+              - { name: titolo1, label: Titolo 1, type: text }
+              - { name: testo1, label: Testo 1, type: text }
+              - { name: term1, label: Terminale 1, type: text }
+              - { name: titolo2, label: Titolo 2, type: text }
+              - { name: testo2, label: Testo 2, type: text }
+              - { name: term2, label: Terminale 2, type: text }
+              - { name: titolo3, label: Titolo 3, type: text }
+              - { name: testo3, label: Testo 3, type: text }
+              - { name: term3, label: Terminale 3, type: text }
+              - { name: titolo4, label: Titolo 4, type: text }
+              - { name: testo4, label: Testo 4, type: text }
+              - { name: term4, label: Terminale 4, type: text }
           - name: lenti
             label: Lenti
             type: object
@@ -256,9 +277,8 @@ content:
           - { name: skill, label: Skill (facoltativa), type: string }
           - { name: name, label: Nome, type: string }
           - { name: what, label: Testo, type: text }
-          - { name: file, label: File citato, type: string }
           - { name: here, label: File acceso nella cartella (nome in FOLDER), type: string }
-          - { name: lines, label: Righe dell'estratto, type: string, list: true }
+          - { name: chat, label: Conversazione con Claude (una riga per voce), type: string, list: true }
       - name: FOLDER
         label: Metodo, cartella di Claude Code
         type: object

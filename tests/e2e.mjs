@@ -60,8 +60,11 @@ checks.offline = async (browser) => {
 
 checks.structure = async (browser) => {
   const { ctx, page, errors } = await open(browser);
-  assert.equal(await page.locator('section.project').count(), 3, 'one pinned chapter per app');
-  assert.ok(await page.locator('#g-app ~ #p-photoshop, #g-app ~ .pin-spacer #p-photoshop').count() >= 1 || await page.locator('#p-photoshop').count() === 1, 'Photoshop is an app');
+  assert.equal(await page.locator('section.project').count(), 1, 'Prisma keeps its pinned chapter');
+  assert.equal(await page.locator('section.project-one').count(), 2, 'Composer and Editor: one screen, then how it works');
+  assert.equal(await page.locator('#composer-how .istep').count(), 4, 'Composer: how it works, four steps');
+  assert.equal(await page.locator('#p-photoshop').count(), 0, 'Photoshop removed');
+  assert.equal(await page.locator('#editor-how .istep').count(), 4, 'Editor: how it works, four steps');
   assert.equal(await page.locator('#mosaic, .pfcard, #tornado, #gl, .cursor, .cursor-pill').count(), 0, 'no bento, no cards, no custom cursor');
   assert.equal(await page.locator('.pill, .where, #chapters, #rail button').count(), 0, 'one indicator only');
   assert.equal(await page.locator('#sphere a[href^="https://"]').count(), 21, 'every app online in the sphere');
@@ -72,6 +75,7 @@ checks.structure = async (browser) => {
   assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.kit-panel')).overflowY), 'visible', 'kit cards never scroll');
   assert.equal(await page.locator('#metodo .mstep').count(), 9, 'nine steps');
   assert.equal(await page.locator('#metodo .mbase #base-gl').count(), 1, 'then the solid base, no real project');
+  assert.equal(await page.locator('#demo .ff').count(), 10, 'the demo makes ten formats');
   assert.ok((await stops(page)).length >= 50, 'stops');
   assert.ok(await page.evaluate(() => document.querySelectorAll('.pin-spacer').length >= 12), 'pins');
   const broken = await page.evaluate(async () => {
@@ -123,11 +127,10 @@ checks.modal = async (browser) => {
   await page.evaluate(() => window.site.open('export'));
   await page.waitForSelector('#modal:not([hidden])');
   assert.equal(await page.textContent('#modal-title'), 'Export');
-  assert.match(await page.textContent('#modal-media'), /IMG-02/);
   await page.keyboard.press('ArrowRight');
   assert.equal(await page.textContent('#modal-title'), 'Type & Color Swap', 'arrows move between plugins, not slides');
   await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowRight');
-  assert.equal(await page.textContent('#modal-title'), 'Modulink', 'Photoshop is not among the plugins');
+  assert.equal(await page.textContent('#modal-title'), 'Modulink', 'Modulink is the last plugin');
   const y = await page.evaluate(() => scrollY);
   await page.keyboard.press('Escape');
   await page.waitForTimeout(500);
@@ -215,20 +218,23 @@ checks.lens = async (browser) => {
     if (await page.evaluate(() => window.site.chapter === 'Lenti'))
       seq.push(await page.getAttribute('#lens-stage', 'data-lens'));
   }
-  assert.deepEqual(seq, ['base', 'brutalist', 'soft', 'editorial']);
+  assert.deepEqual(seq, ['base', 'brutalist', 'soft', 'editorial'], JSON.stringify(seq));
   await ctx.close();
 };
 
 checks.project = async (browser) => {
   const { ctx, page } = await open(browser);
-  // The stop after Composer's title shows the problem beat, and only that one.
+  // Composer: one screen with problem and solution, then each stop of "how it works" shows its own state.
+  await goToSection(page, 'p-composer');
+  assert.ok(await page.isVisible('#p-composer .pproblem') && await page.isVisible('#p-composer .psolution'));
   const s = await stops(page);
-  const top = await page.evaluate(() => { const el = document.getElementById('p-composer'); return el.getBoundingClientRect().top + scrollY; });
+  const top = await page.evaluate(() => { const el = document.getElementById('composer-how'); return el.getBoundingClientRect().top + scrollY; });
   const k = s.findIndex(y => y >= top - 3);
-  await page.evaluate(y => window.site.scrollToY(y, { immediate: true }), s[k + 1]);
-  await page.waitForTimeout(1200);
-  const visible = await page.evaluate(() => [...document.querySelectorAll('#p-composer .pbeat')].map(b => +getComputedStyle(b).opacity > .9));
-  assert.deepEqual(visible, [false, true, false, false]);
+  for (let i = 0; i < 4; i++) {
+    await page.evaluate(y => window.site.scrollToY(y, { immediate: true }), s[k + i]);
+    await page.waitForTimeout(300);
+    assert.equal(await page.getAttribute('#cp', 'data-step'), String(i), 'stop ' + i);
+  }
   await ctx.close();
 };
 
@@ -255,12 +261,6 @@ checks.copy = async (browser) => {
   await ctx.close();
 };
 
-checks.qr = async (browser) => {
-  const { ctx, page } = await open(browser);
-  assert.ok(await page.locator('#qr img, #qr canvas').count() > 0, 'no QR rendered');
-  assert.equal(await page.getAttribute('#share-link', 'href'), await page.evaluate(() => window.SHARE_URL));
-  await ctx.close();
-};
 
 // ---------- Runner ----------
 const only = process.argv.slice(2);

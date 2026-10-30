@@ -55,8 +55,39 @@ content:
               - { name: sempre_kicker, label: Sempre kicker, type: text }
               - { name: sempre_titolo, label: Sempre titolo, type: text }
               - { name: sempre_ponytail, label: Sempre ponytail, type: text }
-              - { name: sempre_caveman, label: Sempre caveman, type: text }
-              - { name: sempre_output, label: Sempre output, type: text }
+              - { name: sempre_brainstorming, label: Sempre brainstorming, type: text }
+              - { name: sempre_inventario, label: Sempre inventario, type: text }
+              - { name: cc_titolo, label: Claude Code titolo, type: text }
+              - { name: cc_testo, label: Claude Code testo, type: text }
+              - { name: cc_terminale, label: Claude Code terminale, type: text }
+              - { name: cartella_titolo, label: Cartella titolo, type: text }
+              - { name: cartella_testo, label: Cartella testo, type: text }
+              - { name: giro_titolo, label: Ciclo titolo, type: text }
+              - { name: giro_testo, label: Ciclo testo, type: text }
+              - { name: giro_doc, label: Ciclo riquadro, type: text }
+              - { name: regole_titolo, label: CLAUDE.md titolo, type: text }
+              - { name: regole_testo, label: CLAUDE.md testo, type: text }
+              - { name: regole_doc, label: CLAUDE.md riquadro, type: text }
+              - { name: skill_titolo, label: Skill titolo, type: text }
+              - { name: skill_testo, label: Skill testo, type: text }
+              - { name: skill_doc, label: Skill riquadro, type: text }
+              - { name: permesso_titolo, label: Permesso titolo, type: text }
+              - { name: permesso_testo, label: Permesso testo, type: text }
+              - { name: permesso_doc, label: Permesso riquadro, type: text }
+          - name: demo
+            label: Demo del plugin
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: passo1_titolo, label: Passo1 titolo, type: text }
+              - { name: passo1_testo, label: Passo1 testo, type: text }
+              - { name: passo2_titolo, label: Passo2 titolo, type: text }
+              - { name: passo2_testo, label: Passo2 testo, type: text }
+              - { name: passo3_titolo, label: Passo3 titolo, type: text }
+              - { name: passo3_testo, label: Passo3 testo, type: text }
+              - { name: passo4_titolo, label: Passo4 titolo, type: text }
+              - { name: passo4_testo, label: Passo4 testo, type: text }
           - name: skill
             label: Skill
             type: object
@@ -89,6 +120,34 @@ content:
             fields:
               - { name: kicker, label: Kicker, type: text }
               - { name: titolo, label: Titolo, type: text }
+          - name: composer
+            label: Composer, come funziona
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: passo1_titolo, label: Passo1 titolo, type: text }
+              - { name: passo1_testo, label: Passo1 testo, type: text }
+              - { name: passo2_titolo, label: Passo2 titolo, type: text }
+              - { name: passo2_testo, label: Passo2 testo, type: text }
+              - { name: passo3_titolo, label: Passo3 titolo, type: text }
+              - { name: passo3_testo, label: Passo3 testo, type: text }
+              - { name: passo4_titolo, label: Passo4 titolo, type: text }
+              - { name: passo4_testo, label: Passo4 testo, type: text }
+          - name: editor
+            label: Editor, come funziona
+            type: object
+            fields:
+              - { name: kicker, label: Kicker, type: text }
+              - { name: titolo, label: Titolo, type: text }
+              - { name: passo1_titolo, label: Passo1 titolo, type: text }
+              - { name: passo1_testo, label: Passo1 testo, type: text }
+              - { name: passo2_titolo, label: Passo2 titolo, type: text }
+              - { name: passo2_testo, label: Passo2 testo, type: text }
+              - { name: passo3_titolo, label: Passo3 titolo, type: text }
+              - { name: passo3_testo, label: Passo3 testo, type: text }
+              - { name: passo4_titolo, label: Passo4 titolo, type: text }
+              - { name: passo4_testo, label: Passo4 testo, type: text }
           - name: tempo
             label: Tempo
             type: object
@@ -100,14 +159,14 @@ content:
             fields:
               - { name: kicker, label: Kicker, type: text }
               - { name: titolo, label: Titolo, type: text }
-              - { name: design_titolo, label: Design titolo, type: text }
-              - { name: design_1, label: Design 1, type: text }
-              - { name: design_2, label: Design 2, type: text }
-              - { name: design_3, label: Design 3, type: text }
-              - { name: dev_titolo, label: Dev titolo, type: text }
-              - { name: dev_1, label: Dev 1, type: text }
-              - { name: dev_2, label: Dev 2, type: text }
-              - { name: dev_3, label: Dev 3, type: text }
+              - { name: sottotitolo, label: Sottotitolo, type: text }
+              - { name: skill_1, label: Skill 1, type: text }
+              - { name: skill_2, label: Skill 2, type: text }
+              - { name: skill_3, label: Skill 3, type: text }
+              - { name: skill_4, label: Skill 4, type: text }
+              - { name: skill_5, label: Skill 5, type: text }
+              - { name: skill_6, label: Skill 6, type: text }
+              - { name: skill_7, label: Skill 7, type: text }
           - name: risorse
             label: Risorse
             type: object
@@ -198,7 +257,16 @@ content:
           - { name: name, label: Nome, type: string }
           - { name: what, label: Testo, type: text }
           - { name: file, label: File citato, type: string }
+          - { name: here, label: File acceso nella cartella (nome in FOLDER), type: string }
           - { name: lines, label: Righe dell'estratto, type: string, list: true }
+      - name: FOLDER
+        label: Metodo, cartella di Claude Code
+        type: object
+        list: { collapsible: true }
+        fields:
+          - { name: name, label: Nome file o cartella, type: string }
+          - { name: d, label: Livello (0 = radice), type: number }
+          - { name: note, label: A cosa serve, type: string }
       - name: METHOD_KEYS
         label: Metodo, tasti della tastiera
         type: string

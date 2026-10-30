@@ -14,7 +14,7 @@
 <script defer src="vendor/ScrollTrigger.min.js"></script>
 <script defer src="vendor/lenis.min.js"></script>
 <script defer src="vendor/three.min.js"></script>
-<script defer src="vendor/qrcode.min.js"></script>
+<script defer src="vendor/GLTFLoader.js"></script>
 <script defer src="main.js"></script>
 </head>
 <body data-theme="deep">
@@ -31,9 +31,9 @@
       <canvas class="keys-gl" id="keys-gl" aria-hidden="true"></canvas>
       <div class="hero-copy">
         <p data-t="intro.kicker" class="kicker reveal">Workshop interno · Design × AI</p>
-        <h1 data-t="intro.titolo" class="display split">Ho smesso di aspettare gli <mark>strumenti giusti.</mark></h1>
+        <h1 data-t="intro.titolo" class="display split">Design × <em>AI</em></h1>
+        <p data-t="intro.autore" class="hero-by">Leonardo Maltese</p>
       </div>
-      <p data-t="intro.autore" class="hero-by">Leonardo Maltese</p>
     </div>
   </section>
 
@@ -47,7 +47,6 @@
   <!-- ===================== 03 PRIMA ===================== -->
   <section id="prima-intro" class="sec screen" data-theme="cream" data-chapter="Prima">
     <div class="stage center">
-      <p data-t="prima.kicker" class="kicker reveal">Il prima</p>
       <h2 data-t="prima.titolo" class="title split">Ogni problema aveva un <mark>workaround.</mark></h2>
       <p data-t="prima.sottotitolo" class="lead reveal">E ogni workaround mi costava tempo, qualità o soldi.</p>
     </div>
@@ -65,18 +64,13 @@
   </section>
 
   <!-- ===================== 04 LA SVOLTA ===================== -->
-  <section id="domanda" class="sec pin" data-theme="cream" data-chapter="Svolta" data-beats="1">
+  <section id="domanda" class="sec pin" data-theme="cream" data-chapter="Svolta" data-beats="3">
     <div class="stage center">
-      <div class="growbox"><p data-t="svolta.domanda" class="question">E se lo strumento me lo <em>costruissi io?</em></p></div>
-    </div>
-  </section>
-
-  <section id="ruolo" class="sec pin" data-theme="blue" data-chapter="Svolta" data-beats="2">
-    <div class="stage center">
-      <div class="beats">
+      <div class="growbox"><div class="beats">
+        <p data-t="svolta.domanda" class="question beat">E se lo strumento me lo <em>costruissi io?</em></p>
         <p data-t="svolta.frase1" class="statement big beat">Non per sostituire gli sviluppatori.</p>
         <p data-t="svolta.frase2" class="statement big beat">Per portare lo sguardo del designer <em>dentro gli strumenti.</em></p>
-      </div>
+      </div></div>
     </div>
   </section>
 
@@ -85,23 +79,65 @@
     <div class="stage">
       <div class="track" id="method-track">
         <div class="panel intro">
-          <p data-t="metodo.kicker" class="kicker">Il metodo</p>
           <h2 data-t="metodo.titolo" class="title">Come lavoro, <em>passo per passo.</em></h2>
           <p data-t="metodo.sottotitolo" class="lead">Un esempio: ogni visual lo rifacevo a mano in dieci formati. Ho costruito un plugin Figma che lo fa in un clic.</p>
         </div>
+        <div class="panel mx"><div class="mleft"><h3 data-t="metodo.cc_titolo">Claude Code, <em>in breve.</em></h3><p data-t="metodo.cc_testo"></p></div>
+          <div class="doc term"><div class="doc-bar"><i></i><i></i><i></i><span>Terminale · claude</span></div><pre data-t="metodo.cc_terminale"></pre></div></div>
+        <div class="panel mx"><div class="mleft"><h3 data-t="metodo.giro_titolo"></h3><p data-t="metodo.giro_testo"></p></div>
+          <div class="doc term"><div class="doc-bar"><i></i><i></i><i></i><span>Il ciclo di lavoro</span></div><pre data-t="metodo.giro_doc"></pre></div></div>
+        <div class="panel mx"><div class="mleft"><h3 data-t="metodo.cartella_titolo">Tutto vive <em>in una cartella.</em></h3><p data-t="metodo.cartella_testo"></p></div>
+          <div class="doc"><div class="doc-bar"><i></i><i></i><i></i><span>Finder · formati-plugin</span></div><ul class="tree big" id="folder"></ul></div></div>
+        <div class="panel mx"><div class="mleft"><h3 data-t="metodo.regole_titolo"></h3><p data-t="metodo.regole_testo"></p></div>
+          <div class="doc term"><div class="doc-bar"><i></i><i></i><i></i><span>CLAUDE.md</span></div><pre data-t="metodo.regole_doc"></pre></div></div>
+        <div class="panel mx"><div class="mleft"><h3 data-t="metodo.skill_titolo"></h3><p data-t="metodo.skill_testo"></p></div>
+          <div class="doc term"><div class="doc-bar"><i></i><i></i><i></i><span>.claude/settings.local.json</span></div><pre data-t="metodo.skill_doc"></pre></div></div>
+        <div class="panel mx"><div class="mleft"><h3 data-t="metodo.permesso_titolo"></h3><p data-t="metodo.permesso_testo"></p></div>
+          <div class="doc term"><div class="doc-bar"><i></i><i></i><i></i><span>Terminale · claude</span></div><pre data-t="metodo.permesso_doc"></pre></div></div>
         <!-- step panels come from METHOD in content.json -->
+      </div>
+    </div>
+  </section>
+
+  <!-- La demo: the plugin built in the method, used. One stop per step; #fig[data-step] drives the Figma mock. -->
+  <section id="demo" class="sec pin" data-theme="blue" data-chapter="Metodo">
+    <div class="stage img-stage demo-stage">
+      <div class="img-steps">
+        <p data-t="demo.kicker" class="kicker">La demo</p>
+        <h2 data-t="demo.titolo" class="demo-title">Il plugin, <em>in azione.</em></h2>
+        <ol class="isteps">
+          <li class="istep"><b>1</b><div><h3 data-t="demo.passo1_titolo"></h3><p data-t="demo.passo1_testo"></p></div></li>
+          <li class="istep"><b>2</b><div><h3 data-t="demo.passo2_titolo"></h3><p data-t="demo.passo2_testo"></p></div></li>
+          <li class="istep"><b>3</b><div><h3 data-t="demo.passo3_titolo"></h3><p data-t="demo.passo3_testo"></p></div></li>
+          <li class="istep"><b>4</b><div><h3 data-t="demo.passo4_titolo"></h3><p data-t="demo.passo4_testo"></p></div></li>
+        </ol>
+      </div>
+      <div class="fig" id="fig" data-step="3" aria-hidden="true">
+        <div class="fig-bar"><i></i><i></i><i></i><span>Campagna autunno · Figma</span></div>
+        <div class="fig-body">
+          <div class="fig-canvas">
+            <span class="fig-page"><b>Pagina</b> <span class="p-in">Visual</span><span class="p-out">Formati</span></span>
+            <div class="fig-orig"><span class="f-lab">Visual · 1080 × 1080</span><div class="art"><i></i><b>● Studio</b><strong>Saldi <br>d'autunno</strong></div></div>
+            <div class="fig-out" id="fig-out"></div>
+          </div>
+          <div class="fig-side">
+            <div class="fs-props"><p class="fs-h">Frame</p><p>W 1080 · H 1080</p><p>Riempimento FFD400</p><p class="fs-h">Livelli</p><p>Logo</p><p>Titolo</p><p>Sfondo</p></div>
+            <div class="fs-plugin"><p class="fs-h">Formati · plugin</p><ul id="fig-list"></ul>
+              <span class="fs-btn"><span class="b-go">Crea 10 formati</span><span class="b-run">Creo i formati…</span><i></i></span>
+              <p class="fs-done">✓ 10 formati creati<br>✓ Logo e titolo interi<br>✓ Originale intatto</p></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="sempre" class="sec screen" data-theme="cream" data-chapter="Metodo">
     <div class="stage center">
-      <p data-t="metodo.sempre_kicker" class="kicker reveal">Sempre accese</p>
       <h2 data-t="metodo.sempre_titolo" class="title split">Tre skill che non spengo <mark>mai.</mark></h2>
       <div class="fan">
         <div class="fcard yellow"><code>ponytail</code><p data-t="metodo.sempre_ponytail">Il codice più semplice che funziona.</p></div>
-        <div class="fcard deep"><code>caveman</code><p data-t="metodo.sempre_caveman">Risposte brevi, stesso contenuto.</p></div>
-        <div class="fcard blue"><code>output-skill</code><p data-t="metodo.sempre_output">Niente codice tagliato a metà.</p></div>
+        <div class="fcard deep"><code>superpowers:<wbr>brainstorming</code><p data-t="metodo.sempre_brainstorming">Prima di costruire, le domande giuste.</p></div>
+        <div class="fcard blue"><code>inventario</code><p data-t="metodo.sempre_inventario">Gli strumenti giusti per ogni progetto.</p></div>
       </div>
     </div>
   </section>
@@ -110,7 +146,6 @@
   <section id="skill" class="sec ring-sec" data-theme="deep" data-chapter="Skill">
     <div class="ring-wrap" aria-hidden="true"><div class="ring" id="ring"></div></div>
     <div class="ring-title">
-      <p data-t="skill.kicker" class="kicker reveal">Le mie skill</p>
       <p class="mega"><span data-count="skills">67</span></p>
       <p data-t="skill.sottotitolo" class="lead reveal">Una skill è un manuale che Claude legge prima di lavorare.</p>
     </div>
@@ -120,7 +155,6 @@
   <section id="lenti" class="sec pin" data-theme="cream" data-chapter="Lenti" data-beats="4">
     <div class="stage split-stage">
       <div class="side">
-        <p data-t="lenti.kicker" class="kicker">Le lenti</p>
         <h2 data-t="lenti.titolo" class="title sm">La base resta neutra. Le skill la <mark>trasformano.</mark></h2>
         <ol class="lens-list" id="lens-list">
           <li data-lens="base">Base</li><li data-lens="brutalist">brutalist-skill</li><li data-lens="soft">soft-skill</li><li data-lens="editorial">minimalist-skill</li>
@@ -142,7 +176,6 @@
   <section id="immagine" class="sec pin" data-theme="deep" data-chapter="Immagine">
     <div class="stage img-stage">
       <div class="img-steps">
-        <p data-t="immagine.kicker" class="kicker">Dall'immagine al codice, fino al 3D</p>
         <ol class="isteps">
           <li class="istep"><b>1</b><div><h3 data-t="immagine.passo1_titolo">Immagine</h3><p data-t="immagine.passo1_testo">Prima di costruire, chiedo un riferimento visivo: vedo la pagina prima che esista.</p>
             <p data-t="immagine.passo1_esempio" class="iex"><span>Esempio</span>«Locandina per un torneo di scacchi, il cavallo protagonista.»</p><code>imagegen-frontend-web</code></div></li>
@@ -175,7 +208,6 @@
   <!-- ===================== 09 PROGETTI ===================== -->
   <section id="progetti" class="sec screen" data-theme="deep" data-chapter="Progetti">
     <div class="stage">
-      <p data-t="progetti.kicker" class="kicker reveal">I progetti</p>
       <h2 data-t="progetti.titolo" class="mega-title split">Gli strumenti che mi sono <mark>costruito.</mark></h2>
       <div class="kb-wrap"><canvas class="kb-gl" id="groups-gl" aria-label="Gruppi di progetti: premi un tasto"></canvas></div>
     </div>
@@ -192,26 +224,17 @@
   <!-- ===================== 11 DA DOVE PARTIRE ===================== -->
   <section id="partire" class="sec screen" data-theme="cream" data-chapter="Partire">
     <div class="stage">
-      <p data-t="partire.kicker" class="kicker reveal">Da dove partire</p>
-      <h2 data-t="partire.titolo" class="title split">Tre skill a testa, <mark>domani.</mark></h2>
-      <div class="two">
-        <div class="col-card deep">
-          <h3 data-t="partire.design_titolo">Per chi progetta</h3>
-          <ul>
-            <li data-t="partire.design_1"><code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.</li>
-            <li data-t="partire.design_2"><code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.</li>
-            <li data-t="partire.design_3"><code>superpowers:brainstorming</code>Ti obbliga a sapere cosa vuoi.</li>
-          </ul>
-        </div>
-        <div class="col-card yellow">
-          <h3 data-t="partire.dev_titolo">Per chi sviluppa</h3>
-          <ul>
-            <li data-t="partire.dev_1"><code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.</li>
-            <li data-t="partire.dev_2"><code>code-review</code>Un secondo paio d'occhi, sempre libero.</li>
-            <li data-t="partire.dev_3"><code>ponytail</code>Meno codice, meno sorprese.</li>
-          </ul>
-        </div>
-      </div>
+      <h2 data-t="partire.titolo" class="title split">La base per <mark>partire.</mark></h2>
+      <p data-t="partire.sottotitolo" class="lead reveal">Poche skill, nell'ordine in cui le uso. Bastano per cominciare a costruire.</p>
+      <ol class="start-list">
+          <li data-t="partire.skill_1"><code>superpowers:brainstorming</code>Prima le domande: sai cosa vuoi prima di costruire.</li>
+          <li data-t="partire.skill_2"><code>inventario</code>Ti dice quali skill e plugin servono al progetto.</li>
+          <li data-t="partire.skill_3"><code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.</li>
+          <li data-t="partire.skill_4"><code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.</li>
+          <li data-t="partire.skill_5"><code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.</li>
+          <li data-t="partire.skill_6"><code>code-review</code>Un secondo paio d'occhi, sempre libero.</li>
+          <li data-t="partire.skill_7"><code>ponytail</code>Meno codice, meno sorprese.</li>
+      </ol>
     </div>
   </section>
 
@@ -220,7 +243,6 @@
     <div class="stage">
       <div class="res-head">
         <div>
-          <p data-t="risorse.kicker" class="kicker reveal">Risorse</p>
           <h2 data-t="risorse.titolo" class="title split">Prendi <mark>tutto.</mark></h2>
         </div>
         <p data-t="risorse.sottotitolo" class="lead reveal">Tutto il kit: le mie skill, i plugin, le skill di terzi. Per ogni cosa: a cosa serve, come si usa, da dove si prende. Clic su un comando per copiarlo.</p>
@@ -230,17 +252,17 @@
   </section>
 
   <!-- ===================== 13 FINE: a big thank you, with the chess pieces floating ===================== -->
-  <section id="fine" class="sec screen end" data-theme="deep" data-chapter="Fine">
+  <!-- Finale: the page shrinks into a MacBook; beside it the terminal and the notes that built it -->
+  <section id="outro" class="sec pin outro" data-theme="deep" data-chapter="Fine" data-beats="4">
     <div class="stage">
-      <canvas class="chess-gl" id="chess-gl" aria-hidden="true"></canvas>
-      <div class="end-copy">
-        <p data-t="fine.kicker" class="kicker">Workshop interno · Design × AI</p>
-        <h2 data-t="fine.titolo" class="wordmark split">Grazie.</h2>
-        <div class="end-row">
-          <p data-t="fine.sottotitolo" class="lead">Lo strumento giusto è quello che ti costruisci. Slide e risorse restano online.</p>
-          <div class="end-qr"><div id="qr" class="qr" aria-hidden="true"></div><a id="share-link" class="share-link" href="https://claude.ai/">claude.ai</a></div>
-        </div>
+      <canvas class="mac-gl" id="mac-gl" aria-label="Un MacBook con la presentazione aperta"></canvas>
+      <div class="outro-page">
+        <canvas class="chess-gl" id="chess-gl" aria-hidden="true"></canvas>
+        <h2 data-t="fine.titolo" class="display end-title split">Lo strumento giusto è quello che <em>ti costruisci.</em></h2>
       </div>
+      <div class="win term-win"><div class="doc-bar"><i></i><i></i><i></i><span>Terminale · claude</span></div><pre data-t="fine.terminale"></pre></div>
+      <div class="win notes-win"><div class="doc-bar"><i></i><i></i><i></i><span>appunti.txt</span></div><pre data-t="fine.appunti"></pre></div>
+      <h2 data-t="fine.grazie" class="wordmark outro-grazie split">Grazie.</h2>
     </div>
   </section>
 
@@ -249,21 +271,9 @@
 <!-- Project detail (brandappart "Modal"): Figma plugins open here; ← → move between them, Esc closes -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
   <div class="modal-backdrop" data-close></div>
-  <article class="modal-card">
-    <button type="button" class="modal-close" data-close aria-label="Chiudi">✕</button>
-    <div class="modal-media" id="modal-media"></div>
-    <div class="modal-body">
-      <p class="pindex" id="modal-index"></p>
-      <h3 class="modal-name" id="modal-title"></h3>
-      <span class="pkind" id="modal-kind"></span>
-      <div class="modal-cols">
-        <div><p class="plabel">Il problema</p><p class="modal-text" id="modal-problem"></p></div>
-        <div><p class="plabel">Cosa fa</p><p class="modal-text" id="modal-solution"></p></div>
-      </div>
-      <ul class="pdetails" id="modal-details"></ul>
-    </div>
-    <div class="modal-nav"><button type="button" data-step="-1" aria-label="Precedente">←</button><span id="modal-count"></span><button type="button" data-step="1" aria-label="Successivo">→</button></div>
-  </article>
+  <button type="button" class="modal-close" data-close aria-label="Chiudi">✕</button>
+  <div class="modal-arc" id="modal-arc"></div>
+  <div class="modal-nav"><button type="button" data-step="-1" aria-label="Precedente">←</button><span id="modal-count"></span><button type="button" data-step="1" aria-label="Successivo">→</button></div>
 </div>
 
 </body>

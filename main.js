@@ -6,7 +6,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const pad = (n) => String(n).padStart(2, '0');
-  const { FAMILIES, SKILLS, PROJECTS, GROUPS, METHOD, METHOD_KEYS, SLOTS, SLOT_SIZE, KEYS, KIT, WEBAPPS, SHARE_URL, TEXTS, PRISMA_SIM } = window;
+  const { FAMILIES, SKILLS, PROJECTS, GROUPS, METHOD, METHOD_KEYS, FOLDER, SLOTS, SLOT_SIZE, KEYS, KIT, WEBAPPS, TEXTS, PRISMA_SIM } = window;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motion = !!(window.gsap && window.ScrollTrigger) && !reduced;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -23,6 +23,72 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     <img src="${IMG}${id}.jpg" alt="${esc(SLOTS[id])}" onerror="this.remove()">
     <span class="slot-num">${id.toUpperCase()}</span><span class="slot-txt">Immagine da cambiare · ${esc(SLOTS[id])}</span>
     <span class="slot-size">${SLOT_SIZE} px · media/projects/${id}.jpg</span></div>`;
+
+  // How it works: steps on the left, a mock on the right; .how-vis[data-step] drives the mock, one state per stop.
+  // Built after data-t runs, so it reads its texts from TEXTS[key] itself.
+  const how = (key, vis) => { const T = TEXTS[key]; return `<section id="${key}-how" class="sec pin how" data-theme="blue" data-chapter="Progetti">
+    <div class="stage img-stage demo-stage">
+      <div class="img-steps">
+        <p class="kicker">${T.kicker}</p><h2 class="demo-title">${T.titolo}</h2>
+        <ol class="isteps">${[1, 2, 3, 4].map(n => `<li class="istep"><b>${n}</b><div><h3>${T[`passo${n}_titolo`]}</h3><p>${T[`passo${n}_testo`]}</p></div></li>`).join('')}</ol>
+      </div>
+${vis}    </div></section>`; };
+  const HOW = {
+    composer: `
+      <div class="cp how-vis" id="cp" data-step="3" aria-hidden="true">
+        <div class="ed-bar"><i></i><i></i><i></i><span>Composer</span><span class="cp-crumb">Studio Rossi › Autunno 2026</span></div>
+        <div class="cp-body">
+          <div class="cp-side">
+            <div class="cp-p p0"><p class="h">Livelli · Figma</p>
+              <ul class="cp-layers"><li><b>#</b>Titolo<span>testo</span></li><li><b>#</b>Data<span>testo</span></li><li><b>$</b>Cerchio<span>forma</span></li><li><b>^</b>Logo<span>overlay</span></li></ul>
+              <p class="cp-note">Il simbolo dice cosa si potrà cambiare.</p></div>
+            <div class="cp-p p1"><p class="h">Controllo di fedeltà</p>
+              <ul class="cp-check"><li>4 livelli riconosciuti</li><li>Font disponibili</li><li class="fix">Testo fuori dal frame<small>corretto in un clic</small></li></ul>
+              <span class="cp-btn">Estrai template</span></div>
+            <div class="cp-p p2"><p class="h">Compila</p>
+              <p class="cp-field">Titolo<span>Nuova collezione</span></p><p class="cp-field">Data<span>Dal 1 dicembre</span></p>
+              <p class="cp-field">Colori<span class="cp-sw"><i></i><i></i><i></i></span></p></div>
+            <div class="cp-p p3"><p class="h">Clienti</p>
+              <ul class="cp-tree"><li>Studio Rossi</li><li class="d1">Autunno 2026</li><li class="d2 on">Nuova collezione</li><li>Caffè Bruno</li><li>Libreria Est</li></ul></div>
+          </div>
+          <div class="cp-stage">
+            <div class="cp-post"><span class="f-lab">Post · 1080×1350</span><div class="art"><i></i><b>● Studio</b><small><span class="t-a">Dal 3 al 10 novembre</span><span class="t-b">Dal 1 dicembre</span></small><strong><span class="t-a">Saldi <br>d'autunno</span><span class="t-b">Nuova <br>collezione</span></strong></div></div>
+            <div class="cp-story"><span class="f-lab">Storia · 1080×1920</span><div class="art"><i></i><b>● Studio</b><small><span class="t-a">Dal 3 al 10 novembre</span><span class="t-b">Dal 1 dicembre</span></small><strong><span class="t-a">Saldi <br>d'autunno</span><span class="t-b">Nuova <br>collezione</span></strong></div></div>
+          </div>
+        </div>
+      </div>
+`,
+    editor: `
+      <div class="ed how-vis" id="ed" data-step="3" aria-hidden="true">
+        <div class="ed-bar"><i></i><i></i><i></i><span>studio.html · Editor</span>
+          <span class="ed-roles"><b class="r-ospite">Ospite</b><b class="r-cliente">Cliente</b><b class="r-staff">Staff</b></span></div>
+        <div class="ed-body">
+          <ul class="ed-index"><li class="g">Sito pubblico</li><li class="on">Home</li><li>Lezioni</li><li>Prezzi</li><li class="g">Area riservata</li><li>Prenota</li><li>Le mie prenotazioni</li><li>Calendario</li></ul>
+          <div class="ed-screen">
+            <div class="ed-page"><p class="ed-url">app.studio.it</p>
+              <div class="ed-nav"><b>● Studio</b><span>Lezioni</span><span>Prezzi</span><span class="ed-who"><i class="v-cliente">Giulia</i><i class="v-ospite">Accedi</i></span></div>
+              <div class="ed-hero"><div><p class="ed-h"><span class="v-cliente">Ciao Giulia</span><span class="v-ospite">Allenati con noi</span></p>
+                <p class="ed-sub"><span class="v-cliente">Hai 2 lezioni questa settimana.</span><span class="v-ospite">Yoga, pilates e funzionale, tutti i giorni.</span></p>
+                <span class="ed-btn"><span class="v-cliente">Prenota</span><span class="v-ospite">Prova gratis</span></span></div><i class="ed-img"></i></div>
+              <p class="ed-k">Le tue prossime lezioni</p>
+              <div class="ed-cards">${['Lun 18:30 · Yoga', 'Gio 18:30 · Pilates', 'Sab 10:00 · Funzionale'].map(t => `<span>${t}</span>`).join('')}
+                <div class="ed-lock"><b>Solo per Cliente e Staff</b><small>Serve un account per vederle.</small></div></div></div>
+          </div>
+          <div class="ed-side">
+            <div class="s-cliente"><p class="h">Cliente · può</p><p>Vedere le sue prossime lezioni</p><p>Prenotare dalla home</p><p class="h no">Non può</p><p>Vedere chi altro è iscritto</p></div>
+            <div class="s-ospite"><p class="h">Ospite · può</p><p>Vedere lezioni e prezzi</p><p>Chiedere una prova gratis</p><p class="h no">Non può</p><p>Vedere le prossime lezioni</p></div>
+          </div>
+        </div>
+        <pre class="ed-code"><b>// progetti/studio/spec.js</b>
+{ id: 'home', g: 'pub', label: 'Home',
+  acc: { ospite: 'read', cliente: 'write',
+         staff: 'full' },
+  can:  { cliente: ['Prenotare dalla home'] },
+  cant: { ospite: ['Vedere le prossime lezioni'] } }</pre>
+        <div class="ed-share"><b>✓ studio.html</b><span>1 file · si apre offline</span><span class="ed-figma">→ In Figma, con livelli veri</span></div>
+      </div>
+`,
+  };
 
   // ---------- Content ----------
   function renderContent() {
@@ -76,6 +142,13 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
             </div>
             <div class="pplay-keys"><canvas class="kb-gl" id="prisma-gl" aria-label="Le tre modalità di Prisma: premi un tasto"></canvas></div>`
           : `<div class="pcard">${p.imgs.map(id => slot(id, 'pimg')).join('')}</div>`;
+        if (HOW[p.id]) { // a one-screen preview, then how it works
+          out += `<section id="p-${p.id}" class="sec screen project-one" data-theme="${themes[n % 2]}" data-chapter="Progetti">
+            <div class="stage"><div class="ptext"><p class="pindex">${pad(n)} / ${pad(ORDER.length)}</p><h3 class="pname split">${esc(p.name)}</h3><span class="pkind">${esc(p.kind)}</span>
+              <p class="plabel">Il problema</p><p class="pproblem">${esc(p.problem)}</p><p class="plabel">Cosa fa</p><p class="psolution">${esc(p.solution)}</p></div>
+            <div class="pone">${p.imgs.map(id => slot(id, 'pone-img')).join('')}</div></div></section>` + how(p.id, HOW[p.id]);
+          return;
+        }
         out += `<section id="p-${p.id}" class="sec pin project${p.id === 'prisma' ? ' has-play' : ''}" data-theme="${themes[n % 2]}" data-chapter="Progetti">
           <div class="stage"><div class="ptext">${beats.join('')}</div><div class="pmedia">${media}</div></div></section>`;
       });
@@ -89,11 +162,32 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     }).join('');
 
     // Method: one panel per step with the real excerpt it produced; the last one shows the steps becoming a base.
+    // The Claude Code folder: in full with notes once, then beside every step with the file it works on lit up.
+    const tree = (here, notes) => FOLDER.map(f => `<li style="--d: ${f.d}"${f.name === here ? ' class="here"' : ''}><b>${esc(f.name)}</b>${notes ? `<span>${esc(f.note)}</span>` : ''}</li>`).join('');
+    $('#folder').innerHTML = tree(null, true);
+    // Overview first: all nine steps at a glance, then one per panel.
+    $('#method-track').insertAdjacentHTML('beforeend', `<div class="panel mover"><h3>Nove passi, <em>dall'idea al rilascio.</em></h3>
+      <div class="mover-phases">${['Preparare', 'Progettare', 'Costruire'].map((p, i) => `<span style="--i: ${i * 3}">${p}</span>`).join('')}</div>
+      <ol class="mover-list"><i class="mover-line" aria-hidden="true"></i>${METHOD.map((m, i) => `<li style="--i: ${i}"><b>${i + 1}</b><span>${esc(m.name)}</span></li>`).join('')}</ol></div>`);
     $('#method-track').insertAdjacentHTML('beforeend', METHOD.map((m, i) => `
       <div class="panel mstep"><div class="mleft"><span class="big-num">${i + 1}</span><h3>${esc(m.name)}</h3><p>${esc(m.what)}</p>${m.skill ? `<code>${esc(m.skill)}</code>` : ''}</div>
-        <div class="doc"><div class="doc-bar"><i></i><i></i><i></i><span>${esc(m.file)}</span></div><pre>${m.lines.map(esc).join('\n')}</pre></div></div>`).join('') + `
+        <div class="doc ide"><div class="doc-bar"><i></i><i></i><i></i><span>${esc(m.file)}</span></div>
+          <div class="ide-body"><ul class="tree" aria-label="Cartella del progetto">${tree(m.here)}</ul><pre>${m.lines.map(esc).join('\n')}</pre></div></div></div>`).join('') + `
       <div class="panel mbase"><canvas class="base-gl" id="base-gl" aria-hidden="true"></canvas>
-        <div class="mbase-copy"><p class="kicker">Tutti insieme</p><h3>Nove passi.<br><em>Una base solida.</em></h3><p>Ogni progetto parte da qui. Sopra, ci costruisco quello che serve.</p></div></div>`);
+        <div class="mbase-copy"><h3>Nove passi.<br><em>Una base solida.</em></h3><p>Ogni progetto parte da qui. Ecco cosa ne è uscito.</p></div></div>`);
+
+    // Demo: the ten formats the plugin makes, in three rows of the Figma canvas (row height in % of the canvas).
+    const FORMATS = [
+      [26, [['Post', 1080, 1080], ['Post verticale', 1080, 1350], ['Storia', 1080, 1920]]],
+      [20, [['Pin', 1000, 1500], ['A4', 2480, 3508], ['Banner', 300, 250]]],
+      [15, [['YouTube', 1920, 1080], ['Link', 1200, 628]]],
+      [7, [['Leaderboard', 728, 90], ['Header X', 1500, 500]]],
+    ];
+    const art = $('#fig .fig-orig .art').outerHTML;
+    let fi = 0;
+    $('#fig-out').innerHTML = FORMATS.map(([h, row]) => `<div class="fig-row" style="height: ${h}cqmin">${row.map(([name, w, hh]) =>
+      `<div class="ff${w / hh > 5 ? ' wide' : ''}" style="--w: ${w}; --h: ${hh}; --i: ${fi++}"><span class="f-lab">${name}</span>${art}</div>`).join('')}</div>`).join('');
+    $('#fig-list').innerHTML = FORMATS.flatMap(([, row]) => row).map(([name, w, hh]) => `<li><b>${name}</b><span>${w}×${hh}</span></li>`).join('');
 
     // Resources: the whole kit, one tab per group.
     $('#kit').innerHTML = `<div class="kit-tabs" role="tablist" aria-label="Gruppi del kit">${KIT.map((g, i) =>
@@ -106,10 +200,6 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
           ${r.src ? `<p class="kit-src"><span>Da</span>${r.href ? `<a href="${esc(r.href)}" target="_blank" rel="noopener">${esc(r.src)}</a>` : esc(r.src)}</p>` : ''}
           ${r.cmds?.length ? `<div class="kit-cmds">${r.cmds.map(c => `<button type="button" class="cmd" data-copy="${esc(c)}">${esc(c)}</button>`).join('')}</div>` : ''}</li>`).join('')}</ul></div>`).join('')}`;
 
-    const link = $('#share-link');
-    link.href = SHARE_URL;
-    link.textContent = SHARE_URL.replace(/^https:\/\//, '').replace(/\/$/, '');
-    if (window.QRCode) new QRCode($('#qr'), { text: SHARE_URL, width: 360, height: 360, colorDark: '#141312', colorLight: '#FAF7ED' });
   }
 
   // Tabs with arrow keys, as WAI-ARIA tabs expect.
@@ -188,7 +278,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
   let lenis = null, pending = null;
   function scrollToY(y, opts = {}) {
     pending = y;
-    if (lenis) lenis.scrollTo(y, { duration: opts.immediate ? 0 : 1.15, immediate: !!opts.immediate, lock: false, force: true, onComplete: () => { pending = null; } });
+    if (lenis) lenis.scrollTo(y, { duration: opts.immediate ? 0 : 1, easing: t => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2), immediate: !!opts.immediate, lock: false, force: true, onComplete: () => { pending = null; } });
     else { scrollTo({ top: y, behavior: 'auto' }); pending = null; }
   }
   function step(dir) {
@@ -219,43 +309,59 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
 
   // ---------- Open a project: Figma plugins in the modal, the others jump to their chapter ----------
   const modal = $('#modal');
-  let current = null, lastFocus = null;
+  let current = null, lastFocus = null, modalList = [];
   const modalOpen = () => !modal.hidden;
-  function openProject(id) {
+  function openProject(id, list) { // list: the projects ← → move through (hero keys pass all of theirs)
     const p = byId(id);
     if (!p) return;
+    if (list) { showInModal(p, list); return; }
     if (p.group !== 'figma') { scrollToY(firstStop(document.getElementById('p-' + id))); return; }
-    showInModal(p);
+    showInModal(p, inGroup('figma'));
   }
-  function showInModal(p) {
-    const list = inGroup('figma'), i = list.indexOf(p);
-    current = p;
-    $('#modal-media').innerHTML = slot(p.imgs[0]);
-    $('#modal-index').textContent = `Plugin Figma · ${pad(i + 1)} / ${pad(list.length)}`;
-    $('#modal-title').textContent = p.name;
-    $('#modal-kind').textContent = p.kind;
-    $('#modal-problem').textContent = p.problem;
-    $('#modal-solution').textContent = p.solution;
-    $('#modal-details').innerHTML = p.details.map(d => `<li>${esc(d)}</li>`).join('') + `<li class="stack">${esc(p.stack)}</li>`;
-    $('#modal-count').textContent = `${pad(i + 1)} / ${pad(list.length)}`;
+  // Every project in the list is a card on an arc; the current one sits on top, the arc turns to the next.
+  const modalCard = (p, list) => `<article class="modal-card" data-id="${p.id}"><div class="modal-body">
+      <p class="pindex">${esc(GROUPS.find(g => g.id === p.group)?.label ?? '')} · ${pad(list.indexOf(p) + 1)} / ${pad(list.length)}</p>
+      <h3 class="modal-name">${esc(p.name)}</h3><span class="pkind">${esc(p.kind)}</span>
+      <div class="modal-cols">${p.problem ? `<div><p class="plabel">Il problema</p><p class="modal-text">${esc(p.problem)}</p></div>` : ''}
+        <div><p class="plabel">Cosa fa</p><p class="modal-text">${esc(p.solution)}</p></div></div>
+      <ul class="pdetails">${p.details.map(d => `<li>${esc(d)}</li>`).join('')}<li class="stack">${esc(p.stack)}</li></ul></div></article>`;
+  function showInModal(p, list = modalList) {
+    const arc = $('#modal-arc'), n = list.length, i = list.indexOf(p);
+    if (list !== modalList || !arc.children.length) arc.innerHTML = list.map(q => modalCard(q, list)).join('');
+    current = p; modalList = list;
     if (modal.hidden) {
       lastFocus = document.activeElement;
       modal.hidden = false;
       lenis?.stop();
-      if (motion) gsap.fromTo('.modal-card', { y: 60, scale: .96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: .6, ease: 'expo.out' });
+      if (motion) gsap.fromTo('.modal-arc', { y: 60, scale: .96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: .6, ease: 'expo.out' });
       if (motion) gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: .3 });
       $('.modal-close').focus();
-    } else if (motion) {
-      gsap.fromTo('.modal-body > *, .modal-media', { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: 'power3.out', stagger: .03 });
     }
+    // Step angle so neighbours sit side by side: chord at the cards' bottom edge (5 heights from the pivot) = width + gap.
+    arc.style.setProperty('--step', 2 * Math.asin(Math.min(1, (arc.offsetWidth + 32) / (10 * arc.offsetHeight))) + 'rad');
+    $$('.modal-card', arc).forEach((c, j) => {
+      const r = ((j - i) % n + n) % n, o = r > n / 2 ? r - n : r; // shortest way round
+      c.style.setProperty('--o', o);
+      c.style.opacity = Math.abs(o) > 2 ? 0 : 1;
+      c.style.zIndex = 10 - Math.abs(o);
+      c.classList.toggle('on', o === 0);
+      c.setAttribute('aria-hidden', o !== 0);
+      c.querySelector('.modal-name').id = o === 0 ? 'modal-title' : '';
+    });
+    $('#modal-count').textContent = `${pad(i + 1)} / ${pad(n)}`;
+    $$('.modal-card', arc).forEach(c => { // all the text fits: shrink the title until the card stops scrolling
+      const b = $('.modal-body', c), t = $('.modal-name', c);
+      t.style.fontSize = '';
+      for (let f = parseFloat(getComputedStyle(t).fontSize); b.scrollHeight > b.clientHeight && f > 24; f -= 2) t.style.fontSize = f - 2 + 'px';
+    });
   }
   function closeModal() {
     if (modal.hidden) return;
     const done = () => { modal.hidden = true; lenis?.start(); lastFocus?.focus?.({ preventScroll: true }); };
-    if (motion) gsap.to('.modal-card', { y: 40, opacity: 0, duration: .25, ease: 'power2.in', onComplete: done }); else done();
+    if (motion) gsap.to('.modal-arc', { y: 40, opacity: 0, duration: .25, ease: 'power2.in', onComplete: done }); else done();
   }
   function stepModal(d) {
-    const list = inGroup('figma');
+    const list = modalList;
     showInModal(list[(list.indexOf(current) + d + list.length) % list.length]);
   }
   function modalKeys(e) {
@@ -276,6 +382,8 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       if (e.target.closest('[data-close]')) closeModal();
       const s = e.target.closest('.modal-nav [data-step]');
       if (s) stepModal(+s.dataset.step);
+      const side = e.target.closest('.modal-card:not(.on)'); // a card at the side turns the arc to it
+      if (side) showInModal(byId(side.dataset.id));
     });
   }
 
@@ -283,7 +391,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
   // Pin a section for `len` screens; `at` lists the progress of each stop inside it.
   function pin(sec, len, build, at) {
     const tl = gsap.timeline({ defaults: { ease: 'none' } });
-    const st = ScrollTrigger.create({ trigger: sec, start: 'top top', end: '+=' + Math.round(len * 100) + '%', pin: true, scrub: 0.6, animation: tl });
+    const st = ScrollTrigger.create({ trigger: sec, start: 'top top', end: '+=' + Math.round(len * 100) + '%', pin: true, scrub: true, animation: tl });
     build(tl, st);
     fractions.set(sec, { st, tl, at });
     return st;
@@ -342,24 +450,23 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       tl.to({}, { duration: .3 });
     }, (tl) => labelsAt(tl, cards.length));
 
-    // The question: a blue box grows to fill the screen (brandappart showreel).
-    pin($('#domanda'), 1.4, (tl) => {
-      tl.fromTo('#domanda .growbox', { width: '40vw', height: '28vh', borderRadius: 28 }, { width: '100vw', height: '100vh', borderRadius: 0, duration: 1, ease: 'power2.inOut' })
-        .fromTo('#domanda .question', { scale: .62 }, { scale: 1, duration: 1, ease: 'power2.inOut' }, 0)
-        .to({}, { duration: .4 });
-    }, [1]);
-
-    // Two statements, one at a time.
-    const roles = $$('#ruolo .beat');
-    gsap.set(roles[1], { autoAlpha: 0 });
-    pin($('#ruolo'), 1.6, (tl) => {
-      tl.addLabel('b0', .15)
-        .to($$('.w > span', roles[0]), { yPercent: -110, stagger: .02, duration: .4, ease: 'power2.in' }, .4)
-        .set(roles[0], { autoAlpha: 0 }, .75)
-        .set(roles[1], { autoAlpha: 1 }, .75)
-        .fromTo($$('.w > span', roles[1]), { yPercent: 110 }, { yPercent: 0, stagger: .02, duration: .5, ease: 'power3.out' }, .75)
-        .addLabel('b1', 1.45).to({}, { duration: .2 });
-    }, (tl) => labelsAt(tl, 2));
+    // The question and its two answers, all inside one blue circle: it opens from the centre, then each line hands over to the next.
+    const beats = $$('#domanda .beat'), words = (el) => $$('.w > span', el);
+    gsap.set(beats.slice(1), { autoAlpha: 0 });
+    pin($('#domanda'), 3, (tl) => {
+      tl.fromTo('#domanda .growbox', { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(75% at 50% 50%)', duration: 1, ease: 'power2.inOut' })
+        .set('#domanda', { attr: { 'data-theme': 'blue' } }, .95) // once the circle covers the screen the page is blue: logo and rail turn cream
+        .addLabel('b0', 1);
+      [1, 2].forEach(k => {
+        const t = tl.labels['b' + (k - 1)] + .2;
+        tl.to(words(beats[k - 1]), { yPercent: -110, stagger: .02, duration: .35, ease: 'power2.in' }, t)
+          .set(beats[k - 1], { autoAlpha: 0 }, t + .45)
+          .set(beats[k], { autoAlpha: 1 }, t + .45)
+          .fromTo(words(beats[k]), { yPercent: 110 }, { yPercent: 0, stagger: .02, duration: .45, ease: 'power3.out' }, t + .45)
+          .addLabel('b' + k, t + 1.05);
+      });
+      tl.to({}, { duration: .2 });
+    }, (tl) => labelsAt(tl, 3));
 
     // Method: a horizontal track; each panel is a stop. The last panel builds the base in 3D when it comes on.
     const track = $('#metodo .track'), panels = $$('#metodo .panel');
@@ -373,6 +480,18 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
         panels.forEach(p => p.classList.toggle('on', x > p.offsetLeft && x < p.offsetLeft + p.offsetWidth));
       },
     });
+
+    // Demo: one Figma state per stop (selected, plugin open, creating, done).
+    const dsteps = $$('#demo .istep'), fig = $('#fig');
+    pin($('#demo'), 3, () => {}, [.06, .36, .66, .96]);
+    const demoST = fractions.get($('#demo')).st;
+    const setDemoStep = (k) => {
+      if (fig.dataset.step === String(k)) return;
+      fig.dataset.step = k; window.site.demoStep = k;
+      dsteps.forEach((s, i) => s.classList.toggle('on', i === k));
+    };
+    ScrollTrigger.create({ trigger: '#demo', start: () => demoST.start, end: () => demoST.end, onUpdate: self => setDemoStep(Math.min(3, Math.floor(self.progress * 4))) });
+    setDemoStep(0);
 
     // Lenses: four looks for one component.
     const lensNames = ['base', 'brutalist', 'soft', 'editorial'];
@@ -420,13 +539,44 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       }, (tl) => labelsAt(tl, beats.length));
     });
 
+    // How it works: one mock state per stop.
+    window.site.how = {};
+    $$('.how').forEach(sec => {
+      const steps = $$('.istep', sec), vis = $('.how-vis', sec);
+      pin(sec, 3, () => {}, [.06, .36, .66, .96]);
+      const st = fractions.get(sec).st;
+      const set = (k) => {
+        if (vis.dataset.step === String(k)) return;
+        vis.dataset.step = k; window.site.how[sec.id] = k;
+        steps.forEach((s, i) => s.classList.toggle('on', i === k));
+      };
+      ScrollTrigger.create({ trigger: sec, start: () => st.start, end: () => st.end, onUpdate: self => set(Math.min(3, Math.floor(self.progress * 4))) });
+      set(0);
+    });
+
     wordScrub($('#tempo'));
+
+    // Finale (last pin, pins are created in page order): the closing page (live, chess included) shrinks into the MacBook, then the terminal and the notes open beside it, line by line.
+    const lines = (pre) => { pre.innerHTML = pre.innerHTML.split('\n').map(l => `<span class="ln">${l || ' '}</span>`).join(''); return $$('.ln', pre); };
+    const termLines = lines($('#outro .term-win pre')), noteLines = lines($('#outro .notes-win pre'));
+    pin($('#outro'), 2.8, (tl) => {
+      tl.addLabel('b0', .05)
+        .addLabel('b1', 1.1)
+        .fromTo('#outro .term-win', { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: .3, ease: 'power3.out' }, 1.25)
+        .fromTo('#outro .notes-win', { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: .3, ease: 'power3.out' }, 1.35)
+        .fromTo(termLines, { opacity: 0 }, { opacity: 1, stagger: .045, duration: .01 }, 1.45)
+        .fromTo(noteLines, { opacity: 0 }, { opacity: 1, stagger: .022, duration: .01 }, 1.5)
+        .addLabel('b2', 2.4)
+        .to('#outro .win', { opacity: 0, y: 30, duration: .25, ease: 'power2.in' }, 2.5) // then the lid closes (LID_CLOSE) and the thanks land
+        .fromTo('#outro .outro-grazie .w > span', { yPercent: 110, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: .03, duration: .4, ease: 'power3.out' }, 3.15)
+        .addLabel('b3', 3.7).to({}, { duration: .2 });
+    }, (tl) => labelsAt(tl, 4));
 
     // Reveals for headings and copy outside pins.
     // The hero is on screen at load: play once, no trigger (the name sits below 90% and never fired; reversing hid the title).
     const trig = (el, start) => el.closest('#hero') ? undefined : { trigger: el, start, toggleActions: 'play none none reverse' };
     $$('.split').forEach(el => {
-      if (el.closest('#ruolo')) return;
+      if (el.closest('#domanda, #outro')) return;
       gsap.fromTo($$('.w > span', el), { yPercent: 115, rotateX: -25 }, { yPercent: 0, rotateX: 0, duration: 1.1, ease: 'expo.out', stagger: .045,
         scrollTrigger: trig(el, 'top 85%') });
     });
@@ -464,7 +614,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
   // ======================================================================
   const T = window.THREE;
   const PAL = { yellow: [0xFFD400, '#141312'], cream: [0xFAF7ED, '#141312'], blue: [0x0057FF, '#FAF7ED'], deep: [0x2A2826, '#FAF7ED'] };
-  const bounceOut = (t) => { const n = 7.5625, d = 2.75; if (t < 1 / d) return n * t * t; if (t < 2 / d) return n * (t -= 1.5 / d) * t + .75; if (t < 2.5 / d) return n * (t -= 2.25 / d) * t + .9375; return n * (t -= 2.625 / d) * t + .984375; };
+  const land = (t) => 1 - Math.pow(1 - t, 4); // soft landing, no bounce
   const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
   function makeRenderer(canvas, shadows = true) {
@@ -570,12 +720,14 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
 
   // An interactive keyboard: keys drop in (from scroll progress, or when it comes on screen),
   // lift under the pointer, and run onPress when clicked.
-  function keyboard(canvas, defs, { rows, onPress, progress, fill = .62, look = [0, 1.6, -.6], spin = .12 } = {}) {
+  function keyboard(canvas, defs, { rows, onPress, progress, fill = .62, look = [0, 1.6, -.6], spin = .12, tilt, rise } = {}) {
     if (!canvas) return null;
     const renderer = makeRenderer(canvas);
     if (!renderer) { canvas.remove(); return null; }
-    const scene = new T.Scene(), cam = new T.PerspectiveCamera(28, 1, .1, 200);
-    studio(scene);
+    const scene = new T.Scene(), cam = new T.PerspectiveCamera(rise ? 8 : 28, 1, .1, 200); // rise: a long lens, nearly flat
+    studio(scene, { shadow: !rise });
+    // rise: keys come up from under the page in their own place instead of falling; nothing below the page shows.
+    if (rise) { renderer.clippingPlanes = [new T.Plane(new T.Vector3(0, 1, 0), .08)]; canvas.style.height = '100%'; } // no sky needed: the keys stay in the box
     const board = new T.Group(); scene.add(board);
     const GAP = .16, groups = rows || [defs.length], keys = [];
     let at = 0, widest = 0;
@@ -598,7 +750,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     sizer(canvas, renderer, cam, (w, h) => {
       const hb = area.clientHeight || h;
       cam.aspect = w / hb; cam.setViewOffset(w, hb, 0, hb - h, w, h);
-      frame(cam, widest + .6, groups.length * 1.2, fill, look);
+      frame(cam, widest + .6, groups.length * 1.2, fill, look, tilt);
     });
     const vis = onScreen(area);
     const ray = new T.Raycaster(), ndc = new T.Vector2(9, 9);
@@ -610,7 +762,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     });
     area.addEventListener('pointerleave', () => ndc.set(9, 9));
     const press = (k) => {
-      gsap.timeline().to(k.userData, { press: 1, duration: .08, ease: 'power2.in' }).to(k.userData, { press: 0, duration: .7, ease: 'elastic.out(1, .4)' });
+      gsap.timeline().to(k.userData, { press: 1, duration: .14, ease: 'power2.inOut' }).to(k.userData, { press: 0, duration: .6, ease: 'power3.out' });
       setTimeout(() => onPress?.(k.userData.def), 240);
     };
     area.addEventListener('click', () => { if (hovered && landed) press(hovered); });
@@ -618,7 +770,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       if (!vis.on) { since = null; return; }
       const now = performance.now() / 1000;
       if (since === null) since = now;
-      const drop = progress ? progress() : clamp01((now - since) / 1.1);
+      const drop = progress ? progress() : clamp01((now - since) / 1.6);
       landed = drop >= 1;
       if (area === canvas) canvas.style.pointerEvents = landed ? 'auto' : 'none';
       ray.setFromCamera(ndc, cam);
@@ -628,14 +780,14 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       keys.forEach((k, i) => {
         const d = clamp01(drop * 1.6 - i * (.6 / keys.length));
         const u = k.userData;
-        u.lift += ((hovered === k ? .22 : 0) - u.lift) * .18;
-        k.position.y = (1 - bounceOut(d)) * 9 + u.lift - u.press * .32 + (landed ? Math.sin(now * 1.4 + i) * .02 : 0);
-        k.rotation.z = (1 - d) * (i % 2 ? .6 : -.5);
-        k.rotation.x = (1 - d) * .4;
+        u.lift += ((hovered === k ? .22 : 0) - u.lift) * .1;
+        k.position.y = (1 - land(d)) * (rise ? -1.2 : 9) + u.lift - u.press * .32 + (landed ? Math.sin(now * 1.4 + i) * .02 : 0);
+        k.rotation.z = rise ? 0 : (1 - d) * (i % 2 ? .6 : -.5);
+        k.rotation.x = rise ? 0 : (1 - d) * .4;
         k.visible = d > 0;
       });
-      board.rotation.y += ((mx * spin) - board.rotation.y) * .06;
-      board.rotation.x += ((-my * spin / 2) - board.rotation.x) * .06;
+      board.rotation.y += ((mx * spin) - board.rotation.y) * .035;
+      board.rotation.x += ((-my * spin / 2) - board.rotation.x) * .035;
       renderer.render(scene, cam);
     });
     canvas.dataset.ready = '1';
@@ -648,7 +800,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     const heroP = progressOf('#hero');
 
     // Hero: one key per tool; keys fall as the hero scrolls; a key opens its tool.
-    const hero = keyboard($('#keys-gl'), KEYS, { rows: [5, KEYS.length - 5], progress: () => clamp01((heroP() - .03) / .36), onPress: k => openProject(k.to) });
+    const hero = keyboard($('#keys-gl'), KEYS, { rows: [5, KEYS.length - 5], progress: () => clamp01((heroP() - .03) / .36), onPress: k => openProject(k.to, KEYS.map(k => byId(k.to)).filter(Boolean)) });
     window.site.keys = hero ? KEYS.map(k => k.label) : [];
 
     // Projects: three big keys, one per group.
@@ -669,11 +821,12 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       { label: '⇧ Converti', sub: 'Maiuscole', u: 2.2, color: 'yellow', g: 'shift' },
       { label: '⌘ Strumenti', sub: 'Comando', u: 2.2, color: 'cream', g: 'cmd' },
       { label: '⌃ Azioni', sub: 'Controllo', u: 2.2, color: 'blue', g: 'ctrl' },
-    ], { fill: .74, look: [0, .2, 0], spin: .06, onPress: k => prismaMode(k.g) });
+    ], { fill: .74, look: [0, .2, 0], spin: .06, tilt: .995, rise: true, onPress: k => prismaMode(k.g) });
 
     baseScene($('#base-gl'));
     knightScene($('#knight-gl'));
     chessFloat($('#chess-gl'));
+    macScene($('#mac-gl'), () => { const f = fractions.get($('#outro')); return f ? f.st.progress * f.tl.duration() : 0; }, $('#outro .outro-page'));
   }
 
   // Method finale: the nine steps become nine keys that stack into a solid 3×3 base; a king lands on top.
@@ -703,13 +856,13 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       if (!on) t0 = null;
       const t = t0 === null ? 0 : performance.now() / 1000 - t0;
       keys.forEach((k, i) => {
-        const d = clamp01((t - i * .14) / .7);
-        k.position.copy(k.userData.home); k.position.y += (1 - bounceOut(d)) * 10;
+        const d = clamp01((t - i * .16) / 1.1);
+        k.position.copy(k.userData.home); k.position.y += (1 - land(d)) * 10;
         k.rotation.y = (1 - d) * (i % 2 ? 1 : -1);
         k.visible = d > 0;
       });
-      const dk = clamp01((t - 1.7) / .9);
-      king.position.set(0, KEY_H + .08 + (1 - bounceOut(dk)) * 12, 0);
+      const dk = clamp01((t - 2.1) / 1.3);
+      king.position.set(0, KEY_H + .08 + (1 - land(dk)) * 12, 0);
       king.rotation.y = t * .5;
       king.visible = dk > 0;
       scene.rotation.y = -.35 + Math.sin(t * .25) * .3;
@@ -734,12 +887,12 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
     knight.scale.setScalar(34);
     scene.add(knight);
     let k = -1, x = 0, y = 0, spin = 0;
-    const spot = [{ x: 0, y: .9, s: 28, ry: -Math.PI / 2 }, { x: 1.9, y: .5, s: 26, ry: -1.2 }, { x: 0, y: .1, s: 40, ry: 0 }]; // 1: high in the poster, above its title
+    const spot = [{ x: 0, y: .9, s: 28, ry: -Math.PI / 2 }, { x: 1.7, y: .05, s: 46, ry: -1.2 }, { x: 0, y: .1, s: 40, ry: 0 }]; // 1: high in the poster, above its title
     sizer(canvas, renderer, cam, () => {
       cam.position.set(0, 1.6, 9); cam.lookAt(0, 1.6, 0);
       // 2: keep the wireframe inside the page card on narrow canvases
       const halfW = 9 * Math.tan(T.MathUtils.degToRad(cam.fov / 2)) * cam.aspect;
-      spot[1].x = Math.min(1.9, halfW * .5); spot[1].s = 26 * Math.min(1, halfW / 3.8);
+      spot[1].x = Math.min(1.7, halfW * .45); spot[1].s = 46 * Math.min(1, halfW / 3.4);
       if (k === 1) knight.scale.setScalar(spot[1].s);
     });
     const vis = onScreen(canvas);
@@ -749,9 +902,9 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
       if (step !== k) {
         const s = knight.scale.x;
         k = step; knight.material = mats[k];
-        gsap.fromTo(knight.scale, { x: s * .85, y: s * .85, z: s * .85 }, { x: spot[k].s, y: spot[k].s, z: spot[k].s, duration: .7, ease: 'back.out(2)' });
+        gsap.fromTo(knight.scale, { x: s * .85, y: s * .85, z: s * .85 }, { x: spot[k].s, y: spot[k].s, z: spot[k].s, duration: 1.1, ease: 'power3.out' });
       }
-      x += (spot[k].x - x) * .08; y += (spot[k].y - y) * .08;
+      x += (spot[k].x - x) * .05; y += (spot[k].y - y) * .05;
       spin = k === 0 ? 0 : spin + (k === 2 ? .012 : .006);
       knight.position.set(x, y, 0);
       knight.rotation.y = spot[k].ry + spin;
@@ -761,6 +914,160 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
   }
 
   // "Grazie": chess pieces drift and bounce like brandappart's keychains; the pointer pushes them.
+  // Finale: the real MacBook model (model/macbook.glb), tilted and swaying on black. The screen shows the closing page;
+  // at the end the lid closes. `time` is the outro timeline's playhead, so the lid follows the scroll.
+  const LID_CLOSE = [2.65, 3.35], SHRINK = [.3, .95]; // timeline seconds: the camera pulls back from inside the screen; the lid closes
+  function macScene(canvas, time, page) {
+    if (!canvas || !T.GLTFLoader) { canvas?.remove(); return; }
+    const renderer = makeRenderer(canvas, false);
+    if (!renderer) { canvas.remove(); return; }
+    const scene = new T.Scene(), cam = new T.PerspectiveCamera(30, 1, .1, 100);
+    studio(scene, { shadow: false });
+    // A soft grey room with two light panels, for the metal to reflect: without it the dark aluminium vanishes on black.
+    const room = new T.Scene(), lightPanel = (x, y, z, w, h) => { const m = new T.Mesh(new T.PlaneGeometry(w, h), new T.MeshBasicMaterial({ color: 0xffffff })); m.position.set(x, y, z); m.lookAt(0, 0, 0); room.add(m); };
+    room.add(new T.Mesh(new T.BoxGeometry(20, 20, 20), new T.MeshBasicMaterial({ color: 0x3a3a3c, side: T.BackSide })));
+    lightPanel(-6, 6, 6, 6, 3); lightPanel(7, 3, -4, 4, 6);
+    scene.environment = new T.PMREMGenerator(renderer).fromScene(room, .04).texture;
+    const mac = new T.Group(); scene.add(mac);
+    let lid = null, lid0 = 0, shut = 1.5, display = null, tex = null;
+    // The screen shows the page live, redrawn every frame (chess canvas + title). The camera starts square on the screen,
+    // with the glass exactly as wide as the window, where the drawing matches the page pixel for pixel: the page hands over there.
+    const live = document.createElement('canvas'), lctx = live.getContext('2d'), chess = page && $('#chess-gl', page);
+    let words = null;
+    const STRETCH = [[62.5, 'extra-condensed'], [75, 'condensed'], [87.5, 'semi-condensed'], [100, 'normal'], [112.5, 'semi-expanded'], [125, 'expanded'], [150, 'extra-expanded']];
+    const layout = () => { // the title's text, in page px, read from the DOM whatever the page's current transform
+      const pr = page.getBoundingClientRect(), sx = pr.width / page.offsetWidth, sy = pr.height / page.offsetHeight, range = document.createRange(), out = [];
+      const walk = document.createTreeWalker($('.end-title', page), NodeFilter.SHOW_TEXT);
+      for (let n; (n = walk.nextNode());) {
+        if (!n.data.trim()) continue;
+        range.selectNodeContents(n);
+        const r = range.getBoundingClientRect(), cs = getComputedStyle(n.parentElement);
+        // cs.font comes back empty, and a canvas only takes keyword stretches: rebuild it, nearest keyword
+        const st = parseFloat(cs.fontStretch) || 100, stretch = STRETCH.reduce((a, b) => Math.abs(b[0] - st) < Math.abs(a[0] - st) ? b : a)[1];
+        out.push({ text: n.data, x: (r.left - pr.left) / sx, y: (r.top - pr.top) / sy, font: `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`, stretch, spacing: cs.letterSpacing, color: cs.color });
+      }
+      return out;
+    };
+    let glassW = 1, aspect = 1.5;
+    const drawLive = () => {
+      const W = page.offsetWidth, H = page.offsetHeight, k = Math.min(devicePixelRatio, 1.5);
+      glassW = Math.max(W, H * aspect); // the glass covers the window: the page sits in its middle
+      const gh = glassW / aspect;
+      if (live.width !== Math.round(glassW * k) || live.height !== Math.round(gh * k)) { live.width = Math.round(glassW * k); live.height = Math.round(gh * k); words = null; }
+      words ||= layout();
+      lctx.setTransform(k, 0, 0, k, 0, 0);
+      lctx.fillStyle = getComputedStyle(page).backgroundColor; lctx.fillRect(0, 0, glassW, gh);
+      lctx.translate((glassW - W) / 2, (gh - H) / 2);
+      if (chess) lctx.drawImage(chess, 0, 0, W, H); // drawn this same frame by chessFloat's ticker, so its buffer is still there
+      lctx.textBaseline = 'alphabetic';
+      words.forEach(w => {
+        lctx.font = w.font; lctx.fontStretch = w.stretch; lctx.letterSpacing = w.spacing; lctx.fillStyle = w.color;
+        lctx.fillText(w.text, w.x, w.y + lctx.measureText(w.text).fontBoundingBoxAscent);
+      });
+      tex.needsUpdate = true;
+    };
+    addEventListener('resize', () => { words = null; });
+    // The angle that lays the screen flat on the base, found on the model itself: turn the lid until the screen faces straight down.
+    const shutAngle = () => {
+      const n = new T.Vector3(), q = new T.Quaternion(), down = new T.Vector3(0, -1, 0);
+      const front = () => { lid.updateMatrixWorld(true); return n.set(0, 0, 1).applyQuaternion(display.getWorldQuaternion(q)); };
+      const f = Math.sign(front().z) || 1; // the side that faces the viewer when open
+      let best = 0, err = Infinity;
+      for (let a = -2.4; a <= 2.4; a += .001) { lid.rotation.z = lid0 + a; const e = front().multiplyScalar(f).angleTo(down); if (e < err) { err = e; best = a; } }
+      lid.rotation.z = lid0;
+      return best;
+    };
+    // 16 MB: fetch it only when the finale gets close.
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      new T.GLTFLoader().load('model/macbook.glb', ({ scene: m }) => {
+        const box = new T.Box3().setFromObject(m), k = 6 / box.getSize(new T.Vector3()).x;
+        m.scale.setScalar(k); m.position.copy(box.getCenter(new T.Vector3())).multiplyScalar(-k);
+        tex = new T.CanvasTexture(live); tex.colorSpace = T.SRGBColorSpace; tex.flipY = false;
+        tex.repeat.set(1.6043, 1.9048); tex.offset.set(-.3036, -.3982); // the display's UVs cover u .189–.813, v .209–.734: stretch the drawing over exactly that
+        m.traverse(o => {
+          if (/^Rotate/.test(o.name)) lid = o;
+          if (o.isMesh && o.material.name === 'Display.002') { o.material = new T.MeshBasicMaterial({ map: tex, toneMapped: false }); display = o; }
+          if (o.isMesh && /Metalic/.test(o.material.name)) { o.material.color.set(0x9A9DA3); o.material.metalness = .85; o.material.roughness = .32; } // space grey shell
+        });
+        // The logo floats 3 cm behind the lid in the model, so in perspective it looks off centre: lay it on the lid's back.
+        const logo = m.getObjectByName('Apple-Logo-Iconic-Tech-Brand-Symbol-PNG-Transparent-Representa');
+        if (logo?.isMesh && display) {
+          const back = new T.Box3(), b = new T.Box3();
+          display.parent.children.forEach(o => { if (o.isMesh && o !== logo) { o.geometry.computeBoundingBox(); back.union(o.geometry.boundingBox); } });
+          logo.updateMatrix(); logo.geometry.computeBoundingBox();
+          b.copy(logo.geometry.boundingBox).applyMatrix4(logo.matrix);
+          logo.position.z += back.min.z - .0004 - b.max.z;
+        }
+        // A sticker on the lid, seen once it shuts.
+        if (display) {
+          const back = new T.Box3();
+          display.parent.children.forEach(o => { if (o.isMesh && /Display|Bezel|Metalic/.test(o.material.name || '')) { o.geometry.computeBoundingBox(); back.union(o.geometry.boundingBox); } });
+          const map = new T.TextureLoader().load('media/outro/sticker.png'); map.colorSpace = T.SRGBColorSpace; map.anisotropy = 8;
+          const w = .11, sticker = new T.Mesh(new T.PlaneGeometry(w, w * 773 / 1070),
+            new T.MeshStandardMaterial({ map, transparent: true, alphaTest: .5, roughness: .55, polygonOffset: true, polygonOffsetFactor: -2 }));
+          sticker.rotation.set(0, Math.PI, Math.PI + .3); // the lid's back faces -z; upright when the lid is shut
+          sticker.position.set(.075, .135, back.min.z - .0008);
+          display.parent.add(sticker);
+        }
+        mac.rotation.set(0, 0, 0);
+        mac.add(m);
+        if (lid && display) { lid0 = lid.rotation.z; shut = shutAngle(); }
+        if (display) { const g = display.geometry; g.computeBoundingBox(); const z = g.boundingBox.getSize(new T.Vector3()); aspect = z.x / z.y; }
+      });
+    }, { rootMargin: '300% 0px' });
+    io.observe(canvas);
+    // The end pose; the camera starts close on the screen (the page *is* the screen) and pulls back to it.
+    const endPos = new T.Vector3(), endLook = new T.Vector3(0, .3, 0), sc = new T.Vector3(), sn = new T.Vector3(), look = new T.Vector3();
+    sizer(canvas, renderer, cam, () => { frame(cam, 6.4, 5.6, .58, endLook.toArray(), .3); endPos.copy(cam.position); });
+    const vis = onScreen(canvas), box = new T.Box3(), v = new T.Vector3();
+    // Where the screen sits on the page, in px.
+    const screenRect = () => {
+      // The screen's own (flat) box, not the world one: a tilted screen's world box has corners off the glass.
+      box.copy(display.geometry.boundingBox);
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (let i = 0; i < 8; i++) {
+        v.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).applyMatrix4(display.matrixWorld).project(cam);
+        const x = (v.x + 1) / 2 * canvas.clientWidth, y = (1 - v.y) / 2 * canvas.clientHeight;
+        x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+      }
+      return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+    };
+    let mx = 0, smx = 0;
+    addEventListener('pointermove', e => { mx = e.clientX / innerWidth * 2 - 1; });
+    gsap.ticker.add(() => {
+      if (!vis.on) return;
+      const t = performance.now() / 1000, at = time(), ease = (x) => x * x * (3 - 2 * x);
+      const q = ease(clamp01((at - SHRINK[0]) / (SHRINK[1] - SHRINK[0])));
+      const sway = ease(clamp01((at - SHRINK[1] - .1) / .6)), close = ease(clamp01((at - LID_CLOSE[0]) / (LID_CLOSE[1] - LID_CLOSE[0])));
+      smx += (mx - smx) * .05;
+      // Straight on to the camera while it pulls back from the screen, then it starts to sway; closing, it tips towards us and sinks.
+      mac.rotation.y = sway * (-.3 + Math.sin(t * .45) * .14 * (1 - close) + smx * .15);
+      mac.rotation.x = close * .25 + sway * Math.sin(t * .32) * .04;
+      mac.position.y = sway * Math.sin(t * .7) * .07 - close * .6;
+      if (lid) lid.rotation.z = lid0 + shut * close;
+      mac.updateMatrixWorld(true);
+      const W = canvas.clientWidth;
+      if (tex && page && close < 1) drawLive();
+      cam.position.copy(endPos); cam.lookAt(endLook);
+      if (display && q < 1) {
+        // Start: square in front of the screen, at the distance where the glass is glassW px wide.
+        box.setFromObject(display).getCenter(sc);
+        sn.set(0, 0, 1).applyQuaternion(display.getWorldQuaternion(new T.Quaternion()));
+        if (sn.z < 0) sn.negate();
+        cam.position.copy(sc).addScaledVector(sn, 4); cam.lookAt(sc); cam.updateMatrixWorld();
+        const d0 = 4 * screenRect().w / glassW;
+        cam.position.copy(sc).addScaledVector(sn, d0).lerp(endPos, q);
+        cam.lookAt(look.copy(sc).lerp(endLook, q));
+      }
+      cam.updateMatrixWorld();
+      if (page) page.style.opacity = display && at > SHRINK[0] ? 0 : 1; // opacity, not visibility: the chess canvas must keep drawing
+      renderer.render(scene, cam);
+    });
+    canvas.dataset.ready = '1';
+  }
+
   function chessFloat(canvas) {
     if (!canvas) return;
     const renderer = makeRenderer(canvas, false);
@@ -971,7 +1278,7 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
 
   // ---------- Boot ----------
   renderContent();
-  $$('.split, #ruolo .beat').forEach(el => wrapWords(el, true));
+  $$('.split, #domanda .beat').forEach(el => wrapWords(el, true));
   $$('.scrub-words').forEach(el => wrapWords(el, false));
   copyButtons();
   kitTabs();

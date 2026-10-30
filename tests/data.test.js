@@ -37,7 +37,7 @@ test('nine projects: complete, grouped, every image slot numbered and described'
   }
   assert.equal(new Set(ids).size, ids.length, 'each slot used once');
   assert.ok(P.filter(p => p.group === 'figma').every(p => p.problem), 'figma cards show the problem');
-  assert.equal(byId(P, 'photoshop').group, 'app', 'Modifica in Photoshop is an app');
+  assert.ok(!byId(P, 'photoshop'), 'Modifica in Photoshop removed');
   assert.ok(!P.some(p => /tea|portfolio/i.test(p.id)), 'client material and portfolio stay out');
   const sim = window.PRISMA_SIM;
   assert.deepEqual(Object.keys(sim), ['shift', 'cmd', 'ctrl'], 'one simulated fan per key');

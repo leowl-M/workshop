@@ -3,7 +3,7 @@
   "TEXTS": {
     "intro": {
       "kicker": "Workshop",
-      "titolo": "Ho smesso di aspettare gli <mark>strumenti giusti.</mark>",
+      "titolo": "Design × <em>AI</em>",
       "autore": "Leonardo Maltese",
       "manifesto": "Da designer, se un processo mi frena cerco di non bloccarmi, sfrutto l'AI e mi creo lo strumento giusto per ripartire."
     },
@@ -28,11 +28,41 @@
     "metodo": {
       "kicker": "Il metodo",
       "titolo": "Come lavoro, <em>passo per passo.</em>",
+      "sottotitolo": "Un esempio vero: ogni visual lo rifacevo a mano in dieci formati. Con Claude Code ho costruito un plugin Figma che lo fa in un clic. Prima, però, gli attrezzi.",
       "sempre_kicker": "Sempre accese",
       "sempre_titolo": "Tre skill che non spengo <mark>mai.</mark>",
       "sempre_ponytail": "Il codice più semplice che funziona.",
-      "sempre_caveman": "Risposte brevi, stesso contenuto.",
-      "sempre_output": "Niente codice tagliato a metà."
+      "sempre_brainstorming": "Prima di costruire, le domande giuste.",
+      "sempre_inventario": "Gli strumenti giusti per ogni progetto.",
+      "cc_titolo": "Claude Code, <em>in breve.</em>",
+      "cc_testo": "Un assistente AI che lavora sul mio computer. Gli descrivo cosa mi serve, a parole, come farei con un collega. Legge i file, scrive il codice e lo prova. Prima di ogni passo importante, chiede il permesso.",
+      "cc_terminale": "<b>&gt; Mi serve un plugin Figma che adatta un visual a dieci formati.</b>\n\n<i>●</i> Leggo CLAUDE.md: le regole del progetto\n<i>●</i> Prima di partire ti faccio qualche domanda\n<i>●</i> Scrivo la spec in docs/formati-design.md\n\n<u>? Posso creare il file?  sì / no</u>",
+      "cartella_titolo": "Tutto vive <em>in una cartella.</em>",
+      "cartella_testo": "Ogni progetto è una cartella, come quelle che usi già. Dentro ci sono file di testo: le regole, i documenti, il codice. Claude li legge per capire il progetto, io li apro per controllare cosa ha fatto.",
+      "giro_titolo": "Come lavora: <em>un giro alla volta.</em>",
+      "giro_testo": "Non tira a indovinare e non fa tutto in un colpo. Ripete sempre lo stesso giro: legge, propone, chiede, fa, controlla. Se qualcosa non torna, rifà il giro.",
+      "giro_doc": "<b>1  Legge</b>      i file della cartella\n<b>2  Propone</b>    cosa fare, in parole semplici\n<b>3  Chiede</b>     il permesso, a me\n<b>4  Fa</b>         scrive o cambia i file\n<b>5  Controlla</b>  prova che funzioni\n\n<u>↻  e se qualcosa non va, ricomincia</u>",
+      "regole_titolo": "CLAUDE.md: <em>le regole della casa.</em>",
+      "regole_testo": "Il primo file che Claude legge, sempre. È il briefing che daresti a un collega appena arrivato: cosa può toccare, cosa no, come voglio che lavori.",
+      "regole_doc": "<b># Plugin formati</b>\n\nTocca solo src/ e tests/.\nNiente librerie nuove senza chiedere.\nOgni modifica ha la sua prova.\nSpiega le scelte in parole semplici.\nPrima di pubblicare, aspetta il mio ok.",
+      "skill_titolo": "Le skill: <em>ricette pronte.</em>",
+      "skill_testo": "Una skill è un metodo scritto una volta e riusato ogni volta: come fare le domande giuste, come scrivere un piano, come rileggere il codice. Un manuale per il collega. Accendo solo quelle che servono al progetto.",
+      "skill_doc": "<b>Accese in questo progetto</b>\n\n<i>●</i> brainstorming     fa domande una alla volta\n<i>●</i> writing-plans     scrive il piano a task\n<i>●</i> code-review       rilegge il codice\n\n<u>○  le altre restano spente</u>",
+      "permesso_titolo": "Io decido, <em>Claude esegue.</em>",
+      "permesso_testo": "Ogni azione importante passa da me: creare un file, lanciare un comando, pubblicare online. Posso dire sì, no, oppure spiegare cosa voglio al suo posto.",
+      "permesso_doc": "<i>●</i> Voglio lanciare i test del plugin\n\n  <b>npm test</b>\n\n<u>? Posso procedere?</u>\n  <b>1  Sì</b>\n  2  Sì, e non chiedermelo più\n  3  No, fai così invece…"
+    },
+    "demo": {
+      "kicker": "La demo",
+      "titolo": "Il plugin, <em>in azione.</em>",
+      "passo1_titolo": "Selezioni il visual",
+      "passo1_testo": "Il visual finito, in Figma: un solo frame quadrato, con logo, titolo e sfondo.",
+      "passo2_titolo": "Apri il plugin",
+      "passo2_testo": "Una finestra con i dieci formati del team. Togli la spunta a quelli che non ti servono.",
+      "passo3_titolo": "Un clic",
+      "passo3_testo": "Il plugin fa una copia per ogni formato. Logo e titolo si spostano dove stanno meglio, lo sfondo si adatta.",
+      "passo4_titolo": "Dieci formati, pochi secondi",
+      "passo4_testo": "Prima era mezza giornata. Logo e titolo restano sempre interi, il visual di partenza non viene toccato."
     },
     "skill": {
       "kicker": "Le mie skill",
@@ -58,20 +88,44 @@
       "kicker": "I progetti",
       "titolo": "Gli strumenti che mi sono <mark>costruito.</mark>"
     },
+    "composer": {
+      "kicker": "Composer · come funziona",
+      "titolo": "Un template, <em>tanti post.</em>",
+      "passo1_titolo": "Prepari il template",
+      "passo1_testo": "In Figma, un post come sempre. Un simbolo davanti al nome del livello dice cosa si potrà cambiare: # testo, @ immagine, $ forma, ^ overlay.",
+      "passo2_titolo": "Il plugin lo controlla",
+      "passo2_testo": "Prima di estrarlo verifica che tutto torni: livelli, font, testi fuori posto. Le correzioni si fanno in un clic.",
+      "passo3_titolo": "Lo compili nell'app",
+      "passo3_testo": "Cambi testi, immagini e colori in un modulo. Il post si aggiorna mentre scrivi, senza aprire Figma.",
+      "passo4_titolo": "Post e storia, per ogni cliente",
+      "passo4_testo": "Lo stesso contenuto in post e in storia. Tutto in ordine per cliente, progetto e cartella."
+    },
+    "editor": {
+      "kicker": "Editor · come funziona",
+      "titolo": "Dal testo al <em>wireframe.</em>",
+      "passo1_titolo": "Scrivi il prodotto",
+      "passo1_testo": "Un solo file: le schermate, chi le può vedere, cosa può fare. Lo scrivo con Claude, a parole.",
+      "passo2_titolo": "Si apre come wireframe",
+      "passo2_testo": "L'editor legge il file e disegna tutte le schermate, navigabili. Accanto, cosa può fare chi guarda.",
+      "passo3_titolo": "Cambi ruolo",
+      "passo3_testo": "Ogni schermata vista da ogni ruolo. Anche quello che un ruolo non deve vedere: chiuso, e si capisce perché.",
+      "passo4_titolo": "Lo condividi",
+      "passo4_testo": "Un file HTML unico che si apre offline. Oppure lo mando in Figma, con livelli e testi veri."
+    },
     "tempo": {
       "frase": "Meno tempo nei processi noiosi. Più tempo per studiare, sperimentare e creare."
     },
     "partire": {
       "kicker": "Da dove partire",
-      "titolo": "Tre skill a testa, <mark>domani.</mark>",
-      "design_titolo": "Per chi progetta",
-      "design_1": "<code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.",
-      "design_2": "<code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.",
-      "design_3": "<code>superpowers:brainstorming</code>Ti obbliga a sapere cosa vuoi.",
-      "dev_titolo": "Per chi sviluppa",
-      "dev_1": "<code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.",
-      "dev_2": "<code>code-review</code>Un secondo paio d'occhi, sempre libero.",
-      "dev_3": "<code>ponytail</code>Meno codice, meno sorprese."
+      "titolo": "La base per <mark>partire.</mark>",
+      "sottotitolo": "Poche skill, nell'ordine in cui le uso. Bastano per cominciare a costruire.",
+      "skill_1": "<code>superpowers:brainstorming</code>Prima le domande: sai cosa vuoi prima di costruire.",
+      "skill_2": "<code>inventario</code>Ti dice quali skill e plugin servono al progetto.",
+      "skill_3": "<code>imagegen-frontend-web</code>Vedi la pagina prima di costruirla.",
+      "skill_4": "<code>design-taste-frontend</code>Smette di farti sembrare tutto uguale.",
+      "skill_5": "<code>superpowers:test-driven-development</code>Codice dell'AI con la prova che funziona.",
+      "skill_6": "<code>code-review</code>Un secondo paio d'occhi, sempre libero.",
+      "skill_7": "<code>ponytail</code>Meno codice, meno sorprese."
     },
     "risorse": {
       "kicker": "Risorse",
@@ -80,8 +134,11 @@
     },
     "fine": {
       "kicker": "Workshop interno · Design × AI",
-      "titolo": "Grazie.",
-      "sottotitolo": "Lo strumento giusto è quello che ti costruisci. Slide e risorse restano online."
+      "titolo": "Lo strumento giusto è quello che <em>ti costruisci.</em>",
+      "sottotitolo": "Slide e risorse restano online: inquadra il QR e riaprile quando vuoi.",
+      "terminale": "<b>~/workshop $</b> claude\n<b>&gt; Costruiamo una presentazione che si scorre e che presento con le frecce.</b>\n<i>●</i> Leggo CLAUDE.md\n<i>●</i> Ti faccio qualche domanda prima di partire\n<i>●</i> Scrivo la spec: docs/specs/presentazione.md\n<i>●</i> Scrivo il piano: 12 task\n<i>●</i> Task 1 · pagina che si legge anche senza JS  ✓\n<i>●</i> Task 2 · una tappa per ogni freccia  ✓\n<i>●</i> Task 6 · tastiera e scacchi in 3D  ✓\n<i>●</i> Test nel browser: tutti ok\n<b>&gt; apri in locale</b>\n<i>●</i> http://localhost:8000\n<b>&gt; pubblica</b>\n<i>●</i> git push · online su GitHub Pages  ✓",
+      "appunti": "<b>appunti — Design × AI</b>\n\n01  Il problema\n    Un workshop da raccontare.\n    Le slide non bastavano:\n    volevo una pagina che si scorre.\n\n02  Il contesto\n    Cartella nuova e CLAUDE.md\n    con le regole: niente codice\n    in più, online solo col mio ok.\n\n03  Spec e piano\n    Cosa deve fare, cosa no,\n    i task in ordine.\n\n04  La costruzione\n    Prima la pagina statica,\n    poi le tappe, la tastiera 3D,\n    gli scacchi, i capitoli.\n\n05  I testi\n    Tutti in content.json:\n    li cambio da Pages CMS\n    senza toccare il codice.\n\n06  La regia\n    Una tappa per freccia,\n    movimenti morbidi.\n\n07  Le prove\n    Playwright nel browser vero,\n    a ogni modifica.\n\n08  Online\n    GitHub Pages: un link\n    per riaprirla.",
+      "grazie": "Grazie."
     }
   },
   "FAMILIES": [
@@ -677,20 +734,20 @@
       ]
     },
     {
-      "id": "photoshop",
-      "name": "Modifica in Photoshop",
-      "kind": "App per Mac + plugin Figma",
+      "id": "editor",
+      "name": "Editor",
+      "kind": "Tool web + plugin Figma",
       "group": "app",
-      "problem": "Per ritoccare un'immagine di Figma: esporta, apri in Photoshop, reimporta.",
-      "solution": "Apre l'immagine selezionata in Photoshop a piena risoluzione. Con ⌘S si aggiorna da sola in Figma.",
+      "problem": "Wireframe rifatti da zero a ogni progetto, con ruoli e permessi spiegati a voce.",
+      "solution": "Descrivo il prodotto in un solo file: schermate, ruoli, flussi. L'editor lo apre come wireframe navigabile, da modificare, annotare e condividere.",
       "details": [
-        "Pulsante \"Modifica in Photoshop\" sul livello",
-        "Fino a 10 immagini alla volta",
-        "App di supporto per Mac"
+        "Ogni schermata vista da ogni ruolo, anche ciò che non deve vedere",
+        "Condividi: un file HTML unico che si apre offline",
+        "In Figma con livelli e testi veri, desktop e mobile"
       ],
-      "stack": "Figma API · helper locale",
+      "stack": "HTML · JavaScript · plugin Figma",
       "imgs": [
-        "img-06"
+        "img-11"
       ]
     },
     {
@@ -764,29 +821,31 @@
   "METHOD": [
     {
       "name": "Il problema",
-      "what": "Parto da un fastidio vero, scritto in parole semplici. Se non so dirlo in due righe, non so ancora cosa costruire.",
+      "what": "Parto da un fastidio vero, scritto in parole semplici. Se non riesco a spiegarlo in due righe, non so ancora cosa costruire.",
       "file": "docs/formati-design.md · Perché",
       "lines": [
         "Finito un visual, lo rifaccio a mano",
         "in dieci formati: post, storia, banner.",
         "Mezza giornata a spostare livelli."
-      ]
+      ],
+      "here": "formati-design.md"
     },
     {
       "name": "Il contesto",
-      "what": "Nella cartella c'è un CLAUDE.md: cosa si tocca, cosa no, come si lavora. Claude lo legge prima di ogni cosa.",
+      "what": "Scrivo le regole del progetto nel CLAUDE.md: cosa si tocca, cosa no, come si lavora. Claude le legge prima di cominciare.",
       "file": "CLAUDE.md",
       "lines": [
         "Il plugin crea copie, non tocca l'originale.",
         "Prima una prova su un solo formato.",
         "Nessun push senza ok.",
         "I commenti spiegano il perché."
-      ]
+      ],
+      "here": "CLAUDE.md"
     },
     {
       "skill": "/skills",
       "name": "Le skill giuste",
-      "what": "Accendo solo le skill che servono a quel progetto. Le altre restano spente, così Claude non si distrae.",
+      "what": "Accendo solo le skill che servono a questo progetto. Le altre restano spente, così Claude resta concentrato.",
       "file": ".claude/settings.local.json",
       "lines": [
         "\"skillOverrides\": {",
@@ -794,35 +853,38 @@
         "  \"threejs-shaders\": \"off\",",
         "  \"copy-guide\": \"name-only\"",
         "}"
-      ]
+      ],
+      "here": "settings.local.json"
     },
     {
       "skill": "superpowers:brainstorming",
       "name": "Le domande",
-      "what": "Claude mi fa domande una alla volta e propone. Le scelte restano mie, e restano scritte.",
+      "what": "Prima di costruire, Claude mi fa domande, una alla volta, e propone soluzioni. Le scelte restano mie, e finiscono per iscritto.",
       "file": "spec · decisioni",
       "lines": [
         "Deciso con l'utente: logo e titolo restano",
         "sempre interi, lo sfondo si può tagliare.",
         "(proposta mia, accettata)"
-      ]
+      ],
+      "here": "formati-design.md"
     },
     {
       "skill": "documento di design",
       "name": "La spec",
-      "what": "Un documento solo: perché, obiettivi, non obiettivi. E gli anti-obiettivi: cosa sarebbe un fallimento anche se funziona.",
+      "what": "La spec è il progetto scritto: perché lo facciamo, cosa deve fare, cosa no. E cosa sarebbe un fallimento, anche se funziona.",
       "file": "docs/formati-design.md",
       "lines": [
         "## Anti-obiettivi",
         "- Un formato che sembra giusto ma ha",
         "  il logo tagliato.",
         "- Modificare il visual di partenza."
-      ]
+      ],
+      "here": "formati-design.md"
     },
     {
       "skill": "superpowers:writing-plans",
       "name": "Il piano",
-      "what": "Task piccoli, ognuno con la sua prova. Il primo task è sempre il banco di prova.",
+      "what": "Il lavoro diviso in passi piccoli, ognuno con la sua prova. Si parte sempre da un test su un solo formato.",
       "file": "docs/formati-piano.md",
       "lines": [
         "Task 0  Il banco di prova",
@@ -831,41 +893,45 @@
         "Task 3  Logo e titolo sempre interi",
         "…",
         "Task 8  Verifica finale"
-      ]
+      ],
+      "here": "formati-piano.md"
     },
     {
       "skill": "subagent-driven-development",
       "name": "La costruzione",
-      "what": "Un agente per task e un revisore che lo controlla. Io guardo, provo e decido.",
+      "what": "Ogni passo va a un agente, un'altra AI dedicata solo a quello. Un secondo agente lo ricontrolla. Io guardo, provo e decido.",
       "file": "piano · istruzioni per gli agenti",
       "lines": [
         "Use superpowers:subagent-driven-development",
         "to implement this plan task-by-task.",
         "Ogni task finisce con le prove verdi."
-      ]
+      ],
+      "here": "src/"
     },
     {
       "skill": "verification-before-completion",
       "name": "La verifica",
-      "what": "Prove nel browser vero, con Playwright, sui punti dove può rompersi. Niente \"fatto\" senza una prova.",
+      "what": "Prove automatiche in un browser vero, sui punti dove può rompersi. Nessun «fatto» senza una prova che lo dimostri.",
       "file": "piano · Review Focus",
       "lines": [
         "node prove/formati/prova.mjs",
         "→ PASS nome / FAIL nome: messaggio",
         "dieci_formati · logo_intero",
         "testo_leggibile · originale_intatto"
-      ]
+      ],
+      "here": "tests/"
     },
     {
       "name": "Il rilascio",
-      "what": "Lo apro io in locale e controllo che funzioni come prima. Solo con il mio ok va online.",
+      "what": "Lo provo io in Figma su un visual vero. Solo con il mio ok va online, e il team lo installa.",
       "file": "CLAUDE.md · Come si lavora",
       "lines": [
         "Prima di ogni push si prova il plugin",
         "in Figma su un visual vero e si guarda",
         "ogni formato, uno per uno.",
         "Poi il team lo installa dal link."
-      ]
+      ],
+      "here": "CLAUDE.md"
     }
   ],
   "METHOD_KEYS": [
@@ -1470,12 +1536,6 @@
       "to": "modulink"
     },
     {
-      "label": "Photoshop",
-      "u": 1.75,
-      "color": "cream",
-      "to": "photoshop"
-    },
-    {
       "label": "Prisma",
       "u": 1.25,
       "color": "yellow",
@@ -1486,6 +1546,12 @@
       "u": 1.5,
       "color": "blue",
       "to": "composer"
+    },
+    {
+      "label": "Editor",
+      "u": 1.5,
+      "color": "deep",
+      "to": "editor"
     },
     {
       "label": "Training",
@@ -1500,11 +1566,58 @@
     "img-03": "Type & Color Swap",
     "img-04": "Split PDF",
     "img-05": "Modulink",
-    "img-06": "Modifica in Photoshop (app)",
     "img-07": "Prisma",
     "img-08": "Composer · app",
     "img-09": "Composer · plugin",
-    "img-10": "Training"
+    "img-10": "Training",
+    "img-11": "Editor"
   },
-  "SLOT_SIZE": "1600 × 1000"
+  "SLOT_SIZE": "1600 × 1000",
+  "FOLDER": [
+    {
+      "name": "formati-plugin/",
+      "d": 0,
+      "note": "La cartella del progetto"
+    },
+    {
+      "name": "CLAUDE.md",
+      "d": 1,
+      "note": "Le regole: cosa si tocca, come si lavora"
+    },
+    {
+      "name": ".claude/",
+      "d": 1,
+      "note": "Le impostazioni di Claude"
+    },
+    {
+      "name": "settings.local.json",
+      "d": 2,
+      "note": "Le skill accese per questo progetto"
+    },
+    {
+      "name": "docs/",
+      "d": 1,
+      "note": "I documenti"
+    },
+    {
+      "name": "formati-design.md",
+      "d": 2,
+      "note": "La spec: perché, obiettivi, limiti"
+    },
+    {
+      "name": "formati-piano.md",
+      "d": 2,
+      "note": "Il piano, un task alla volta"
+    },
+    {
+      "name": "src/",
+      "d": 1,
+      "note": "Il codice del plugin"
+    },
+    {
+      "name": "tests/",
+      "d": 1,
+      "note": "Le prove automatiche"
+    }
+  ]
 }

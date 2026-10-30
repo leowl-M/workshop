@@ -85,10 +85,7 @@ em { font-style: normal; color: var(--em); }
 .keys-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .hero-copy { position: absolute; left: var(--gut); right: var(--gut); top: 50%; translate: 0 -50%; text-align: center; pointer-events: none; transform-origin: 50% 50%; }
 .hero-copy .display { margin: 0 auto; max-width: 14ch; color: var(--cream); }
-.hero-by { position: absolute; left: var(--gut); bottom: 8vh; font: 500 14px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
-.scroll-hint { position: absolute; right: var(--gut); bottom: 8vh; display: flex; align-items: center; gap: 12px; font: 500 13px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
-.scroll-hint i { width: 2px; height: 48px; background: linear-gradient(var(--fg) 50%, transparent 50%) 0 0 / 2px 200%; animation: drip 1.6s linear infinite; }
-@keyframes drip { to { background-position: 0 -96px; } }
+.hero-by { position: absolute; left: 0; right: 0; text-align: center; bottom: 8vh; font: 500 14px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
 html:not(.motion) .keys-gl { display: none; }
 
 /* === WORD SCRUB STATEMENTS === */
@@ -322,7 +319,7 @@ html:not(.motion) .ptext { height: auto; display: grid; gap: 6vh; }
   .share-link:hover { text-decoration-thickness: 3px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cube, .scroll-hint i { animation: none; }
+  .cube { animation: none; }
   body { transition: none; }
 }
 .tcard.blue p, .rcard.blue p { opacity: 1; } /* dimmed cream on blue drops below AA */

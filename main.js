@@ -19,8 +19,9 @@ fetch('content.json', { cache: 'no-cache' }).then(r => r.json()).then(content =>
   const inGroup = (g) => ORDER.filter(p => p.group === g);
 
   // Placeholder: a numbered solid block; it shows the real picture as soon as media/projects/img-NN.jpg exists.
+  // On load the box takes the picture's own ratio, so it is never cropped (no effect where the box is sized by inset).
   const slot = (id, cls = '') => `<div class="slot ${cls}" data-n="${+id.slice(4)}">
-    <img src="${IMG}${id}.jpg" alt="${esc(SLOTS[id])}" onerror="this.remove()">
+    <img src="${IMG}${id}.jpg" alt="${esc(SLOTS[id])}" onerror="this.remove()" onload="this.parentNode.style.aspectRatio = this.naturalWidth + ' / ' + this.naturalHeight">
     <span class="slot-num">${id.toUpperCase()}</span><span class="slot-txt">Immagine da cambiare · ${esc(SLOTS[id])}</span>
     <span class="slot-size">${SLOT_SIZE} px · media/projects/${id}.jpg</span></div>`;
 
@@ -187,9 +188,10 @@ ${vis}    </div></section>`; };
         <div class="cc-caps">${METHOD.map((m, i) => `<div class="cc-cap"><span class="big-num">${i + 1}</span><h3>${esc(m.name)}</h3><p>${esc(m.what)}</p>${m.skill ? `<code>${esc(m.skill)}</code>` : ''}</div>`).join('')}
           <div class="cc-cap"><span class="big-num">✓</span><h3>Il prodotto.</h3><p>Un plugin Figma vero, pronto per il team. Adesso vediamolo in azione.</p></div></div>
       </div>
-      <div class="panel mbase"><canvas class="base-gl" id="base-gl" aria-hidden="true"></canvas>
-        <div class="mbase-copy"><h3>Nove passi.<br><em>Una base solida.</em></h3><p>Ogni progetto parte da qui. Ecco cosa ne è uscito.</p></div></div>
     </div>`;
+    // The base closes the method after the demo, in its own section.
+    $('#base').innerHTML = `<div class="stage"><div class="panel mbase"><canvas class="base-gl" id="base-gl" aria-hidden="true"></canvas>
+        <div class="mbase-copy"><h3>Nove passi.<br><em>Una base solida.</em></h3><p>Ogni progetto parte da qui. Ecco cosa ne è uscito.</p></div></div></div>`;
 
 
     // Demo: the ten formats the plugin makes, in three rows of the Figma canvas (row height in % of the canvas).
@@ -516,12 +518,10 @@ ${vis}    </div></section>`; };
     // Skills in practice: four questions.
     ccPin($('#claude'), 4);
     hTrack($('#metodo-passi'));
-    // The nine steps live, then the product, then the base (its panel turns on, so the 3D keys land).
-    const psTree = $$('#ps .ps-tree li'), base = $('#passi .mbase');
-    ccPin($('#passi'), METHOD.length + 2, (k) => {
+    // The nine steps live, then the product.
+    const psTree = $$('#ps .ps-tree li');
+    ccPin($('#passi'), METHOD.length + 1, (k) => {
       psTree.forEach(li => li.classList.toggle('here', li.dataset.name === METHOD[k]?.here));
-      $('#passi').classList.toggle('at-base', k === METHOD.length + 1);
-      base.classList.toggle('on', k === METHOD.length + 1);
     });
 
     // Demo: one Figma state per stop (selected, plugin open, creating, done).
@@ -535,6 +535,8 @@ ${vis}    </div></section>`; };
     };
     ScrollTrigger.create({ trigger: '#demo', start: () => demoST.start, end: () => demoST.end, onUpdate: self => setDemoStep(Math.min(3, Math.floor(self.progress * 4))) });
     setDemoStep(0);
+    // The base: its panel turns on while the section is on screen, so the 3D keys land on every visit.
+    ScrollTrigger.create({ trigger: '#base', start: 'top 40%', end: 'bottom 60%', toggleClass: { targets: '#base .mbase', className: 'on' } });
 
     // Lenses: four looks for one component.
     const lensNames = ['base', 'brutalist', 'soft', 'editorial'];
@@ -618,6 +620,9 @@ ${vis}    </div></section>`; };
     // Reveals for headings and copy outside pins.
     // The hero is on screen at load: play once, no trigger (the name sits below 90% and never fired; reversing hid the title).
     const trig = (el, start) => el.closest('#hero') ? undefined : { trigger: el, start, toggleActions: 'play none none reverse' };
+    // Highlighted words: the underline draws when the word is fully on screen, and redraws on every visit.
+    const drawIO = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('drawn', e.isIntersecting)), { threshold: 1 });
+    $$('mark').forEach(m => drawIO.observe(m));
     $$('.split').forEach(el => {
       if (el.closest('#domanda, #outro')) return;
       gsap.fromTo($$('.w > span', el), { yPercent: 115, rotateX: -25 }, { yPercent: 0, rotateX: 0, duration: 1.1, ease: 'expo.out', stagger: .045,

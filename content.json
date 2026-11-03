@@ -15,7 +15,7 @@
       "card1_testo": "Variabili, icone, asset: copia, incolla, ripeti.",
       "card2_titolo": "Screenshot e incollo",
       "card2_testo": "Da Photoshop a Figma, un livello alla volta.",
-      "card3_titolo": "Pago un tool che fa metà",
+      "card3_titolo": "Pago un tool che fa metà del lavoro",
       "card3_testo": "Un abbonamento al mese per una funzione su dieci.",
       "card4_titolo": "Chiedo a uno sviluppatore",
       "card4_testo": "…e aspetto il suo prossimo buco libero."
@@ -1615,7 +1615,7 @@
     "img-05": "Modulink",
     "img-07": "Prisma",
     "img-08": "Composer · app",
-    "img-09": "Composer · plugin",
+    "img-09": "Composer · editor",
     "img-10": "Training",
     "img-11": "Editor"
   },

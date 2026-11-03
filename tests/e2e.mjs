@@ -75,7 +75,8 @@ checks.structure = async (browser) => {
   assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.kit-panel')).overflowY), 'visible', 'kit cards never scroll');
   assert.equal(await page.locator('#claude .cc-convo').count(), 4, 'Claude Code window: four questions on skills');
   assert.equal(await page.locator('#passi .cc-cap').count(), 10, 'nine steps live, then the product');
-  assert.equal(await page.locator('#passi .mbase #base-gl').count(), 1, 'then the solid base, no real project');
+  assert.equal(await page.locator('#base .mbase #base-gl').count(), 1, 'the solid base closes the method');
+  assert.ok(await page.evaluate(() => document.querySelector('#demo').compareDocumentPosition(document.querySelector('#base')) & Node.DOCUMENT_POSITION_FOLLOWING), 'the base comes after the demo');
   assert.equal(await page.locator('#demo .ff').count(), 10, 'the demo makes ten formats');
   assert.ok((await stops(page)).length >= 50, 'stops');
   assert.ok(await page.evaluate(() => document.querySelectorAll('.pin-spacer').length >= 12), 'pins');

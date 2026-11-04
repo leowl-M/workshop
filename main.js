@@ -296,7 +296,9 @@ ${vis}    </div></section>`; };
   let lenis = null, pending = null;
   function scrollToY(y, opts = {}) {
     pending = y;
-    if (lenis) lenis.scrollTo(y, { duration: opts.immediate ? 0 : 1, easing: t => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2), immediate: !!opts.immediate, lock: false, force: true, onComplete: () => { pending = null; } });
+    // Long jumps (a pinned statement is 1.6 screens + the way in) get more time, so the words don't flash: at least 1 s, else 0.9 s per screen travelled.
+    const dur = Math.max(1, Math.abs(y - scrollY) / innerHeight * 0.9);
+    if (lenis) lenis.scrollTo(y, { duration: opts.immediate ? 0 : dur, easing: t => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2), immediate: !!opts.immediate, lock: false, force: true, onComplete: () => { pending = null; } });
     else { scrollTo({ top: y, behavior: 'auto' }); pending = null; }
   }
   function step(dir) {
